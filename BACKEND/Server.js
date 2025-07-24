@@ -10,12 +10,7 @@ const authMiddleware = require("./middleware/authMiddleware");
 const FrontendRoute = require("./Router/FrontendRoute");
 
 const PORT = 3000;
-app.use(
-  cors({
-    origin: "https://news-blog-ten.vercel.app/", // Ya jo frontend port hai
-    credentials: true,
-  })
-);
+app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
