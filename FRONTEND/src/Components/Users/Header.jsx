@@ -10,7 +10,7 @@ const Header = () => {
     const fetchHeader = async () => {
       try {
         const response = await axios.get(
-          "https://news-blog-abh6.vercel.app//get-category"
+          "https://news-blog-abh6.vercel.app/get-category"
         );
         console.log("📦 Categories:", response.data);
         setCategories(response.data.data);

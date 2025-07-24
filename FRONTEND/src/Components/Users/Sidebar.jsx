@@ -10,7 +10,7 @@ const Sidebar = () => {
     const fetchRecentPosts = async () => {
       try {
         const response = await axios.get(
-          "https://news-blog-abh6.vercel.app//getAllPost"
+          "https://news-blog-abh6.vercel.app/getAllPost"
         );
         if (response?.data?.data) {
           // Get the last 3 posts (you can change this logic as needed)
@@ -67,7 +67,7 @@ const Sidebar = () => {
             >
               {/* Left Image */}
               <img
-                src={`https://news-blog-abh6.vercel.app//uploads/${post.image}`}
+                src={`https://news-blog-abh6.vercel.app/uploads/${post.image}`}
                 alt="News"
                 style={{
                   width: "80px",

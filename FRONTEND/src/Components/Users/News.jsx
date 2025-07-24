@@ -10,7 +10,7 @@ const News = () => {
     const FetchNews = async () => {
       try {
         const response = await axios.get(
-          "https://news-blog-abh6.vercel.app//getAllPost"
+          "https://news-blog-abh6.vercel.app/getAllPost"
         );
         if (response) {
           console.log(response.data.data);
@@ -52,7 +52,7 @@ const News = () => {
           >
             {/* Left Side Image */}
             <img
-              src={`https://news-blog-abh6.vercel.app//uploads/${newsItem.image}`}
+              src={`https://news-blog-abh6.vercel.app/uploads/${newsItem.image}`}
               alt="News"
               style={{
                 width: "200px",
