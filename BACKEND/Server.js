@@ -12,7 +12,7 @@ const FrontendRoute = require("./Router/FrontendRoute");
 const PORT = 3000;
 app.use(
   cors({
-    origin: "http://localhost:5173", // Ya jo frontend port hai
+    origin: "https://news-blog-ten.vercel.app/", // Ya jo frontend port hai
     credentials: true,
   })
 );
@@ -23,14 +23,10 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use("/uploads", express.static("uploads"));
 
-
-
 app.use(FrontendRoute);
 app.use("/auth", require("./Router/auth"));
-app.use(authMiddleware); 
+app.use(authMiddleware);
 app.use(router);
-
-
 
 mongoose
   .connect(DB_PATH)
