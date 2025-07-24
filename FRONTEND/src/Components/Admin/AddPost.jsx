@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -13,28 +13,7 @@ const AddPost = () => {
     image: null,
   });
 
-  const [categories, setCategories] = useState([]);
-
-  useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axios.get(
-          "https://news-blog-abh6.vercel.app/admin/get-categories",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        console.log("✅ Categories:", res.data.data);
-        setCategories(res.data.data);
-      } catch (err) {
-        console.error("❌ Error fetching categories:", err);
-      }
-    };
-
-    fetchCategories();
-  }, []);
+  const [loading, setLoading] = useState(false);
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
@@ -47,107 +26,94 @@ const AddPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
+
     const data = new FormData();
     data.append("title", formData.title);
     data.append("description", formData.description);
-    data.append("category", formData.category); // ✅ this will send the category _id
+    data.append("category", formData.category);
     data.append("image", formData.image);
 
     try {
       const response = await axios.post(
-        "https://news-blog-abh6.vercel.app/admin/add-post/",
+        "https://news-blog-abh6.vercel.app/admin/add-post",
         data,
         {
           headers: {
             "Content-Type": "multipart/form-data",
-
             Authorization: `Bearer ${token}`,
           },
         }
       );
-      console.log(response.data);
 
+      console.log("✅ Post submitted:", response.data.message);
+      alert("✅ Post added successfully!");
       navigate("/admin/posts");
-      console.log("✅ Post Submitted:", response.data.message);
     } catch (err) {
       console.error("❌ Error submitting post:", err);
+      if (err.response?.data?.message) {
+        alert("❌ " + err.response.data.message);
+      } else {
+        alert("❌ Something went wrong while submitting the post.");
+      }
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
     <div className="container mt-5">
-      <h2 className="text-primary mb-4">Add New Post</h2>
+      <h2>Add New Post</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Title
-          </label>
+          <label htmlFor="title" className="form-label">Title:</label>
           <input
             type="text"
-            className="form-control"
-            id="title"
             name="title"
+            className="form-control"
             onChange={handleChange}
             value={formData.title}
-            placeholder="Enter post title"
             required
           />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
+          <label htmlFor="description" className="form-label">Description:</label>
           <textarea
-            className="form-control"
-            id="description"
             name="description"
-            rows="4"
+            className="form-control"
             onChange={handleChange}
             value={formData.description}
-            placeholder="Enter post description"
             required
           ></textarea>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="category" className="form-label">
-            Category
-          </label>
-          <select
-            className="form-select"
-            id="category"
+          <label htmlFor="category" className="form-label">Category:</label>
+          <input
+            type="text"
             name="category"
+            className="form-control"
             onChange={handleChange}
             value={formData.category}
             required
-          >
-            <option value="">-- Choose Category --</option>
-            {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.categoryName}
-              </option>
-            ))}
-          </select>
+          />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="image" className="form-label">
-            Post Image
-          </label>
+          <label htmlFor="image" className="form-label">Image:</label>
           <input
             type="file"
-            className="form-control"
-            id="image"
             name="image"
+            className="form-control"
             accept="image/*"
             onChange={handleChange}
             required
           />
         </div>
 
-        <button type="submit" className="btn btn-success w-100">
-          Submit Post
+        <button type="submit" className="btn btn-primary" disabled={loading}>
+          {loading ? "Submitting..." : "Add Post"}
         </button>
       </form>
     </div>
