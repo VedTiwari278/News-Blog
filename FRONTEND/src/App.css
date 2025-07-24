@@ -1,0 +1,58 @@
+/* .search-class {
+  text-align: center;
+  border-left: 3px solid rgb(138, 128, 128);
+  float: left;
+  margin-left: 20px;
+  width: 30%;
+  color: black;
+}
+
+.container {
+  width: 80%;
+}
+
+.inner-container {
+  margin-left: 20px;
+  color: black;
+}
+
+.logo {
+  max-height: 80px;
+  object-fit: contain;
+}
+
+.category-bar {
+  background-color: black;
+  font-weight: 800;
+  height: 40px;
+  display: flex;
+  justify-content: space-evenly;
+  justify-items: center;
+  align-items: center;
+
+  color: white;
+}
+
+.index-Second-Container {
+  display: flex;
+}
+
+.Brand {
+  background-color: rgb(72, 72, 244);
+  height: 100px;
+}
+
+.News {
+  color: black;
+  display: flex;
+  justify-content: space-around;
+  width: 70%;
+}
+
+.inputField {
+  width: 800px;
+} */
+
+.Search {
+  width: 400px;
+}
