@@ -5,23 +5,36 @@ const fs = require("fs");
 const path = require("path");
 // const Post = require("../models/Post"); // adjust path if needed
 
+const cloudinary = require("../config/cloudinary");
+// const Post = require("../models/Post");
+
+
+
+
 exports.addpost = async (req, res) => {
   try {
-    console.log("Hello", req.body);
-    console.log("✅ req.file:", req.file);
+    console.log("📦 Incoming Data:", req.body);
+    console.log("🖼️ Uploaded File:", req.file);
 
-    const user = req.user; // ✅ comes from auth middleware
-    console.log("Logged-in User ID:", user.id);
-
+    const user = req.user; // From auth middleware
     const { title, description, category } = req.body;
-    const image = req.file ? req.file.filename : "";
+
+    let imageUrl = "";
+
+    if (req.file) {
+      // Upload to Cloudinary
+      const result = await cloudinary.uploader.upload(req.file.path, {
+        folder: "posts",
+      });
+      imageUrl = result.secure_url;
+    }
 
     const newPost = new Post({
       title,
       description,
-      author: user.id, // ✅ FIXED: Use user._id from req.user
+      author: user.id,
       category,
-      image,
+      image: imageUrl, // ✅ Use Cloudinary URL here
     });
 
     await newPost.save();
@@ -38,6 +51,11 @@ exports.addpost = async (req, res) => {
     });
   }
 };
+
+
+
+
+
 
 exports.addCategory = async (req, res) => {
   // console.log(req.body);
