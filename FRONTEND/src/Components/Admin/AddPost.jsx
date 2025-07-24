@@ -65,8 +65,9 @@ const AddPost = () => {
           },
         }
       );
+      console.log(response.data);
 
-      navigate("https://news-blog-abh6.vercel.app/admin/posts");
+      navigate("/admin/posts");
       console.log("✅ Post Submitted:", response.data.message);
     } catch (err) {
       console.error("❌ Error submitting post:", err);
