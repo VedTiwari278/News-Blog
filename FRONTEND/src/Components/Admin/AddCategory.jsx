@@ -12,7 +12,7 @@ const AddCategory = () => {
     const fetchCategories = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/admin/get-categories",
+          "https://news-blog-abh6.vercel.app/admin/get-categories",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -39,19 +39,22 @@ const AddCategory = () => {
     }
 
     try {
-      const res = await axios.post("http://localhost:3000/admin/add-category", {
-        categoryName: name,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.post(
+        "https://news-blog-abh6.vercel.app/admin/add-category",
+        {
+          categoryName: name,
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       // alert(res.data.message);
       categoryName.current.value = "";
 
       // Re-fetch updated category list
       const updated = await axios.get(
-        "http://localhost:3000/admin/get-categories",
+        "https://news-blog-abh6.vercel.app/admin/get-categories",
         {
           headers: {
             Authorization: `Bearer ${token}`,

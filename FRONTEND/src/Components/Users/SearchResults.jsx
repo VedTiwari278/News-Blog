@@ -14,7 +14,7 @@ const SearchResults = () => {
     const fetchSearchResults = async () => {
       try {
         const res = await axios.get(
-          `http://localhost:3000/search?term=${term}`
+          `https://news-blog-abh6.vercel.app//search?term=${term}`
         );
         setResults(res.data.data);
       } catch (error) {
@@ -48,7 +48,7 @@ const SearchResults = () => {
             >
               {/* Left Side Image */}
               <img
-                src={`http://localhost:3000/uploads/${newsItem.image}`}
+                src={`https://news-blog-abh6.vercel.app//uploads/${newsItem.image}`}
                 alt="News"
                 style={{
                   width: "200px",

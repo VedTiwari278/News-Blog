@@ -25,7 +25,7 @@ const UpdatePost = () => {
     const fetchCategories = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/admin/get-categories",
+          "https://news-blog-abh6.vercel.app//admin/get-categories",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -41,7 +41,7 @@ const UpdatePost = () => {
     const fetchPost = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/get-post/${id}`,
+          `https://news-blog-abh6.vercel.app/admin/get-post/${id}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -71,7 +71,7 @@ const UpdatePost = () => {
       };
 
       const res = await axios.put(
-        `http://localhost:3000/admin/update-post/${id}`,
+        `https://news-blog-abh6.vercel.app/admin/update-post/${id}`,
         updatedPost,
         {
           headers: {

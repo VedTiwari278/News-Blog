@@ -13,7 +13,7 @@ const CategoryWise = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/getAllPostById/${id}`
+          `https://news-blog-abh6.vercel.app//getAllPostById/${id}`
         );
         if (response) {
           setNews(response.data.data);
@@ -46,9 +46,15 @@ const CategoryWise = () => {
           style={{ minHeight: "70vh" }}
         >
           {loading ? (
-            <div className="d-flex justify-content-center align-items-center w-100" style={{ minHeight: "60vh" }}>
+            <div
+              className="d-flex justify-content-center align-items-center w-100"
+              style={{ minHeight: "60vh" }}
+            >
               <div className="text-center">
-                <div className="spinner-border text-primary" role="status"></div>
+                <div
+                  className="spinner-border text-primary"
+                  role="status"
+                ></div>
                 <p className="mt-3">Loading posts...</p>
               </div>
             </div>
@@ -82,7 +88,7 @@ const CategoryWise = () => {
               >
                 {/* Left Image */}
                 <img
-                  src={`http://localhost:3000/uploads/${newsItem.image}`}
+                  src={`https://news-blog-abh6.vercel.app//uploads/${newsItem.image}`}
                   alt="News"
                   style={{
                     width: "200px",

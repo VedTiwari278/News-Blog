@@ -11,7 +11,7 @@ const Single = () => {
     const fetchData = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/getSingle/${id}`
+          `https://news-blog-abh6.vercel.app//getSingle/${id}`
         );
         setData(response.data.data);
       } catch (error) {
@@ -39,7 +39,7 @@ const Single = () => {
 
           {/* Image */}
           <img
-            src={`http://localhost:3000/uploads/${data.image}`}
+            src={`https://news-blog-abh6.vercel.app//uploads/${data.image}`}
             className="w-100"
             alt={data.title}
             style={{ objectFit: "cover", maxHeight: "420px" }}

@@ -10,7 +10,10 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", data);
+      const res = await axios.post(
+        "https://news-blog-abh6.vercel.app/auth/login",
+        data
+      );
       localStorage.setItem("token", res.data.token);
       alert("Login Successful");
       navigate("/");
@@ -21,7 +24,10 @@ function Login() {
 
   return (
     <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
-      <div className="card shadow-lg border-0 p-4" style={{ maxWidth: "420px", width: "100%" }}>
+      <div
+        className="card shadow-lg border-0 p-4"
+        style={{ maxWidth: "420px", width: "100%" }}
+      >
         <div className="text-center mb-4">
           <h2 className="fw-bold text-primary">Welcome Back</h2>
           <p className="text-muted">Login to your account</p>
@@ -59,7 +65,10 @@ function Login() {
 
         <div className="text-center mt-3">
           <span className="text-muted">Don't have an account? </span>
-          <Link to="/register" className="fw-semibold text-decoration-none text-primary">
+          <Link
+            to="/register"
+            className="fw-semibold text-decoration-none text-primary"
+          >
             Register
           </Link>
         </div>
