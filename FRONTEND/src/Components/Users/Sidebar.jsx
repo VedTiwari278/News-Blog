@@ -90,7 +90,7 @@ const Sidebar = () => {
                   to={`/post/${post._id}`}
                   className="btn btn-sm btn-outline-primary mt-1"
                 >
-                  Read
+                  Read More
                 </Link>
               </div>
             </div>
