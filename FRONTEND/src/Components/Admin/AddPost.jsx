@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useRef, useEffect, useState } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
@@ -6,37 +6,53 @@ const AddPost = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
 
-  const [formData, setFormData] = useState({
-    title: "",
-    description: "",
-    category: "",
-    image: null,
-  });
+  const titleRef = useRef();
+  const descRef = useRef();
+  const categoryRef = useRef();
+  const imageRef = useRef();
 
-  const [loading, setLoading] = useState(false);
+  const [categories, setCategories] = useState([]);
 
-  const handleChange = (e) => {
-    const { name, value, files } = e.target;
-    if (name === "image") {
-      setFormData((prev) => ({ ...prev, image: files[0] }));
-    } else {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
-  };
+  useEffect(() => {
+    const fetchCategories = async () => {
+      try {
+        const res = await axios.get(
+          "http://localhost:3000/admin/get-categories",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        console.log("✅ Categories:", res.data.data);
+        setCategories(res.data.data);
+      } catch (err) {
+        console.error("❌ Error fetching categories:", err);
+      }
+    };
+
+    fetchCategories();
+  }, []);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setLoading(true);
 
     const data = new FormData();
-    data.append("title", formData.title);
-    data.append("description", formData.description);
-    data.append("category", formData.category);
-    data.append("image", formData.image);
+    data.append("title", titleRef.current.value);
+    data.append("description", descRef.current.value);
+    data.append("category", categoryRef.current.value);
+    data.append("image", imageRef.current.files[0]);
+
+    // ✅ Log FormData values
+    console.log("🚀 FormData being sent:");
+    for (let pair of data.entries()) {
+      console.log(`${pair[0]}:`, pair[1]);
+    }
 
     try {
+      console.log("hello jo");
       const response = await axios.post(
-        "https://news-blog-abh6.vercel.app/admin/add-post",
+        "http://localhost:3000/admin/add-post/",
         data,
         {
           headers: {
@@ -45,75 +61,80 @@ const AddPost = () => {
           },
         }
       );
-
-      console.log("✅ Post submitted:", response.data.message);
-      alert("✅ Post added successfully!");
+      console.log("✅ Post Submitted:", response.data.message);
       navigate("/admin/posts");
     } catch (err) {
       console.error("❌ Error submitting post:", err);
-      if (err.response?.data?.message) {
-        alert("❌ " + err.response.data.message);
-      } else {
-        alert("❌ Something went wrong while submitting the post.");
-      }
-    } finally {
-      setLoading(false);
     }
   };
 
   return (
     <div className="container mt-5">
-      <h2>Add New Post</h2>
+      <h2 className="text-primary mb-4">Add New Post</h2>
       <form onSubmit={handleSubmit} encType="multipart/form-data">
         <div className="mb-3">
-          <label htmlFor="title" className="form-label">Title:</label>
+          <label htmlFor="title" className="form-label">
+            Title
+          </label>
           <input
             type="text"
-            name="title"
             className="form-control"
-            onChange={handleChange}
-            value={formData.title}
+            id="title"
+            placeholder="Enter post title"
+            ref={titleRef}
             required
           />
         </div>
 
         <div className="mb-3">
-          <label htmlFor="description" className="form-label">Description:</label>
+          <label htmlFor="description" className="form-label">
+            Description
+          </label>
           <textarea
-            name="description"
             className="form-control"
-            onChange={handleChange}
-            value={formData.description}
+            id="description"
+            rows="4"
+            placeholder="Enter post description"
+            ref={descRef}
             required
           ></textarea>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="category" className="form-label">Category:</label>
-          <input
-            type="text"
-            name="category"
-            className="form-control"
-            onChange={handleChange}
-            value={formData.category}
+          <label htmlFor="category" className="form-label">
+            Category
+          </label>
+          <select
+            className="form-select"
+            id="category"
+            ref={categoryRef}
             required
-          />
+          >
+            <option value="">-- Choose Category --</option>
+            {categories.map((cat) => (
+              <option key={cat._id} value={cat._id}>
+                {cat.categoryName}
+              </option>
+            ))}
+          </select>
         </div>
 
         <div className="mb-3">
-          <label htmlFor="image" className="form-label">Image:</label>
+          <label htmlFor="image" className="form-label">
+            Post Image
+          </label>
           <input
             type="file"
-            name="image"
             className="form-control"
+            id="image"
             accept="image/*"
-            onChange={handleChange}
+            ref={imageRef}
             required
           />
         </div>
 
-        <button type="submit" className="btn btn-primary" disabled={loading}>
-          {loading ? "Submitting..." : "Add Post"}
+        <button type="submit" className="btn btn-success w-100">
+          Submit Post
         </button>
       </form>
     </div>

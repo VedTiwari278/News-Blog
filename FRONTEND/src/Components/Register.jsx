@@ -18,7 +18,7 @@ function Register() {
     try {
       console.log(data);
       const response = await axios.post(
-        "https://news-blog-abh6.vercel.app/auth/register",
+        "http://localhost:3000/auth/register",
         data
       );
       alert("Registered Successfully");

@@ -9,9 +9,7 @@ const News = () => {
   useEffect(() => {
     const FetchNews = async () => {
       try {
-        const response = await axios.get(
-          "https://news-blog-abh6.vercel.app/getAllPost"
-        );
+        const response = await axios.get("http://localhost:3000/getAllPost");
         if (response) {
           console.log(response.data.data);
 
@@ -52,7 +50,7 @@ const News = () => {
           >
             {/* Left Side Image */}
             <img
-              src={`https://news-blog-abh6.vercel.app/uploads/${newsItem.image}`}
+              src={`http://localhost:3000/uploads/${newsItem.image}`}
               alt="News"
               style={{
                 width: "200px",

@@ -22,11 +22,7 @@ exports.addpost = async (req, res) => {
     let imageUrl = "";
 
     if (req.file) {
-      // Upload to Cloudinary
-      const result = await cloudinary.uploader.upload(req.file.path, {
-        folder: "posts",
-      });
-      imageUrl = result.secure_url;
+      imageUrl = req.file.filename; // just filename, not full path
     }
 
     const newPost = new Post({
@@ -34,7 +30,7 @@ exports.addpost = async (req, res) => {
       description,
       author: user.id,
       category,
-      image: imageUrl, // ✅ Use Cloudinary URL here
+      image: imageUrl, // store filename only
     });
 
     await newPost.save();

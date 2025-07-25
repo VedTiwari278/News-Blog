@@ -9,9 +9,7 @@ const Sidebar = () => {
   useEffect(() => {
     const fetchRecentPosts = async () => {
       try {
-        const response = await axios.get(
-          "https://news-blog-abh6.vercel.app/getAllPost"
-        );
+        const response = await axios.get("http://localhost:3000/getAllPost");
         if (response?.data?.data) {
           // Get the last 3 posts (you can change this logic as needed)
           const latestPosts = response.data.data.slice(-5).reverse();
@@ -67,7 +65,7 @@ const Sidebar = () => {
             >
               {/* Left Image */}
               <img
-                src={`https://news-blog-abh6.vercel.app/uploads/${post.image}`}
+                src={`http://localhost:3000/uploads/${post.image}`}
                 alt="News"
                 style={{
                   width: "80px",

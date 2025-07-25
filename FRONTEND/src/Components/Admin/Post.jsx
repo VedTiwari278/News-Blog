@@ -14,7 +14,7 @@ const Post = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        "https://news-blog-abh6.vercel.app/admin/get-posts",
+        "http://localhost:3000/admin/get-posts",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -44,14 +44,11 @@ const Post = () => {
         return;
       }
 
-      await axios.delete(
-        `https://news-blog-abh6.vercel.app/admin/delete-post/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
+      await axios.delete(`http://localhost:3000/admin/delete-post/${id}`, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
       fetchPost();
     } catch (error) {
       alert("Failed to delete post");

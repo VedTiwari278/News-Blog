@@ -23,7 +23,7 @@ const Users = () => {
     try {
       setLoading(true); // Start loader
       const response = await axios.get(
-        "https://news-blog-abh6.vercel.app//admin/get-users",
+        "http://localhost:3000/admin/get-users",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -44,14 +44,11 @@ const Users = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(
-        `https://news-blog-abh6.vercel.app/admin/delete-user/${id}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      await axios.delete(`http://localhost:3000/admin/delete-user/${id}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       fetchUser(); // Refresh list
     } catch (error) {
       alert("Failed to delete User");
