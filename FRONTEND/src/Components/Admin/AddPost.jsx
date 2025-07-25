@@ -12,6 +12,7 @@ const AddPost = () => {
   const imageRef = useRef();
 
   const [categories, setCategories] = useState([]);
+  const [submitting, setSubmitting] = useState(false); // 🟡 Loader state
 
   useEffect(() => {
     const fetchCategories = async () => {
@@ -24,7 +25,6 @@ const AddPost = () => {
             },
           }
         );
-        console.log("✅ Categories:", res.data.data);
         setCategories(res.data.data);
       } catch (err) {
         console.error("❌ Error fetching categories:", err);
@@ -36,6 +36,7 @@ const AddPost = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setSubmitting(true); // 🟡 Set loading true
 
     const data = new FormData();
     data.append("title", titleRef.current.value);
@@ -43,14 +44,7 @@ const AddPost = () => {
     data.append("category", categoryRef.current.value);
     data.append("image", imageRef.current.files[0]);
 
-    // ✅ Log FormData values
-    console.log("🚀 FormData being sent:");
-    for (let pair of data.entries()) {
-      console.log(`${pair[0]}:`, pair[1]);
-    }
-
     try {
-      console.log("hello jo");
       const response = await axios.post(
         "https://news-blog-abh6.vercel.app/admin/add-post/",
         data,
@@ -61,10 +55,14 @@ const AddPost = () => {
           },
         }
       );
+
       console.log("✅ Post Submitted:", response.data.message);
       navigate("/admin/posts");
     } catch (err) {
       console.error("❌ Error submitting post:", err);
+      alert("Failed to submit post");
+    } finally {
+      setSubmitting(false); // 🔴 Reset loading
     }
   };
 
@@ -133,8 +131,12 @@ const AddPost = () => {
           />
         </div>
 
-        <button type="submit" className="btn btn-success w-100">
-          Submit Post
+        <button
+          type="submit"
+          className="btn btn-success w-100"
+          disabled={submitting}
+        >
+          {submitting ? "Submitting..." : "Submit Post"}
         </button>
       </form>
     </div>

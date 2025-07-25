@@ -5,9 +5,10 @@ import axios from "axios";
 const AddCategory = () => {
   const categoryName = useRef();
   const token = localStorage.getItem("token");
-  const [categories, setCategories] = useState([]); // Holds fetched categories
+  const [categories, setCategories] = useState([]);
+  const [submitting, setSubmitting] = useState(false); // ⬅️ Track submission state
 
-  // Fetch categories from DB on component mount
+  // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -19,8 +20,7 @@ const AddCategory = () => {
             },
           }
         );
-        console.log(res.data.data); // ✅ Check structure
-        setCategories(res.data.data); // ✅ Use 'data' if backend sends { data: [...] }
+        setCategories(res.data.data);
       } catch (error) {
         console.error("❌ Error fetching categories:", error);
       }
@@ -38,8 +38,10 @@ const AddCategory = () => {
       return;
     }
 
+    setSubmitting(true); // ⬅️ Show loading state
+
     try {
-      const res = await axios.post(
+      await axios.post(
         "https://news-blog-abh6.vercel.app/admin/add-category",
         { categoryName: name },
         {
@@ -49,10 +51,9 @@ const AddCategory = () => {
         }
       );
 
-      // alert(res.data.message);
       categoryName.current.value = "";
 
-      // Re-fetch updated category list
+      // Refresh categories
       const updated = await axios.get(
         "https://news-blog-abh6.vercel.app/admin/get-categories",
         {
@@ -61,11 +62,12 @@ const AddCategory = () => {
           },
         }
       );
-      console.log(updated.data.data); // ✅ Updated data
-      setCategories(updated.data.data); // ✅ Use 'data'
+      setCategories(updated.data.data);
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
       console.error("❌ Error:", error);
+    } finally {
+      setSubmitting(false); // ⬅️ Reset loading state
     }
   };
 
@@ -86,8 +88,8 @@ const AddCategory = () => {
             placeholder="Enter category name"
           />
         </div>
-        <button type="submit" className="btn btn-success">
-          Add Category
+        <button type="submit" className="btn btn-success" disabled={submitting}>
+          {submitting ? "Submitting..." : "Add Category"}
         </button>
       </form>
 
