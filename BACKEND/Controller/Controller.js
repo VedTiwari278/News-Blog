@@ -83,14 +83,38 @@ exports.getCategories = async (req, res) => {
   res.status(200).send({ data });
 };
 
+
 exports.getPost = async (req, res) => {
-  const data = await Post.find()
-    .populate("category", "categoryName")
-    .populate("author", "username");
-  // const categoryData = await Category.find();
-  console.log("Category Data dfghjk", data);
-  res.status(200).send({ data: data });
+  try {
+    // console.log("Someone hit me");
+
+    const user = req.user;
+    // console.log("Logged-in User:", user);
+
+    let posts;
+
+    if (user.role === "admin") {
+      // Admin gets all posts
+      posts = await Post.find()
+        .populate("category", "categoryName")
+        .populate("author", "username");
+    } else {
+      // Non-admin user gets only their own posts
+      posts = await Post.find({ author: user.id })
+        .populate("category", "categoryName")
+        .populate("author", "username");
+    }
+
+    // console.log("Fetched Posts:", posts);
+
+    res.status(200).send({ data: posts });
+  } catch (error) {
+    // console.error("Error in getPost:", error);
+    res.status(500).send({ error: "Internal server error" });
+  }
 };
+
+
 
 exports.editCategory = async (req, res) => {
   const id = req.params.id;
