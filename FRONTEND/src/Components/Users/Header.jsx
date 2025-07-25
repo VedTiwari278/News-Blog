@@ -36,7 +36,7 @@ const Header = () => {
 
       {/* Responsive Category Bar */}
       <div
-        className="bg-primary py-2 px-2 overflow-auto d-flex gap-3"
+        className="bg-primary py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
         style={{ whiteSpace: "nowrap" }}
       >
         {categories.map((category) => (

@@ -6,7 +6,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 const Index = () => {
   return (
-    <div className="Main-Container">
+    <div
+      className="Main-Container min-vh-100"
+      style={{
+        background: "linear-gradient(to right, #c8e1ebff, #dbac8dff, #e1ecf1ff)",
+        color: "#ffffff",
+      }}
+    >
       <Header />
       <div className="container mt-4">
         <div className="row">
