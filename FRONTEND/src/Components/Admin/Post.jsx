@@ -14,16 +14,13 @@ const Post = () => {
     try {
       setLoading(true);
       const response = await axios.get(
-        // "https://news-blog-abh6.vercel.app/admin/get-posts",
-        "http://localhost:3000/admin/get-posts",
+        "https://news-blog-abh6.vercel.app/admin/get-posts",
         {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }
       );
-      console.log("User based data", response.data.data);
-
       setPost(response.data.data);
     } catch (error) {
       console.error("Error fetching posts:", error);
