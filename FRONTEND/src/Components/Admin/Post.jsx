@@ -61,9 +61,9 @@ const Post = () => {
 
   return (
     <div className="container mt-4">
-      <div className="d-flex justify-content-between align-items-center mb-4">
+      <div className="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
         <h3 className="text-primary fw-bold">Post Table</h3>
-        <Link to="/admin/add-post" className="btn btn-success">
+        <Link to="/admin/add-post" className="btn btn-success mt-2 mt-md-0">
           + ADD POST
         </Link>
       </div>
@@ -74,55 +74,57 @@ const Post = () => {
           <p>Loading posts...</p>
         </div>
       ) : (
-        <table className="table table-bordered table-striped table-hover shadow">
-          <thead className="table-dark">
-            <tr>
-              <th scope="col">Id</th>
-              <th scope="col">Title</th>
-              <th scope="col">Category</th>
-              <th scope="col">Date</th>
-              <th scope="col">Author</th>
-              <th scope="col">Edit</th>
-              <th scope="col">Delete</th>
-            </tr>
-          </thead>
-          <tbody>
-            {Array.isArray(post) && post.length > 0 ? (
-              post.map((post, index) => (
-                <tr key={post._id || index}>
-                  <td>{index + 1}</td>
-                  <td>{post.title}</td>
-                  <td>{post.category?.categoryName || "Unknown"}</td>
-                  <td>{new Date(post.createdAt).toLocaleString()}</td>
-                  <td>{post.author?.username || "Unknown"}</td>
-                  <td>
-                    <Link
-                      to={`/admin/edit-post/${post._id}`}
-                      className="text-warning"
-                      title="Edit Post"
-                    >
-                      <FaEdit size={18} />
-                    </Link>
-                  </td>
-                  <td>
-                    <button
-                      className="btn btn-sm btn-danger"
-                      onClick={() => handleDelete(post._id)}
-                    >
-                      <FaDeleteLeft />
-                    </button>
+        <div className="table-responsive"> {/* ✅ Responsive wrapper */}
+          <table className="table table-bordered table-striped table-hover shadow">
+            <thead className="table-dark">
+              <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Category</th>
+                <th scope="col">Date</th>
+                <th scope="col">Author</th>
+                <th scope="col">Edit</th>
+                <th scope="col">Delete</th>
+              </tr>
+            </thead>
+            <tbody>
+              {Array.isArray(post) && post.length > 0 ? (
+                post.map((post, index) => (
+                  <tr key={post._id || index}>
+                    <td>{index + 1}</td>
+                    <td>{post.title}</td>
+                    <td>{post.category?.categoryName || "Unknown"}</td>
+                    <td>{new Date(post.createdAt).toLocaleString()}</td>
+                    <td>{post.author?.username || "Unknown"}</td>
+                    <td>
+                      <Link
+                        to={`/admin/edit-post/${post._id}`}
+                        className="text-warning"
+                        title="Edit Post"
+                      >
+                        <FaEdit size={18} />
+                      </Link>
+                    </td>
+                    <td>
+                      <button
+                        className="btn btn-sm btn-danger"
+                        onClick={() => handleDelete(post._id)}
+                      >
+                        <FaDeleteLeft />
+                      </button>
+                    </td>
+                  </tr>
+                ))
+              ) : (
+                <tr>
+                  <td colSpan="7" className="text-center">
+                    No posts found
                   </td>
                 </tr>
-              ))
-            ) : (
-              <tr>
-                <td colSpan="7" className="text-center">
-                  No posts found
-                </td>
-              </tr>
-            )}
-          </tbody>
-        </table>
+              )}
+            </tbody>
+          </table>
+        </div>
       )}
     </div>
   );
