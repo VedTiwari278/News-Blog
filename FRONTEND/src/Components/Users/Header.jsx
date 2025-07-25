@@ -24,19 +24,27 @@ const Header = () => {
 
   return (
     <>
-      <div className="Brand text-center py-3 bg-light shadow-sm">
+      {/* Logo Section */}
+      <div className="text-center py-3 bg-light shadow-sm">
         <img
           src="/images/News.jpeg"
           alt="No Logo Found"
-          className="img-fluid logo"
+          className="img-fluid"
+          style={{ maxHeight: "80px", width: "auto" }}
         />
       </div>
-      <div className="category-bar d-flex justify-content-center gap-4 py-2 bg-primary">
+
+      {/* Responsive Category Bar */}
+      <div
+        className="bg-primary py-2 px-2 overflow-auto d-flex gap-3"
+        style={{ whiteSpace: "nowrap" }}
+      >
         {categories.map((category) => (
           <Link
             key={category._id}
             to={`/category/${category._id}`}
-            className="text-white text-decoration-none fw-semibold"
+            className="text-white text-decoration-none fw-semibold px-2"
+            style={{ flex: "0 0 auto" }}
           >
             {category.categoryName}
           </Link>

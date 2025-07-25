@@ -10,10 +10,13 @@ const Index = () => {
       <Header />
       <div className="container mt-4">
         <div className="row">
-          <div className="col-md-4">
+          {/* Sidebar: Mobile mein order-1, Desktop mein order-md-1 */}
+          <div className="col-12 col-md-4 order-1 order-md-1">
             <Sidebar />
           </div>
-          <div className="col-md-8">
+
+          {/* News: Mobile mein order-2, Desktop mein order-md-2 */}
+          <div className="col-12 col-md-8 order-2 order-md-2">
             <News />
           </div>
         </div>
