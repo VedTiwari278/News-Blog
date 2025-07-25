@@ -9,8 +9,8 @@ const Index = () => {
     <div
       className="Main-Container min-vh-100"
       style={{
-        background: "linear-gradient(to right, #c8e1ebff, #dbac8dff, #e1ecf1ff)",
-        color: "#ffffff",
+        background: "linear-gradient(to right, #585a5aff, #1d1b19ff, #373a3cff)",
+        color: "#494b4bff",
       }}
     >
       <Header />
