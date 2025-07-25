@@ -1,6 +1,7 @@
 import React from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaInstagram, FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
@@ -23,14 +24,20 @@ const Footer = () => {
                 </a>
               </li>
               <li>
-                <a href="/about" className="text-white text-decoration-none d-block">
+                <Link
+                  to="/about"
+                  className="text-white text-decoration-none d-block"
+                >
                   About
-                </a>
+                </Link>
               </li>
               <li>
-                <a href="/register" className="text-white text-decoration-none d-block">
+                <Link
+                  to="/register"
+                  className="text-white text-decoration-none d-block"
+                >
                   Be a Contributor
-                </a>
+                </Link>
               </li>
             </ul>
           </div>
