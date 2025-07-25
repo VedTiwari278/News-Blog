@@ -9,10 +9,10 @@ const UpdateUser = () => {
   const [Lastname, SetLastName] = useState("");
   const [username, setUserName] = useState("");
   const [Role, SetRole] = useState("");
+  const [updating, setUpdating] = useState(false); // new state
 
   const { id } = useParams();
 
-  // Get token from localStorage
   const token = localStorage.getItem("token");
 
   const fetchUser = async () => {
@@ -26,8 +26,6 @@ const UpdateUser = () => {
         }
       );
       const user = response.data.data;
-      // console.log("the data is", response.data.data);
-
       SetFirstName(user.firstName);
       SetLastName(user.lastName);
       setUserName(user.username);
@@ -44,6 +42,8 @@ const UpdateUser = () => {
 
   const handleUpdate = async (e) => {
     e.preventDefault();
+    setUpdating(true); // set loading to true
+
     try {
       const updatedUser = {
         FirstName: Firstname,
@@ -61,11 +61,14 @@ const UpdateUser = () => {
           },
         }
       );
+
       alert("✅ User updated successfully!");
       navigate("/admin/users");
     } catch (error) {
       console.error("Error updating user:", error);
       alert("❌ Failed to update user");
+    } finally {
+      setUpdating(false); // always reset after completion
     }
   };
 
@@ -94,7 +97,7 @@ const UpdateUser = () => {
         </div>
 
         <div className="mb-3">
-          <label>username</label>
+          <label>Username</label>
           <input
             type="text"
             className="form-control"
@@ -113,7 +116,9 @@ const UpdateUser = () => {
           />
         </div>
 
-        <button className="btn btn-outline-warning">Update User</button>
+        <button className="btn btn-outline-warning" disabled={updating}>
+          {updating ? "Updating..." : "Update User"}
+        </button>
       </form>
     </div>
   );
