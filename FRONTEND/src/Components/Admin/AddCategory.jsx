@@ -41,8 +41,8 @@ const AddCategory = () => {
     try {
       const res = await axios.post(
         "https://news-blog-abh6.vercel.app/admin/add-category",
+        { categoryName: name },
         {
-          categoryName: name,
           headers: {
             Authorization: `Bearer ${token}`,
           },

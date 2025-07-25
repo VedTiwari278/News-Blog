@@ -29,7 +29,7 @@ const Category = () => {
 
       setLoading(true); // Start loader
       const response = await axios.get(
-        "http://localhost:3000/admin/get-categories",
+        "https://news-blog-abh6.vercel.app/admin/get-categories",
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -52,11 +52,14 @@ const Category = () => {
     try {
       console.log("🪪 Token from localStorage:", token);
 
-      await axios.delete(`http://localhost:3000/admin/delete-category/${id}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      await axios.delete(
+        `https://news-blog-abh6.vercel.app/admin/delete-category/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       fetchAll(); // Refresh list
     } catch (error) {
       alert("Failed to delete category");

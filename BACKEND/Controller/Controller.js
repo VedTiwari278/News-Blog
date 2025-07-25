@@ -8,21 +8,20 @@ const path = require("path");
 const cloudinary = require("../config/cloudinary");
 // const Post = require("../models/Post");
 
-
-
+// const Post = require("../models/Post");
 
 exports.addpost = async (req, res) => {
   try {
     console.log("📦 Incoming Data:", req.body);
     console.log("🖼️ Uploaded File:", req.file);
 
-    const user = req.user; // From auth middleware
+    const user = req.user;
     const { title, description, category } = req.body;
 
     let imageUrl = "";
 
-    if (req.file) {
-      imageUrl = req.file.filename; // just filename, not full path
+    if (req.file && req.file.path) {
+      imageUrl = req.file.path; // ✅ Cloudinary gives the full URL in path
     }
 
     const newPost = new Post({
@@ -30,7 +29,7 @@ exports.addpost = async (req, res) => {
       description,
       author: user.id,
       category,
-      image: imageUrl, // store filename only
+      image: imageUrl,
     });
 
     await newPost.save();
@@ -47,11 +46,6 @@ exports.addpost = async (req, res) => {
     });
   }
 };
-
-
-
-
-
 
 exports.addCategory = async (req, res) => {
   // console.log(req.body);
@@ -275,10 +269,9 @@ exports.AllPostBYid = async (req, res) => {
   const id = req.params.id;
   // console.log(id);
 
-  const data = await Post.find({ category: id }).populate(
-    "category",
-    "categoryName"
-  );
+  const data = await Post.find({ category: id })
+    .populate("category", "categoryName")
+    .populate("author", "username");
 
   res.status(200).send({ data: data });
 };
@@ -299,7 +292,9 @@ exports.SearchTerm = async (req, res) => {
         { title: { $regex: term, $options: "i" } },
         { description: { $regex: term, $options: "i" } },
       ],
-    }).populate("category", "categoryName");
+    })
+      .populate("category", "categoryName")
+      .populate("author", "username");
 
     res.status(200).json({ success: true, data: results });
   } catch (error) {

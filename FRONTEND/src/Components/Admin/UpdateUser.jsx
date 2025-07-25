@@ -18,7 +18,7 @@ const UpdateUser = () => {
   const fetchUser = async () => {
     try {
       const response = await axios.get(
-        `http://localhost:3000/admin/get-user/${id}`,
+        `https://news-blog-abh6.vercel.app/admin/get-user/${id}`,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -51,7 +51,7 @@ const UpdateUser = () => {
       };
 
       const res = await axios.put(
-        `http://localhost:3000/admin/update-user/${id}`,
+        `https://news-blog-abh6.vercel.app/admin/update-user/${id}`,
         updatedUser,
         {
           headers: {

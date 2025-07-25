@@ -17,7 +17,7 @@ const AddPost = () => {
     const fetchCategories = async () => {
       try {
         const res = await axios.get(
-          "http://localhost:3000/admin/get-categories",
+          "https://news-blog-abh6.vercel.app/admin/get-categories",
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -52,7 +52,7 @@ const AddPost = () => {
     try {
       console.log("hello jo");
       const response = await axios.post(
-        "http://localhost:3000/admin/add-post/",
+        "https://news-blog-abh6.vercel.app/admin/add-post/",
         data,
         {
           headers: {

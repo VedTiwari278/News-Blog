@@ -13,7 +13,7 @@ const Updatecategory = () => {
     const fetchCategory = async () => {
       try {
         const response = await axios.get(
-          `http://localhost:3000/admin/edit-category/${id}`,
+          `https://news-blog-abh6.vercel.app/admin/edit-category/${id}`,
           {
             headers: {
               Authorization: `Bearer ${localStorage.getItem("token")}`,
@@ -37,7 +37,7 @@ const Updatecategory = () => {
     e.preventDefault();
     try {
       await axios.put(
-        `http://localhost:3000/admin/update-category/${id}`,
+        `https://news-blog-abh6.vercel.app/admin/update-category/${id}`,
         {
           categoryName: category.categoryName,
         },

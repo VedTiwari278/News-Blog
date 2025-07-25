@@ -13,9 +13,11 @@ const CategoryWise = () => {
       try {
         setLoading(true);
         const response = await axios.get(
-          `http://localhost:3000/getAllPostById/${id}`
+          `https://news-blog-abh6.vercel.app/getAllPostById/${id}`
         );
         if (response) {
+          console.log(response.data.data);
+
           setNews(response.data.data);
         }
       } catch (err) {
@@ -88,7 +90,7 @@ const CategoryWise = () => {
               >
                 {/* Left Image */}
                 <img
-                  src={`http://localhost:3000/uploads/${newsItem.image}`}
+                  src={newsItem.image}
                   alt="News"
                   style={{
                     width: "200px",

@@ -10,7 +10,10 @@ function Login() {
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/auth/login", data);
+      const res = await axios.post(
+        "https://news-blog-abh6.vercel.app/auth/login",
+        data
+      );
       localStorage.setItem("token", res.data.token);
       alert("Login Successful");
       navigate("/");
