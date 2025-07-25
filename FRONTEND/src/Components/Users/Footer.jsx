@@ -4,9 +4,9 @@ import { FaInstagram, FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 
 const Footer = () => {
   return (
-    <footer className="bg-dark text-white pt-4 pb-2 mt-5">
-      <div className="container text-center text-md-start">
-        <div className="row">
+    <footer className="bg-dark text-white pt-4 pb-3 mt-5">
+      <div className="container">
+        <div className="row text-center text-md-start">
           {/* Left: About/Name */}
           <div className="col-md-4 mb-4">
             <h5>Ved Tiwari</h5>
@@ -18,17 +18,17 @@ const Footer = () => {
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="/" className="text-white text-decoration-none">
+                <a href="/" className="text-white text-decoration-none d-block">
                   Home
                 </a>
               </li>
               <li>
-                <a href="/about" className="text-white text-decoration-none">
+                <a href="/about" className="text-white text-decoration-none d-block">
                   About
                 </a>
               </li>
               <li>
-                <a href="/register" className="text-white text-decoration-none">
+                <a href="/register" className="text-white text-decoration-none d-block">
                   Be a Contributor
                 </a>
               </li>
@@ -38,7 +38,7 @@ const Footer = () => {
           {/* Right: Social Links */}
           <div className="col-md-4 mb-4">
             <h5>Follow Me</h5>
-            <div className="d-flex gap-3 justify-content-center justify-content-md-start">
+            <div className="d-flex justify-content-center justify-content-md-start gap-4">
               <a
                 href="https://www.instagram.com/vedprakash_431/"
                 target="_blank"
@@ -72,6 +72,7 @@ const Footer = () => {
             </div>
           </div>
         </div>
+
         <hr className="bg-white" />
         <p className="text-center mb-0">Made with ❤️ by Ved Tiwari</p>
       </div>
