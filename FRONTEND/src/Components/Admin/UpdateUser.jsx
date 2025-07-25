@@ -26,10 +26,12 @@ const UpdateUser = () => {
         }
       );
       const user = response.data.data;
-      SetFirstName(user.FirstName);
-      SetLastName(user.LastName);
+      // console.log("the data is", response.data.data);
+
+      SetFirstName(user.firstName);
+      SetLastName(user.lastName);
       setUserName(user.username);
-      SetRole(user.Role);
+      SetRole(user.role);
     } catch (error) {
       console.error("Error fetching user:", error);
       alert("Failed to fetch user. Unauthorized or server error.");
