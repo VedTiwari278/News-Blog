@@ -57,10 +57,8 @@ const UpdatePost = () => {
       }
     };
 
-    setInterval(() => {
-      fetchCategories();
-      fetchPost();
-    }, 1000);
+    fetchCategories();
+    fetchPost();
   }, [id]);
 
   const handleUpdate = async (e) => {

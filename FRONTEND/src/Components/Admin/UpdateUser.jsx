@@ -37,9 +37,7 @@ const UpdateUser = () => {
   };
 
   useEffect(() => {
-    setInterval(() => {
-      fetchUser();
-    }, interval);
+    fetchUser();
   }, [id]);
 
   const handleUpdate = async (e) => {
