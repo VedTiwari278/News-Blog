@@ -21,7 +21,9 @@ const Sidebar = () => {
         console.error("Failed to fetch recent posts", err);
       }
     };
-    fetchRecentPosts();
+    setInterval(() => {
+      fetchRecentPosts();
+    }, 100);
   }, []);
 
   return (
