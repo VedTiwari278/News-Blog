@@ -83,7 +83,6 @@ exports.getCategories = async (req, res) => {
   res.status(200).send({ data });
 };
 
-
 exports.getPost = async (req, res) => {
   try {
     // console.log("Someone hit me");
@@ -113,8 +112,6 @@ exports.getPost = async (req, res) => {
     res.status(500).send({ error: "Internal server error" });
   }
 };
-
-
 
 exports.editCategory = async (req, res) => {
   const id = req.params.id;
@@ -291,13 +288,15 @@ exports.AllPost = async (req, res) => {
 
 exports.AllPostBYid = async (req, res) => {
   const id = req.params.id;
-  // console.log(id);
+  console.log(id);
 
   const data = await Post.find({ category: id })
     .populate("category", "categoryName")
     .populate("author", "username");
 
-  res.status(200).send({ data: data });
+  const categoryName = data.categoryName;
+
+  res.status(200).send({ data: data, categoryName: categoryName });
 };
 
 exports.getSingle = async (req, res) => {
