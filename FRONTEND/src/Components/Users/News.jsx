@@ -21,13 +21,18 @@ const News = () => {
         setLoading(false);
       }
     };
-    FetchNews();
+    setInterval(() => {
+      FetchNews();
+    }, 100);
   }, []);
 
   return (
     <div className="container my-4">
       {loading ? (
-        <div className="d-flex justify-content-center align-items-center" style={{ height: "50vh" }}>
+        <div
+          className="d-flex justify-content-center align-items-center"
+          style={{ height: "50vh" }}
+        >
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
