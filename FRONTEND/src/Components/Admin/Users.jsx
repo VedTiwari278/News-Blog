@@ -52,9 +52,7 @@ const Users = () => {
           },
         }
       );
-      setInterval(() => {
-        fetchUser();
-      }, 100);
+      fetchUser();
     } catch (error) {
       alert("Failed to delete User");
       console.error(error);
