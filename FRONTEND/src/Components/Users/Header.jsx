@@ -20,7 +20,7 @@ const Header = () => {
     };
     setInterval(() => {
       fetchHeader();
-    }, 1000);
+    }, 100);
   }, []);
 
   return (
