@@ -4,7 +4,6 @@ const DB_PATH =
 const express = require("express");
 const mongoose = require("mongoose");
 const app = express();
-const path = require("path");
 const cors = require("cors");
 const router = require("./Router/Route");
 const authMiddleware = require("./middleware/authMiddleware");
@@ -16,16 +15,6 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 // ✅ Auth route
-
-// const express = require("express");
-// const app = express();
-
-// Serve static Vite build from dist folder
-app.use(express.static(path.join(__dirname, "../FRONTEND/dist")));
-
-app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "../FRONTEND/dist", "index.html"));
-});
 
 app.use("/uploads", express.static("uploads"));
 
