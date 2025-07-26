@@ -17,7 +17,6 @@ const CategoryWise = () => {
         );
         if (response) {
           console.log(response.data.data);
-          const categoryName = response.categoryName;
 
           setNews(response.data.data);
         }
@@ -30,8 +29,8 @@ const CategoryWise = () => {
     FetchNews();
   }, [id]);
 
-  // const categoryName =
-  //   news.length > 0 ? news[0].category?.categoryName : "Unknown Category";
+  const categoryName =
+    news.length > 0 ? news[0].category?.categoryName : "Unknown Category";
 
   return (
     <div className="container mt-4">
