@@ -33,7 +33,9 @@ const Post = () => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     } else {
-      fetchPost();
+      setInterval(() => {
+        fetchPost();
+      }, 100);
     }
   }, []);
 
@@ -74,7 +76,9 @@ const Post = () => {
           <p>Loading posts...</p>
         </div>
       ) : (
-        <div className="table-responsive"> {/* ✅ Responsive wrapper */}
+        <div className="table-responsive">
+          {" "}
+          {/* ✅ Responsive wrapper */}
           <table className="table table-bordered table-striped table-hover shadow">
             <thead className="table-dark">
               <tr>
