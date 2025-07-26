@@ -1,22 +1,10 @@
+
+
 {
-  "builds": [
+  "rewrites": [
     {
-      "src": "Server.js",
-      "use": "@vercel/node"
-    },
-    {
-      "src": "FRONTEND/package.json",
-      "use": "@vercel/static-build"
-    }
-  ],
-  "routes": [
-    {
-      "src": "/(.*)",
-      "dest": "/Server.js"
-    },
-    {
-      "src": "/(.*)",
-      "dest": "/FRONTEND/dist/index.html"
+      "source": "/(.*)",
+      "destination": "/"
     }
   ]
 }
