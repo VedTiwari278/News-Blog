@@ -18,8 +18,9 @@ const Header = () => {
         console.error("❌ Error fetching categories:", error);
       }
     };
-
-    fetchHeader();
+    setInterval(() => {
+      fetchHeader();
+    }, 1000);
   }, []);
 
   return (

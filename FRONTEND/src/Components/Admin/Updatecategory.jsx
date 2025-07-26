@@ -29,9 +29,8 @@ const Updatecategory = () => {
         );
       }
     };
-    setInterval(() => {
-      fetchCategory();
-    }, 1000);
+
+    fetchCategory();
   }, [id]);
 
   const handleSubmit = async (e) => {
