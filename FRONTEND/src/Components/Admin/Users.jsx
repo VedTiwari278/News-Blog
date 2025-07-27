@@ -64,6 +64,9 @@ const Users = () => {
       <div className="d-flex justify-content-between align-items-center mb-4 flex-wrap">
         <h3 className="text-primary fw-bold">All USERS</h3>
         {/* Optional Add User Button */}
+        <Link to="/" className="btn btn-outline-primary mt-4 rounded-pill px-4">
+          ⬅ Back to Home
+        </Link>
       </div>
 
       {loading ? (

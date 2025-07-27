@@ -66,6 +66,10 @@ const Post = () => {
         <Link to="/admin/add-post" className="btn btn-success mt-2 mt-md-0">
           + ADD POST
         </Link>
+
+        <Link to="/" className="btn btn-outline-primary mt-4 rounded-pill px-4">
+          ⬅ Back to Home
+        </Link>
       </div>
 
       {loading ? (
@@ -74,7 +78,9 @@ const Post = () => {
           <p>Loading posts...</p>
         </div>
       ) : (
-        <div className="table-responsive"> {/* ✅ Responsive wrapper */}
+        <div className="table-responsive">
+          {" "}
+          {/* ✅ Responsive wrapper */}
           <table className="table table-bordered table-striped table-hover shadow">
             <thead className="table-dark">
               <tr>
