@@ -127,6 +127,9 @@ const Category = () => {
           </tbody>
         </table>
       )}
+      <Link to="/" className="btn btn-outline-primary mt-4 rounded-pill px-4">
+        ⬅ Back to Home
+      </Link>
     </div>
   );
 };
