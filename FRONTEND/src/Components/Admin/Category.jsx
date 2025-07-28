@@ -23,12 +23,12 @@ const Category = () => {
 
   const fetchAll = async () => {
     try {
-      //     if (!token) {
-      //       navigate("/login");
-      //       return;
-      //     }
+          if (!token) {
+            navigate("/login");
+            return;
+          }
 
-      //     setLoading(true); // Start loader
+          setLoading(true); // Start loader
       //     const response = await axios.get(
       //       "https://news-blog-abh6.vercel.app/admin/get-categories",
       //       {
