@@ -7,12 +7,19 @@ export const CategoryProvider = ({ children }) => {
 
   const fetchCategories = async () => {
     try {
-      const res = await fetch("https://news-blog-abh6.vercel.app/admin/get-categories");
-      const data = await res.json();
-      setCategories(data.data); // Make sure to access .data properly
-    } catch (err) {
-      console.error("Error fetching categories:", err);
-    }
+      const res = await axios.get(
+          "https://news-blog-abh6.vercel.app/admin/get-categories",
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
+        setCategories(res.data.data);
+      } catch (error) {
+        console.error("❌ Error fetching categories:", error);
+      }
+    
   };
 
   useEffect(() => {
