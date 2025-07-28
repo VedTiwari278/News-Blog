@@ -1,5 +1,5 @@
 import { createContext, useState, useEffect } from "react";
-
+import axios from "axios";
 export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
