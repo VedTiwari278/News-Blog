@@ -18,9 +18,7 @@ const Header = () => {
         console.error("❌ Error fetching categories:", error);
       }
     };
-   const intervalId= setInterval(() => {
-      fetchHeader();
-    }, 100);
+    fetchHeader();
     return () => {
       clearInterval(intervalId); // Cleanup: stop the interval
       console.log("Component unmounted. Interval cleared.");
@@ -44,16 +42,17 @@ const Header = () => {
         className="bg-primary py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
         style={{ whiteSpace: "nowrap" }}
       >
-        {categories && categories.map((category) => (
-          <Link
-            key={category._id}
-            to={`/category/${category._id}`}
-            className="text-white text-decoration-none fw-semibold px-2"
-            style={{ flex: "0 0 auto" }}
-          >
-            {category.categoryName}
-          </Link>
-        ))}
+        {categories &&
+          categories.map((category) => (
+            <Link
+              key={category._id}
+              to={`/category/${category._id}`}
+              className="text-white text-decoration-none fw-semibold px-2"
+              style={{ flex: "0 0 auto" }}
+            >
+              {category.categoryName}
+            </Link>
+          ))}
       </div>
     </>
   );
