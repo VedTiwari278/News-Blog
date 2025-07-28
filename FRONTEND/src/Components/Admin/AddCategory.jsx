@@ -50,7 +50,8 @@ const AddCategory = () => {
           },
         }
       );
-
+      window.dispatchEvent("updatecategory");
+      console.log("sjfkls");
       categoryName.current.value = "";
 
       // Refresh categories

@@ -19,6 +19,10 @@ const Header = () => {
       }
     };
     fetchHeader();
+    const updateheader=()=>{
+      fetchHeader();
+    }
+    window.addEventListener("updatecategory",updateheader);
   }, []);
 
   return (
