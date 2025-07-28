@@ -13,6 +13,7 @@ const Category = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { categories, fetchCategories } = useContext(CategoryContext);
+  alldata=categories;
 
   let userData = {};
   if (token) {
