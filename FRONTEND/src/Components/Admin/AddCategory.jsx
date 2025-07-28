@@ -5,9 +5,9 @@ import axios from "axios";
 const AddCategory = () => {
   const categoryName = useRef();
   const token = localStorage.getItem("token");
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [submitting, setSubmitting] = useState(false); // ⬅️ Track submission state
-  // const {setCategories}=useContext(CategoryContext);
+  const {setCategories}=useContext(CategoryContext);
 
   useEffect(() => {
     const fetchCategories = async () => {
