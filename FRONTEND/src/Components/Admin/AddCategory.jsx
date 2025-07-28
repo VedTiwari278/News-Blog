@@ -25,7 +25,8 @@ const AddCategory = () => {
         console.error("❌ Error fetching categories:", error);
       }
     };
-
+console.log("first fetch");
+alert("fetch  first");
     fetchCategories();
   }, []);
 
@@ -92,9 +93,10 @@ console.log("sub4");
             placeholder="Enter category name"
           />
         </div>
-        <button type="submit" className="btn btn-success" disabled={submitting}>
+        {/* <button type="submit" className="btn btn-success" disabled={submitting}>
           {submitting ? "Submitting..." : "Add Category"}
-        </button>
+        </button> */}
+        <button type="submit">add</button>
       </form>
 
       <h4 className="fw-bold">All Available Categories</h4>
