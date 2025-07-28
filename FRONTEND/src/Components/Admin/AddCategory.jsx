@@ -37,10 +37,11 @@ const AddCategory = () => {
       alert("Please enter a category name");
       return;
     }
-
+console.log("sub");
     setSubmitting(true); // ⬅️ Show loading state
-
+console.log("sub1");
     try {
+      console.log("sub2");
       await axios.post(
         "https://news-blog-abh6.vercel.app/admin/add-category",
         { categoryName: name },
@@ -50,10 +51,10 @@ const AddCategory = () => {
           },
         }
       );
-      
+      console.log("sub3");
       
       categoryName.current.value = "";
-
+console.log("sub4");
       // Refresh categories
       const updated = await axios.get(
         "https://news-blog-abh6.vercel.app/admin/get-categories",
@@ -63,8 +64,8 @@ const AddCategory = () => {
           },
         }
       );
-      console.log("sjfkls",updated);
-      window.dispatchEvent(new Event("updatecategory"));
+      console.log("sjfkls5",updated);
+      // window.dispatchEvent(new Event("updatecategory"));
       setCategories(updated.data.data);
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
