@@ -63,7 +63,7 @@ const AddCategory = () => {
           },
         }
       );
-      console.log("sjfkls");
+      console.log("sjfkls",updated);
       window.dispatchEvent("updatecategory");
       setCategories(updated.data.data);
     } catch (error) {
