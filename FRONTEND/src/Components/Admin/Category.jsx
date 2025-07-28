@@ -1,10 +1,11 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { jwtDecode } from "jwt-decode";
+import { CategoryContext } from "../contex/CategoryContext";
 
 const Category = () => {
   const [alldata, setAllData] = useState([]);
@@ -28,7 +29,7 @@ const Category = () => {
         return;
       }
 
-      setLoading(true); // Start loader
+      //     setLoading(true); // Start loader
       //     const response = await axios.get(
       //       "https://news-blog-abh6.vercel.app/admin/get-categories",
       //       {
