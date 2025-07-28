@@ -5,10 +5,8 @@ import {CategoryContext} from '../contex/CategoryContext';
 const AddCategory = () => {
   const categoryName = useRef();
   const token = localStorage.getItem("token");
-  // const [categories, setCategories] = useState([]);
   const [submitting, setSubmitting] = useState(false); // ⬅️ Track submission state
-  // const {setCategories}=useContext(CategoryContext);
- const { fetchCategories } = useContext(CategoryContext);
+  const { categories ,fetchCategories} = useContext(CategoryContext);
   useEffect(() => {
     const fetchCategories = async () => {
       try {
@@ -60,7 +58,6 @@ const AddCategory = () => {
         }
       );
       fetchCategories(); 
-      // setCategories(updated.data.data);
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
       console.error("❌ Error:", error);
