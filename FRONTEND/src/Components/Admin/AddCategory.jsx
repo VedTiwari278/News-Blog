@@ -63,6 +63,8 @@ const AddCategory = () => {
         }
       );
       setCategories(updated.data.data);
+      console.log("aa gya");
+      window.dispatchEvent("dataupdate");
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
       console.error("❌ Error:", error);

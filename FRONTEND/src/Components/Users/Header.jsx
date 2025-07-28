@@ -18,9 +18,11 @@ const Header = () => {
         console.error("❌ Error fetching categories:", error);
       }
     };
-    setInterval(() => {
+    fetchHeader();
+    const updatedate = () => {
       fetchHeader();
-    }, 100);
+    };
+    window.addEventListener("dataupdate", updatedate);
   }, []);
 
   return (

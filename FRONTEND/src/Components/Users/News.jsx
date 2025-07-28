@@ -21,9 +21,7 @@ const News = () => {
         setLoading(false);
       }
     };
-    setInterval(() => {
-      FetchNews();
-    }, 100);
+    FetchNews();
   }, []);
 
   return (
