@@ -1,7 +1,7 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-
+import {CategoryContext} from '../contex/CategoryContext';
 const AddCategory = () => {
   const categoryName = useRef();
   const token = localStorage.getItem("token");
