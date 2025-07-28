@@ -6,23 +6,30 @@ import { Link } from "react-router-dom";
 const Header = () => {
   const [categories, setCategories] = useState([]);
 
-  useEffect(() => {
-    const fetchHeader = async () => {
-      try {
-        const response = await axios.get(
-          "https://news-blog-abh6.vercel.app/get-category"
-        );
-        console.log("📦 Categories:", response.data);
-        setCategories(response.data.data);
-      } catch (error) {
-        console.error("❌ Error fetching categories:", error);
-      }
-    };
-    fetchHeader();
-    const updateheader=()=>{
-      fetchHeader();
+  const fetchHeader = async () => {
+    try {
+      const response = await axios.get(
+        "https://news-blog-abh6.vercel.app/get-category"
+      );
+      console.log("📦 Categories:", response.data);
+      setCategories(response.data.data);
+    } catch (error) {
+      console.error("❌ Error fetching categories:", error);
     }
-    window.addEventListener("updatecategory",updateheader);
+  };
+
+  useEffect(() => {
+    fetchHeader();
+
+    const updateheader = () => {
+      fetchHeader();
+    };
+
+    window.addEventListener("updatecategory", updateheader);
+
+    return () => {
+      window.removeEventListener("updatecategory", updateheader);
+    };
   }, []);
 
   return (

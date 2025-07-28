@@ -66,8 +66,8 @@ console.log("sub4");
         }
       );
       console.log("sjfkls5",updated);
-      alert("categroy add");
-      // window.dispatchEvent(new Event("updatecategory"));
+      alert("categroy add",updated);
+      window.dispatchEvent(new Event("updatecategory"));
       setCategories(updated.data.data);
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
