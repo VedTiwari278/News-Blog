@@ -9,7 +9,6 @@ const AddCategory = () => {
   const [submitting, setSubmitting] = useState(false); // ⬅️ Track submission state
   const {setCategories}=useContext(CategoryContext);
 
-  // Fetch categories on component mount
   useEffect(() => {
     const fetchCategories = async () => {
       try {
