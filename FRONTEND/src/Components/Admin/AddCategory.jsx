@@ -64,7 +64,7 @@ const AddCategory = () => {
         }
       );
       console.log("sjfkls",updated);
-      window.dispatchEvent("updatecategory");
+      window.dispatchEvent(new Event("updatecategory"));
       setCategories(updated.data.data);
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
