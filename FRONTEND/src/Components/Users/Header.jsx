@@ -19,10 +19,6 @@ const Header = () => {
       }
     };
     fetchHeader();
-    return () => {
-      clearInterval(intervalId); // Cleanup: stop the interval
-      console.log("Component unmounted. Interval cleared.");
-    };
   }, []);
 
   return (
