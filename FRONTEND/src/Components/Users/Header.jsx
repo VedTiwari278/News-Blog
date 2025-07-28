@@ -6,23 +6,7 @@ import {CategoryContext} from '../contex/CategoryContext'
 
 const Header = () => {
   // const [categories, setCategories] = useState([]);
-const{categories,setCategories,}=useContext(CategoryContext);
-  useEffect(() => {
-    const fetchHeader = async () => {
-      try {
-        const response = await axios.get(
-          "https://news-blog-abh6.vercel.app/get-category"
-        );
-        console.log("📦 Categories:", response.data);
-        setCategories(response.data.data);
-      } catch (error) {
-        console.error("❌ Error fetching categories:", error);
-      }
-    };
-      fetchHeader();
-    
-  }, []);
-
+const { categories } = useContext(CategoryContext);
   return (
     <>
       {/* Logo Section */}
