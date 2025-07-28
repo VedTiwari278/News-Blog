@@ -1,9 +1,6 @@
 import { createContext, useState, useEffect } from "react";
 
-export const CategoryContext = createContext({
-  categories:[],
-  setCategories:()=>{}
-});
+export const CategoryContext = createContext();
 
 export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
