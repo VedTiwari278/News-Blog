@@ -13,7 +13,6 @@ const Category = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
   const { categories, fetchCategories } = useContext(CategoryContext);
-  alldata=categories;
 
   let userData = {};
   if (token) {
@@ -96,8 +95,8 @@ const Category = () => {
             </tr>
           </thead>
           <tbody>
-            {alldata.length > 0 ? (
-              alldata.map((category, index) => (
+            {categories.length > 0 ? (
+              categories.map((category, index) => (
                 <tr key={category._id}>
                   <td>{index + 1}</td>
                   <td>
