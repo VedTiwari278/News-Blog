@@ -38,7 +38,7 @@ const Header = () => {
         className="bg-primary py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
         style={{ whiteSpace: "nowrap" }}
       >
-        {categories.map((category) => (
+        {/* {categories.map((category) => (
           <Link
             key={category._id}
             to={`/category/${category._id}`}
@@ -47,7 +47,7 @@ const Header = () => {
           >
             {category.categoryName}
           </Link>
-        ))}
+        ))} */}
       </div>
     </>
   );
