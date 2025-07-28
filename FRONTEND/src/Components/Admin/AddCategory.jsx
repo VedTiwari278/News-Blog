@@ -1,12 +1,13 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 
 const AddCategory = () => {
   const categoryName = useRef();
   const token = localStorage.getItem("token");
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [submitting, setSubmitting] = useState(false); // ⬅️ Track submission state
+  const {setCategories}=useContext(CategoryContext);
 
   // Fetch categories on component mount
   useEffect(() => {
@@ -25,8 +26,6 @@ const AddCategory = () => {
         console.error("❌ Error fetching categories:", error);
       }
     };
-console.log("first fetch");
-alert("fetch  first");
     fetchCategories();
   }, []);
 
@@ -38,9 +37,7 @@ alert("fetch  first");
       alert("Please enter a category name");
       return;
     }
-console.log("sub");
     setSubmitting(true); // ⬅️ Show loading state
-console.log("sub1");
     try {
       console.log("sub2");
       await axios.post(
@@ -52,10 +49,8 @@ console.log("sub1");
           },
         }
       );
-      console.log("sub3");
       
       categoryName.current.value = "";
-console.log("sub4");
       // Refresh categories
       const updated = await axios.get(
         "https://news-blog-abh6.vercel.app/admin/get-categories",
@@ -65,9 +60,7 @@ console.log("sub4");
           },
         }
       );
-      console.log("sjfkls5",updated);
-      alert("categroy add");
-      window.dispatchEvent(new Event("updatecategory"));
+     
       setCategories(updated.data.data);
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
@@ -94,10 +87,9 @@ console.log("sub4");
             placeholder="Enter category name"
           />
         </div>
-        {/* <button type="submit" className="btn btn-success" disabled={submitting}>
+         <button type="submit" className="btn btn-success" disabled={submitting}>
           {submitting ? "Submitting..." : "Add Category"}
-        </button> */}
-        <button type="submit">add</button>
+        </button> 
       </form>
 
       <h4 className="fw-bold">All Available Categories</h4>

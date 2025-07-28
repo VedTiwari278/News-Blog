@@ -26,11 +26,13 @@ import CategoryWise from "./Components/Users/CategoryWise";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
 import About from "./Components/Users/About";
+import {CategoryProvider} from './Components/contex/CategoryContext'
 // const About = () => <h2 className="text-center mt-5">About Page</h2>;
 const Contact = () => <h2 className="text-center mt-5">Contact Page</h2>;
 
 const App = () => {
   return (
+    <CategoryProvider>
     <Router>
       <NavBar></NavBar>
       <Routes>
@@ -63,6 +65,7 @@ const App = () => {
       </Routes>
       <Footer></Footer>
     </Router>
+    </CategoryProvider>
   );
 };
 
