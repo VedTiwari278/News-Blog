@@ -11,6 +11,7 @@ const Category = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const { categories, fetchCategories } = useContext(CategoryContext);
 
   let userData = {};
   if (token) {
@@ -22,21 +23,22 @@ const Category = () => {
 
   const fetchAll = async () => {
     try {
-      if (!token) {
-        navigate("/login");
-        return;
-      }
+      //     if (!token) {
+      //       navigate("/login");
+      //       return;
+      //     }
 
-      setLoading(true); // Start loader
-      const response = await axios.get(
-        "https://news-blog-abh6.vercel.app/admin/get-categories",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-      setAllData(response.data.data);
+      //     setLoading(true); // Start loader
+      //     const response = await axios.get(
+      //       "https://news-blog-abh6.vercel.app/admin/get-categories",
+      //       {
+      //         headers: {
+      //           Authorization: `Bearer ${token}`,
+      //         },
+      //       }
+      //     );
+      //     setAllData(response.data.data);
+      fetchCategories();
     } catch (error) {
       console.error("❌ Error fetching categories:", error);
     } finally {

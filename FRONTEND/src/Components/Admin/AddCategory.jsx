@@ -49,14 +49,14 @@ const AddCategory = () => {
       
       categoryName.current.value = "";
       // Refresh categories
-      const updated = await axios.get(
-        "https://news-blog-abh6.vercel.app/admin/get-categories",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      // const updated = await axios.get(
+      //   "https://news-blog-abh6.vercel.app/admin/get-categories",
+      //   {
+      //     headers: {
+      //       Authorization: `Bearer ${token}`,
+      //     },
+      //   }
+      // );
       fetchCategories(); 
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
