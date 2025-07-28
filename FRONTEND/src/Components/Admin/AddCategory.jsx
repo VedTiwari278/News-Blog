@@ -50,8 +50,8 @@ const AddCategory = () => {
           },
         }
       );
-      window.dispatchEvent("updatecategory");
-      console.log("sjfkls");
+      
+      
       categoryName.current.value = "";
 
       // Refresh categories
@@ -63,6 +63,8 @@ const AddCategory = () => {
           },
         }
       );
+      console.log("sjfkls");
+      window.dispatchEvent("updatecategory");
       setCategories(updated.data.data);
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
