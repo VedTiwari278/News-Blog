@@ -9,7 +9,7 @@ const Header = () => {
 const { categories ,fetchCategories} = useContext(CategoryContext);
 useEffect(()=>{
   fetchCategories(); 
-})
+},[])
   return (
     <>
       {/* Logo Section */}
