@@ -18,19 +18,13 @@ const Header = () => {
     }
   };
 
-  useEffect(() => {
-    fetchHeader();
+  
 
     const updateheader = () => {
       fetchHeader();
     };
 
     window.addEventListener("updatecategory", updateheader);
-
-    return () => {
-      window.removeEventListener("updatecategory", updateheader);
-    };
-  }, []);
 
   return (
     <>
