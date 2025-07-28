@@ -23,7 +23,7 @@ const AddCategory = () => {
         console.error("❌ Error fetching categories:", error);
       }
     };
-    fetchCategories();
+    // fetchCategories();
   }, []);
 
   const handleSubmit = async (e) => {

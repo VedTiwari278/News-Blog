@@ -5,7 +5,6 @@ import { Link } from "react-router-dom";
 import {CategoryContext} from '../contex/CategoryContext'
 
 const Header = () => {
-  // const [categories, setCategories] = useState([]);
 const { categories ,fetchCategories} = useContext(CategoryContext);
 useEffect(()=>{
   fetchCategories(); 
