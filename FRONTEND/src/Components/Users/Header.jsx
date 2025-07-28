@@ -22,6 +22,7 @@ const Header = () => {
 
     const updateheader = () => {
       fetchHeader();
+      alert("dispech");
     };
 
     window.addEventListener("updatecategory", updateheader);
