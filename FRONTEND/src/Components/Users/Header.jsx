@@ -18,11 +18,13 @@ const Header = () => {
         console.error("❌ Error fetching categories:", error);
       }
     };
-    fetchHeader();
-    const updatedate = () => {
+   const intervalId= setInterval(() => {
       fetchHeader();
+    }, 100);
+    return () => {
+      clearInterval(intervalId); // Cleanup: stop the interval
+      console.log("Component unmounted. Interval cleared.");
     };
-    window.addEventListener("dataupdate", updatedate);
   }, []);
 
   return (

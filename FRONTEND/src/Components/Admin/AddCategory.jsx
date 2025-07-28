@@ -50,8 +50,7 @@ const AddCategory = () => {
           },
         }
       );
-      console.log("aa gya");
-      window.dispatchEvent("dataupdate");
+
       categoryName.current.value = "";
 
       // Refresh categories
