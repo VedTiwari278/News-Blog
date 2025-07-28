@@ -8,22 +8,22 @@ const AddCategory = () => {
   const [submitting, setSubmitting] = useState(false); // ⬅️ Track submission state
   const { categories ,fetchCategories} = useContext(CategoryContext);
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axios.get(
-          "https://news-blog-abh6.vercel.app/admin/get-categories",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        // setCategories(res.data.data);
-      } catch (error) {
-        console.error("❌ Error fetching categories:", error);
-      }
-    };
-    // fetchCategories();
+    // const fetchCategories = async () => {
+    //   try {
+    //     const res = await axios.get(
+    //       "https://news-blog-abh6.vercel.app/admin/get-categories",
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       }
+    //     );
+    //     // setCategories(res.data.data);
+    //   } catch (error) {
+    //     console.error("❌ Error fetching categories:", error);
+    //   }
+    // };
+    fetchCategories();
   }, []);
 
   const handleSubmit = async (e) => {
