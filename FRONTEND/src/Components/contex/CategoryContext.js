@@ -6,7 +6,7 @@ export const CategoryProvider = ({ children }) => {
   const [categories, setCategories] = useState([]);
 
   const fetchCategories = async () => {
-    const res = await fetch("http://localhost:5000/api/categories");
+    const res = await fetch("https://news-blog-abh6.vercel.app/admin/get-categories");
     const data = await res.json();
     setCategories(data);
   };
