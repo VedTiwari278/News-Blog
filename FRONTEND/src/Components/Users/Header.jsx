@@ -6,7 +6,10 @@ import {CategoryContext} from '../contex/CategoryContext'
 
 const Header = () => {
   // const [categories, setCategories] = useState([]);
-const { categories } = useContext(CategoryContext);
+const { categories ,fetchCategories} = useContext(CategoryContext);
+useEffect(()=>{
+  fetchCategories(); 
+})
   return (
     <>
       {/* Logo Section */}
