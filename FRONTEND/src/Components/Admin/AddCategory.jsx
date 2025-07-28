@@ -20,7 +20,7 @@ const AddCategory = () => {
             },
           }
         );
-        setCategories(res.data.data);
+        // setCategories(res.data.data);
       } catch (error) {
         console.error("❌ Error fetching categories:", error);
       }
