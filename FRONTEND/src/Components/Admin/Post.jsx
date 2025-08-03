@@ -1,39 +1,41 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
-
+import { NewsContext } from "../context/NewContext";
 const Post = () => {
-  const [post, setPost] = useState([]);
-  const [loading, setLoading] = useState(true);
-  const navigate = useNavigate();
-
-  const fetchPost = async () => {
-    try {
-      setLoading(true);
-      const response = await axios.get(
-        "https://news-blog-abh6.vercel.app/admin/get-posts",
-        {
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
-          },
-        }
-      );
-      setPost(response.data.data);
-    } catch (error) {
-      console.error("Error fetching posts:", error);
-    } finally {
-      setLoading(false);
-    }
-  };
+  // const [news, setNews] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const { news, setNews, loading,FetchNews } =
+    useContext(NewsContext);
+  // useEffect(() => {
+  //   const FetchNews = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://news-blog-abh6.vercel.app/getAllPost"
+  //       );
+  //       if (response) {
+  //         setNews(response.data.data);
+  //       }
+  //     } catch (err) {
+  //       console.error("No Posts Found", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   FetchNews();
+  // }, []);
+  useEffect(() => {
+    FetchNews();
+  }, [news]);
 
   useEffect(() => {
     if (!localStorage.getItem("token")) {
       navigate("/login");
     } else {
-      fetchPost();
+      FetchNews();
     }
   }, []);
 
@@ -52,7 +54,7 @@ const Post = () => {
           },
         }
       );
-      fetchPost();
+      FetchNews();
     } catch (error) {
       alert("Failed to delete post");
       console.error(error);
@@ -94,8 +96,8 @@ const Post = () => {
               </tr>
             </thead>
             <tbody>
-              {Array.isArray(post) && post.length > 0 ? (
-                post.map((post, index) => (
+              {Array.isArray(news) && news.length > 0 ? (
+                news.map((post, index) => (
                   <tr key={post._id || index}>
                     <td>{index + 1}</td>
                     <td>{post.title}</td>

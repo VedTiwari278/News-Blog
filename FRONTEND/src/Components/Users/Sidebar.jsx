@@ -1,28 +1,30 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import Saerch from "./Saerch";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { NewsContext } from "../context/NewContext";
 
 const Sidebar = () => {
-  const [recentPosts, setRecentPosts] = useState([]);
+  const { news, loading } = useContext(NewsContext);
+  // const [recentPosts, setRecentPosts] = useState([]);
 
-  useEffect(() => {
-    const fetchRecentPosts = async () => {
-      try {
-        const response = await axios.get(
-          "https://news-blog-abh6.vercel.app/getAllPost"
-        );
-        if (response?.data?.data) {
-          // Get the last 3 posts (you can change this logic as needed)
-          const latestPosts = response.data.data.slice(-5).reverse();
-          setRecentPosts(latestPosts);
-        }
-      } catch (err) {
-        console.error("Failed to fetch recent posts", err);
-      }
-    };
-    fetchRecentPosts();
-  }, []);
+  // useEffect(() => {
+  //   const fetchRecentPosts = async () => {
+  // try {
+  //   const response = await axios.get(
+  //     "https://news-blog-abh6.vercel.app/getAllPost"
+  //   );
+  //   if (response?.data?.data) {
+  //     // Get the last 3 posts (you can change this logic as needed)
+  const latestPosts = news.slice(-5).reverse();
+  // setRecentPosts(latestPosts);
+  // }
+  //   } catch (err) {
+  //     console.error("Failed to fetch recent posts", err);
+  //   }
+  // };
+  // fetchRecentPosts();
+  // }, []);
 
   return (
     <div
@@ -54,7 +56,7 @@ const Sidebar = () => {
         </h4>
 
         <div className="d-flex flex-column gap-3 mt-3">
-          {recentPosts.map((post) => (
+          {latestPosts.map((post) => (
             <div
               key={post._id}
               className="card shadow-sm flex-row"

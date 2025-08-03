@@ -1,12 +1,12 @@
 import React, { useRef, useEffect, useState, useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
-import {CategoryContext} from '../contex/CategoryContext';
+import { CategoryContext } from "../context/CategoryContext";
 const AddCategory = () => {
   const categoryName = useRef();
   const token = localStorage.getItem("token");
   const [submitting, setSubmitting] = useState(false); // ⬅️ Track submission state
-  const { categories ,fetchCategories} = useContext(CategoryContext);
+  const { categories, fetchCategories } = useContext(CategoryContext);
   useEffect(() => {
     // const fetchCategories = async () => {
     //   try {
@@ -46,7 +46,7 @@ const AddCategory = () => {
           },
         }
       );
-      
+
       categoryName.current.value = "";
       // Refresh categories
       // const updated = await axios.get(
@@ -57,7 +57,7 @@ const AddCategory = () => {
       //     },
       //   }
       // );
-      fetchCategories(); 
+      fetchCategories();
     } catch (error) {
       alert(error.response?.data?.message || "Something went wrong");
       console.error("❌ Error:", error);
@@ -83,9 +83,9 @@ const AddCategory = () => {
             placeholder="Enter category name"
           />
         </div>
-         <button type="submit" className="btn btn-success" disabled={submitting}>
+        <button type="submit" className="btn btn-success" disabled={submitting}>
           {submitting ? "Submitting..." : "Add Category"}
-        </button> 
+        </button>
       </form>
 
       <h4 className="fw-bold">All Available Categories</h4>

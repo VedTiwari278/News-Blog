@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import {CategoryContext} from '../contex/CategoryContext'
+import {CategoryContext} from '../context/CategoryContext'
 
 const Header = () => {
 const { categories ,fetchCategories} = useContext(CategoryContext);

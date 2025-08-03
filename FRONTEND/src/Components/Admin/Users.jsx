@@ -1,46 +1,67 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
 import { FaDeleteLeft } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
+const token = localStorage.getItem("token");
 import axios from "axios";
+import { UserContext } from "../context/UserContext";
 
 const Users = () => {
-  const [user, setUser] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [user, setUser] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const { setLoading, user, setUser, fetchUser, loading } =
+    useContext(UserContext);
   const navigate = useNavigate();
-  const token = localStorage.getItem("token");
 
-  useEffect(() => {
-    if (!token) {
-      navigate("/login");
-    } else {
-      fetchUser();
-    }
-  }, [token]);
-
-  const fetchUser = async () => {
+  const fetchAllUser = async () => {
     try {
-      setLoading(true);
-      const response = await axios.get(
-        "https://news-blog-abh6.vercel.app/admin/get-users",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
-
-      if (response.data && response.data.data) {
-        setUser(response.data.data);
+      if (!token) {
+        navigate("/login");
+        return;
       }
+      fetchUser();
     } catch (error) {
-      console.error("Error fetching users:", error);
-      navigate("/login");
+      console.log("Error in fetching users");
     } finally {
       setLoading(false);
     }
   };
+
+  useEffect(() => {
+    fetchAllUser();
+  }, []);
+
+  // useEffect(() => {
+  //   if (!token) {
+  //     navigate("/login");
+  //   } else {
+  //     fetchUser();
+  //   }
+  // }, [token]);
+
+  // const fetchUser = async () => {
+  // try {
+  //   setLoading(true);
+  //   const response = await axios.get(
+  //     "https://news-blog-abh6.vercel.app/admin/get-users",
+  //     {
+  //       headers: {
+  //         Authorization: `Bearer ${token}`,
+  //       },
+  //     }
+  //   );
+
+  //   if (response.data && response.data.data) {
+  //     setUser(response.data.data);
+  //   }
+  // } catch (error) {
+  //   console.error("Error fetching users:", error);
+  //   navigate("/login");
+  // } finally {
+  //   setLoading(false);
+  // }
+  // };
 
   const handleDelete = async (id) => {
     try {
@@ -52,7 +73,7 @@ const Users = () => {
           },
         }
       );
-      fetchUser();
+      fetchAllUser();
     } catch (error) {
       alert("Failed to delete User");
       console.error(error);

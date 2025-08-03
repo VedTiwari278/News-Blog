@@ -1,26 +1,31 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { NewsContext } from "../context/NewContext";
 
 const News = () => {
-  const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(true);
-
+  // const [news, setNews] = useState([]);
+  // const [loading, setLoading] = useState(true);
+  const { news, setNews, loading, setLoading, FetchNews } =
+    useContext(NewsContext);
+  // useEffect(() => {
+  //   const FetchNews = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://news-blog-abh6.vercel.app/getAllPost"
+  //       );
+  //       if (response) {
+  //         setNews(response.data.data);
+  //       }
+  //     } catch (err) {
+  //       console.error("No Posts Found", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   FetchNews();
+  // }, []);
   useEffect(() => {
-    const FetchNews = async () => {
-      try {
-        const response = await axios.get(
-          "https://news-blog-abh6.vercel.app/getAllPost"
-        );
-        if (response) {
-          setNews(response.data.data);
-        }
-      } catch (err) {
-        console.error("No Posts Found", err);
-      } finally {
-        setLoading(false);
-      }
-    };
     FetchNews();
   }, []);
 

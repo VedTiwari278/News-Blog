@@ -1,36 +1,49 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Sidebar from "./Sidebar";
+import { NewsContext } from "../context/NewContext";
 
 const CategoryWise = () => {
-  const [news, setNews] = useState([]);
-  const [loading, setLoading] = useState(true);
+  // const [news, setNews] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const { id } = useParams();
 
-  useEffect(() => {
-    const FetchNews = async () => {
-      try {
-        setLoading(true);
-        const response = await axios.get(
-          `https://news-blog-abh6.vercel.app/getAllPostById/${id}`
-        );
-        if (response) {
-          console.log(response.data.data);
+  const { news, setNews, loading } = useContext(NewsContext);
+  const [FilteredNews, setFilterNews] = useState([]);
 
-          setNews(response.data.data);
-        }
-      } catch (err) {
-        console.error("No Posts Found", err);
-      } finally {
-        setLoading(false);
-      }
-    };
-    FetchNews();
-  }, [id]);
+  useEffect(() => {
+    const filtered = news.filter((item) => item.category._id === id);
+    setFilterNews(filtered);
+  }, [news, id]);
+
+  // console.log("By ID :", FilterNews);
+
+  // useEffect(() => {
+  //   const FetchNews = async () => {
+  //     try {
+  //       setLoading(true);
+  //       const response = await axios.get(
+  //         `https://news-blog-abh6.vercel.app/getAllPostById/${id}`
+  //       );
+  //       if (response) {
+  //         console.log(response.data.data);
+
+  //         setNews(response.data.data);
+  //       }
+  //     } catch (err) {
+  //       console.error("No Posts Found", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   FetchNews();
+  // }, [id]);
 
   const categoryName =
-    news.length > 0 ? news[0].category?.categoryName : "Unknown Category";
+    FilteredNews.length > 0
+      ? FilteredNews[0].category?.categoryName
+      : "Unknown Category";
 
   return (
     <div className="container mt-4">
@@ -60,7 +73,7 @@ const CategoryWise = () => {
                 <p className="mt-3">Loading posts...</p>
               </div>
             </div>
-          ) : news.length === 0 ? (
+          ) : FilteredNews.length === 0 ? (
             <div
               className="d-flex justify-content-center align-items-center w-100"
               style={{ minHeight: "60vh" }}
@@ -76,7 +89,7 @@ const CategoryWise = () => {
               </div>
             </div>
           ) : (
-            news.map((newsItem) => (
+            FilteredNews.map((newsItem) => (
               <div
                 className="card shadow-sm flex-row mb-3"
                 style={{

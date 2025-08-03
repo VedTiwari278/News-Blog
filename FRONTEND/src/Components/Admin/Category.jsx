@@ -5,7 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { jwtDecode } from "jwt-decode";
-import { CategoryContext } from "../contex/CategoryContext";
+import { CategoryContext } from "../context/CategoryContext";
 
 const Category = () => {
   const [alldata, setAllData] = useState([]);

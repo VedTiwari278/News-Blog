@@ -1,26 +1,19 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { NewsContext } from "../context/NewContext";
 
 const Single = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
+  const { news } = useContext(NewsContext);
+  // console.log(news);
 
   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const response = await axios.get(
-          `https://news-blog-abh6.vercel.app/getSingle/${id}`
-        );
-        setData(response.data.data);
-      } catch (error) {
-        console.error("Error fetching single post:", error);
-      }
-    };
-
-    fetchData();
-  }, [id]);
+    const matchedItem = news.find((item) => item._id === id);
+    setData(matchedItem);
+  }, [id, news]);
 
   return (
     <div className="container my-5">
