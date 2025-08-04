@@ -8,8 +8,7 @@ import { NewsContext } from "../context/NewContext";
 const Post = () => {
   // const [news, setNews] = useState([]);
   // const [loading, setLoading] = useState(true);
-  const { news, setNews, loading,FetchNews } =
-    useContext(NewsContext);
+  const { news, setNews, loading, FetchNews } = useContext(NewsContext);
   // useEffect(() => {
   //   const FetchNews = async () => {
   //     try {

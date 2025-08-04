@@ -15,12 +15,12 @@ const Category = () => {
   const { categories, fetchCategories } = useContext(CategoryContext);
 
   let userData = {};
-  if (token) {
-    userData = jwtDecode(token);
-    console.log("👤 Decoded User Data:", userData);
-    console.log("🆔 User ID:", userData.id);
-    console.log("User Name:", userData.name);
-  }
+  // if (token) {
+  //   userData = jwtDecode(token);
+  //   console.log("👤 Decoded User Data:", userData);
+  //   console.log("🆔 User ID:", userData.id);
+  //   console.log("User Name:", userData.name);
+  // }
 
   const fetchAll = async () => {
     try {

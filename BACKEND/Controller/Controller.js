@@ -83,7 +83,6 @@ exports.getCategories = async (req, res) => {
   res.status(200).send({ data });
 };
 
-
 exports.getPost = async (req, res) => {
   try {
     // console.log("Someone hit me");
@@ -113,8 +112,6 @@ exports.getPost = async (req, res) => {
     res.status(500).send({ error: "Internal server error" });
   }
 };
-
-
 
 exports.editCategory = async (req, res) => {
   const id = req.params.id;
@@ -164,7 +161,7 @@ exports.updateCategory = async (req, res) => {
 exports.deleteCategory = async (req, res) => {
   const id = req.params.id;
   // console.log(id);
-
+  await Post.deleteMany({ category: id });
   const data = await Category.findByIdAndDelete(id);
   res.status(200).send({ data: data });
 };
@@ -202,6 +199,7 @@ exports.deletePost = async (req, res) => {
 exports.deleteUser = async (req, res) => {
   const id = req.params.id;
   // console.log(id);
+  await Post.deleteMany({ author: id });
   const data = await User.findByIdAndDelete(id);
   res.status(200).send({ data: data });
 };

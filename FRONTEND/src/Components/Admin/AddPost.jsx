@@ -1,6 +1,8 @@
-import React, { useRef, useEffect, useState } from "react";
+import React, { useRef, useEffect, useState, useContext } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { NewsContext } from "../context/NewContext";
+import { CategoryContext } from "../context/CategoryContext";
 
 const AddPost = () => {
   const navigate = useNavigate();
@@ -11,27 +13,29 @@ const AddPost = () => {
   const categoryRef = useRef();
   const imageRef = useRef();
 
-  const [categories, setCategories] = useState([]);
+  // const [categories, setCategories] = useState([]);
   const [submitting, setSubmitting] = useState(false); // 🟡 Loader state
+  const { news, setNews, FetchNews } = useContext(NewsContext);
+  const { categories } = useContext(CategoryContext);
 
   useEffect(() => {
-    const fetchCategories = async () => {
-      try {
-        const res = await axios.get(
-          "https://news-blog-abh6.vercel.app/admin/get-categories",
-          {
-            headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          }
-        );
-        setCategories(res.data.data);
-      } catch (err) {
-        console.error("❌ Error fetching categories:", err);
-      }
-    };
+    // const fetchCategories = async () => {
+    //   try {
+    //     const res = await axios.get(
+    //       "https://news-blog-abh6.vercel.app/admin/get-categories",
+    //       {
+    //         headers: {
+    //           Authorization: `Bearer ${token}`,
+    //         },
+    //       }
+    //     );
+    //     setCategories(res.data.data);
+    //   } catch (err) {
+    //     console.error("❌ Error fetching categories:", err);
+    //   }
+    // };
 
-    fetchCategories();
+    FetchNews();
   }, []);
 
   const handleSubmit = async (e) => {
@@ -55,6 +59,7 @@ const AddPost = () => {
           },
         }
       );
+      FetchNews();
 
       console.log("✅ Post Submitted:", response.data.message);
       navigate("/admin/posts");

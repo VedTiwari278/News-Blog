@@ -27,7 +27,7 @@ const News = () => {
   // }, []);
   useEffect(() => {
     FetchNews();
-  }, []);
+  }, [news]);
 
   return (
     <div className="container my-4">
