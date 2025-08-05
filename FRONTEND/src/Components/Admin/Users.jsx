@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
+
 import { FaDeleteLeft } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link, useNavigate } from "react-router-dom";
@@ -121,10 +122,10 @@ const Users = () => {
                     <td>
                       <Link
                         to={`/admin/edit-user/${users._id}`}
-                        className="text-warning"
+                        className="btn btn-sm btn-warning"
                         title="Edit User"
                       >
-                        <FaEdit size={18} />
+                        <FaEdit />
                       </Link>
                     </td>
                     <td>

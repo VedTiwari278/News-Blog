@@ -3,12 +3,13 @@ import React, { useContext, useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NewsContext } from "../context/NewContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Single = () => {
   const { id } = useParams();
   const [data, setData] = useState(null);
   const { news } = useContext(NewsContext);
-  // console.log(news);
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     const matchedItem = news.find((item) => item._id === id);
@@ -19,7 +20,9 @@ const Single = () => {
     <div className="container my-5">
       {data ? (
         <div
-          className="card shadow-lg border-0 rounded-4 overflow-hidden"
+          className={`${
+            darkMode ? "bg-dark text-light" : "bg-light text-dark"
+          } card shadow-lg rounded-4 overflow-hidden`}
           style={{ maxWidth: "850px", margin: "0 auto" }}
         >
           {/* Top Gradient Strip */}
@@ -42,10 +45,13 @@ const Single = () => {
           <div className="d-flex justify-content-between align-items-center px-4 pt-3">
             <Link
               to={`/category/${data.category._id}`}
-              className="text-decoration-none "
+              className="text-decoration-none"
             >
-              <button className="btn btn-outline-dark">
-                {" "}
+              <button
+                className={`btn ${
+                  darkMode ? "btn-outline-light" : "btn-outline-dark"
+                }`}
+              >
                 {data.category.categoryName}
               </button>
             </Link>

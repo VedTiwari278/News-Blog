@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
+
 import { FaDeleteLeft } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
@@ -106,10 +107,10 @@ const Post = () => {
                     <td>
                       <Link
                         to={`/admin/edit-post/${post._id}`}
-                        className="text-warning"
+                        className="btn btn-sm btn-warning"
                         title="Edit Post"
                       >
-                        <FaEdit size={18} />
+                        <FaEdit />
                       </Link>
                     </td>
                     <td>

@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { NewsContext } from "../context/NewContext";
-
+import { ThemeContext } from "../context/ThemeContext";
 const News = () => {
   // const [news, setNews] = useState([]);
   // const [loading, setLoading] = useState(true);
   const { news, setNews, loading, setLoading, FetchNews } =
     useContext(NewsContext);
+  const { darkMode, toggleTheme } = useContext(ThemeContext);
+
   // useEffect(() => {
   //   const FetchNews = async () => {
   //     try {
@@ -30,12 +32,9 @@ const News = () => {
   }, [news]);
 
   return (
-    <div className="container my-4">
+    <div className={`container my-4  `}>
       {loading ? (
-        <div
-          className="d-flex justify-content-center align-items-center"
-          style={{ height: "50vh" }}
-        >
+        <div className="d-flex justify-content-center align-items-center">
           <div className="spinner-border text-primary" role="status">
             <span className="visually-hidden">Loading...</span>
           </div>
@@ -43,8 +42,17 @@ const News = () => {
       ) : (
         <div className="row g-4">
           {news.map((newsItem) => (
-            <div className="col-12 col-md-6 col-lg-4" key={newsItem._id}>
-              <div className="card h-100 shadow-sm">
+            <div className={`col-12 col-md-6 col-lg-4 `} key={newsItem._id}>
+              <div
+                className={`card h-100 shadow-sm ${
+                  darkMode ? " bg-dark text-light" : " bg-light text-dark"
+                } `}
+                style={{
+                  background: "#cdd0d1fa",
+                  border: "2px solid #cacacafa",
+                  borderRadius: "8px",
+                }}
+              >
                 <img
                   src={newsItem.image}
                   alt="News"

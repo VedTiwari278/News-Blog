@@ -1,11 +1,20 @@
-import React from "react";
+import React, { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { FaInstagram, FaLinkedin, FaGithub, FaEnvelope } from "react-icons/fa";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Footer = () => {
+  const { darkMode } = useContext(ThemeContext);
+
   return (
-    <footer className="bg-dark text-white pt-4 pb-3 mt-5">
+    <footer
+      className={`${
+        darkMode
+          ? "bg-dark text-light fw-bold"
+          : "bg-secondary  text-dark fw-bold"
+      } pt-4 pb-3 mt-5`}
+    >
       <div className="container">
         <div className="row text-center text-md-start">
           {/* Left: About/Name */}
@@ -19,14 +28,21 @@ const Footer = () => {
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a href="/" className="text-white text-decoration-none d-block">
+                <a
+                  href="/"
+                  className={`text-decoration-none d-block ${
+                    darkMode ? "text-light" : "text-dark"
+                  }`}
+                >
                   Home
                 </a>
               </li>
               <li>
                 <Link
                   to="/about"
-                  className="text-white text-decoration-none d-block"
+                  className={`text-decoration-none d-block ${
+                    darkMode ? "text-light" : "text-dark"
+                  }`}
                 >
                   About
                 </Link>
@@ -34,7 +50,9 @@ const Footer = () => {
               <li>
                 <Link
                   to="/register"
-                  className="text-white text-decoration-none d-block"
+                  className={`text-decoration-none d-block ${
+                    darkMode ? "text-light" : "text-dark"
+                  }`}
                 >
                   Be a Contributor
                 </Link>
@@ -43,14 +61,15 @@ const Footer = () => {
           </div>
 
           {/* Right: Social Links */}
-          <div className="col-md-4 mb-4">
+          <div className="col-md-4 text-light mb-4">
             <h5>Follow Me</h5>
             <div className="d-flex justify-content-center justify-content-md-start gap-4">
               <a
                 href="https://www.instagram.com/vedprakash_431/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white fs-5"
+                className={`fs-5 ${darkMode ? "text-light" : "text-dark"}`}
+                aria-label="Instagram"
               >
                 <FaInstagram />
               </a>
@@ -58,7 +77,8 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/ved-prakash-tiwari-b21522280/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white fs-5"
+                className={`fs-5 ${darkMode ? "text-light" : "text-dark"}`}
+                aria-label="LinkedIn"
               >
                 <FaLinkedin />
               </a>
@@ -66,13 +86,15 @@ const Footer = () => {
                 href="https://github.com/VedTiwari278"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white fs-5"
+                className={`fs-5 ${darkMode ? "text-light" : "text-dark"}`}
+                aria-label="GitHub"
               >
                 <FaGithub />
               </a>
               <a
                 href="mailto:vedprakasht759@gmail.com"
-                className="text-white fs-5"
+                className={`fs-5 ${darkMode ? "text-light" : "text-dark"}`}
+                aria-label="Email"
               >
                 <FaEnvelope />
               </a>
@@ -80,7 +102,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <hr className="bg-white" />
+        <hr className={darkMode ? "bg-light" : "bg-dark"} />
         <p className="text-center mb-0">Made with ❤️ by Ved Tiwari</p>
       </div>
     </footer>

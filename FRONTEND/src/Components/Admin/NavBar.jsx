@@ -31,8 +31,10 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`navbar navbar-expand-lg ${
-        darkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"
+      className={`navbar sticky-top navbar-expand-lg ${
+        darkMode
+          ? "navbar-dark bg-dark fw-bold"
+          : "navbar-light bg-light fw-bold"
       } shadow`}
     >
       <div className="container">
@@ -77,27 +79,30 @@ const NavBar = () => {
             )}
           </ul>
 
-          <ul className="navbar-nav ms-auto gap-2 align-items-center">
-            {/* 🌙 Theme toggle button with proper color */}
-            <li className="nav-item d-flex align-items-center">
-              <div className="form-check form-switch">
-                <input
-                  className="form-check-input"
-                  type="checkbox"
-                  id="themeSwitch"
-                  checked={darkMode}
-                  onChange={toggleTheme}
-                />
-                <label
-                  className={`form-check-label ${
+          <ul className="navbar-nav ms-auto gap-3 align-items-center">
+            {/* 🌙 Theme toggle icon button */}
+            <li className="nav-item">
+              <button
+                className="btn border-0"
+                onClick={toggleTheme}
+                style={{ fontSize: "1.5rem", color: darkMode ? "#fff" : "#000" }}
+              >
+                {darkMode ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
+              </button>
+            </li>
+
+            {user && (
+              <li className="nav-item">
+                <span
+                  className={`fw-semibold ${
                     darkMode ? "text-light" : "text-dark"
                   }`}
-                  htmlFor="themeSwitch"
                 >
-                  {darkMode ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
-                </label>
-              </div>
-            </li>
+                  Welcome, {user}
+                </span>
+              </li>
+            )}
+
             {!token ? (
               <li className="nav-item">
                 <Link className="nav-link" to="/login">

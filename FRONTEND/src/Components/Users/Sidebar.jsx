@@ -3,7 +3,7 @@ import Saerch from "./Saerch";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { NewsContext } from "../context/NewContext";
-
+import { ThemeContext } from "../context/ThemeContext";
 const Sidebar = () => {
   const { news, loading } = useContext(NewsContext);
   // const [recentPosts, setRecentPosts] = useState([]);
@@ -25,9 +25,10 @@ const Sidebar = () => {
   // };
   // fetchRecentPosts();
   // }, []);
-
+  const { darkMode } = useContext(ThemeContext);
   return (
     <div
+      className={`${darkMode ? " bg-dark text-light" : " bg-light text-dark"}`}
       style={{
         padding: "10px",
         background: "#cdd0d1fa",
@@ -44,7 +45,11 @@ const Sidebar = () => {
       </div>
 
       {/* Recent Posts Section */}
-      <div>
+      <div
+        className={`${
+          darkMode ? " bg-dark text-light" : " bg-light text-dark"
+        }`}
+      >
         <h4
           style={{
             borderBottom: "2px solid #ccc",
@@ -59,7 +64,9 @@ const Sidebar = () => {
           {latestPosts.map((post) => (
             <div
               key={post._id}
-              className="card shadow-sm flex-row"
+              className={`card shadow-sm flex-row ${
+                darkMode ? " bg-dark text-light" : " bg-light text-dark"
+              }`}
               style={{
                 width: "100%",
                 height: "100px",

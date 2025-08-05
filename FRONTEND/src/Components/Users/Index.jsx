@@ -1,17 +1,22 @@
-import React from "react";
+import React, { useContext } from "react";
 import Header from "./Header";
 import News from "./News";
 import Sidebar from "./Sidebar";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ThemeContext } from "../context/ThemeContext";
 
 const Index = () => {
+  const { darkMode } = useContext(ThemeContext);
   return (
     <div
-      className="Main-Container min-vh-100"
-      style={{
-        background: "linear-gradient(to right, #585a5aff, #1d1b19ff, #373a3cff)",
-        color: "#494b4bff",
-      }}
+      className={`${
+        darkMode ? "bg-dark" : "bg-transparent"
+      } Main-Container min-vh-100`}
+      // style={{
+      //   background:
+      //     "linear-gradient(to right, #585a5aff, #1d1b19ff, #373a3cff)",
+      //   color: "#494b4bff",
+      // }}
     >
       <Header />
       <div className="container mt-4">
