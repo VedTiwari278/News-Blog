@@ -79,23 +79,25 @@ const NavBar = () => {
 
           <ul className="navbar-nav ms-auto gap-2 align-items-center">
             {/* 🌙 Theme toggle button with proper color */}
-            <li className="nav-item">
-              <button
-                onClick={toggleTheme}
-                className={`btn ${darkMode ? "btn-outline-light" : "btn-outline-dark"} me-2`}
-              >
-                {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
-              </button>
+            <li className="nav-item d-flex align-items-center">
+              <div className="form-check form-switch">
+                <input
+                  className="form-check-input"
+                  type="checkbox"
+                  id="themeSwitch"
+                  checked={darkMode}
+                  onChange={toggleTheme}
+                />
+                <label
+                  className={`form-check-label ${
+                    darkMode ? "text-light" : "text-dark"
+                  }`}
+                  htmlFor="themeSwitch"
+                >
+                  {darkMode ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
+                </label>
+              </div>
             </li>
-
-            {user && (
-              <li className="nav-item m-3">
-                <span className={`fw-semibold ${darkMode ? "text-light" : "text-dark"}`}>
-                  Welcome, {user}
-                </span>
-              </li>
-            )}
-
             {!token ? (
               <li className="nav-item">
                 <Link className="nav-link" to="/login">
