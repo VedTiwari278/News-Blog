@@ -56,3 +56,12 @@
 .Search {
   width: 400px;
 }
+
+body.dark {
+  background-color: #121212;
+  color: white;
+}
+
+body {
+  transition: background-color 0.3s ease, color 0.3s ease;
+}

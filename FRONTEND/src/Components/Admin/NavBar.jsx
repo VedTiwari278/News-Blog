@@ -1,11 +1,14 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import "bootstrap/dist/js/bootstrap.bundle.min";
+import { ThemeContext } from "../context/ThemeContext";
+import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
 
 const NavBar = () => {
   const navigate = useNavigate();
   const token = localStorage.getItem("token");
+  const { darkMode, toggleTheme } = useContext(ThemeContext);
 
   let role = null;
   let user = null;
@@ -27,7 +30,11 @@ const NavBar = () => {
   };
 
   return (
-    <nav className="navbar navbar-expand-lg navbar-dark bg-dark shadow">
+    <nav
+      className={`navbar navbar-expand-lg ${
+        darkMode ? "navbar-dark bg-dark" : "navbar-light bg-light"
+      } shadow`}
+    >
       <div className="container">
         <Link className="navbar-brand fw-bold" to="/">
           Daily News Analysis
@@ -47,7 +54,6 @@ const NavBar = () => {
 
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto gap-3">
-            {/* Writer and Admin can access Category and Posts */}
             {["writer", "admin"].includes(role) && (
               <>
                 <li className="nav-item">
@@ -62,8 +68,6 @@ const NavBar = () => {
                 </li>
               </>
             )}
-
-            {/* Only Admin can access Users */}
             {role === "admin" && (
               <li className="nav-item">
                 <Link className="nav-link" to="/admin/users">
@@ -74,10 +78,21 @@ const NavBar = () => {
           </ul>
 
           <ul className="navbar-nav ms-auto gap-2 align-items-center">
-            {/* Show Welcome Username */}
+            {/* 🌙 Theme toggle button with proper color */}
+            <li className="nav-item">
+              <button
+                onClick={toggleTheme}
+                className={`btn ${darkMode ? "btn-outline-light" : "btn-outline-dark"} me-2`}
+              >
+                {darkMode ? <MdOutlineLightMode /> : <MdOutlineDarkMode />}
+              </button>
+            </li>
+
             {user && (
               <li className="nav-item m-3">
-                <span className="text-light fw-semibold">Welcome, {user}</span>
+                <span className={`fw-semibold ${darkMode ? "text-light" : "text-dark"}`}>
+                  Welcome, {user}
+                </span>
               </li>
             )}
 

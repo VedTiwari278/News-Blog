@@ -26,42 +26,44 @@ import CategoryWise from "./Components/Users/CategoryWise";
 import Register from "./Components/Register";
 import Login from "./Components/Login";
 import About from "./Components/Users/About";
+import { ThemeProvider } from "./Components/context/ThemeContext";
 // const About = () => <h2 className="text-center mt-5">About Page</h2>;
 const Contact = () => <h2 className="text-center mt-5">Contact Page</h2>;
 
 const App = () => {
   return (
     <Router>
-      <NavBar></NavBar>
-      <Routes>
-        {/* <Route path="*" element={<Index />} /> */}
+      <ThemeProvider>
+        <NavBar></NavBar>
+        <Routes>
+          {/* <Route path="*" element={<Index />} /> */}
 
+          <Route path="/" element={<Index />} />
+          <Route path="/admin" element={<Home />} />
+          <Route path="/admin/category" element={<Category />} />
+          <Route path="/admin/add-post" element={<AddPost />} />
+          <Route path="/admin/users" element={<Users />} />
+          <Route path="/admin/posts" element={<Post />} />
+          <Route path="/about" element={<About />} />
 
-        <Route path="/" element={<Index />} />
-        <Route path="/admin" element={<Home />} />
-        <Route path="/admin/category" element={<Category />} />
-        <Route path="/admin/add-post" element={<AddPost />} />
-        <Route path="/admin/users" element={<Users />} />
-        <Route path="/admin/posts" element={<Post />} />
-        <Route path="/about" element={<About />} />
+          {/* <Route path="/admin/add-users" element={<AddUser />} /> */}
 
-        {/* <Route path="/admin/add-users" element={<AddUser />} /> */}
+          <Route path="/admin/edit-category/:id" element={<Updatecategory />} />
+          <Route path="/admin/edit-user/:id" element={<UpdateUser />} />
+          <Route path="/admin/edit-post/:id" element={<UpdatePost />} />
 
-        <Route path="/admin/edit-category/:id" element={<Updatecategory />} />
-        <Route path="/admin/edit-user/:id" element={<UpdateUser />} />
-        <Route path="/admin/edit-post/:id" element={<UpdatePost />} />
-
-        <Route path="/admin/add-category" element={<AddCategory />} />
-        <Route path="/category/:id" element={<CategoryWise />} />
-        <Route path="/search" element={<SearchResults />} />
-        <Route path="/about" element={<About />} />
-        <Route path="/post/:id" element={<Single />} />
-        <Route path="/delete-post" element={<DeletePost />} />
-        <Route path="/edit-post" element={<UpdatePost />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
-      </Routes>
-      <Footer></Footer>
+          <Route path="/admin/add-category" element={<AddCategory />} />
+          <Route path="/category/:id" element={<CategoryWise />} />
+          <Route path="/search" element={<SearchResults />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/post/:id" element={<Single />} />
+          <Route path="/delete-post" element={<DeletePost />} />
+          <Route path="/edit-post" element={<UpdatePost />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+        </Routes>
+        <Footer></Footer>
+      </ThemeProvider>
     </Router>
   );
 };
