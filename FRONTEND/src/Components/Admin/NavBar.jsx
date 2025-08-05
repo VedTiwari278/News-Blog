@@ -39,7 +39,7 @@ const NavBar = () => {
     >
       <div className="container">
         <Link className="navbar-brand fw-bold" to="/">
-          Daily News Analysis
+          TypeTide 
         </Link>
 
         <button
