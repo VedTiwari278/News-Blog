@@ -39,7 +39,7 @@ const NavBar = () => {
     >
       <div className="container">
         <Link className="navbar-brand fw-bold" to="/">
-          TypeTide 
+          Daily News Analysis
         </Link>
 
         <button
@@ -85,7 +85,10 @@ const NavBar = () => {
               <button
                 className="btn border-0"
                 onClick={toggleTheme}
-                style={{ fontSize: "1.5rem", color: darkMode ? "#fff" : "#000" }}
+                style={{
+                  fontSize: "1.5rem",
+                  color: darkMode ? "#fff" : "#000",
+                }}
               >
                 {darkMode ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
               </button>

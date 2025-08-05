@@ -48,9 +48,9 @@ const Sidebar = () => {
       }}
     >
       {/* Search Bar */}
-      <div style={{ marginBottom: "20px" }}>
+      {/* <div style={{ marginBottom: "20px" }}>
         <Saerch />
-      </div>
+      </div> */}
 
       {/* Recent Posts Section */}
       <div>

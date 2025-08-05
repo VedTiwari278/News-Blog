@@ -1,88 +1,254 @@
 import React, { useContext, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link } from "react-router-dom"; // Added missing import
 import { NewsContext } from "../context/NewContext";
 import { ThemeContext } from "../context/ThemeContext";
+import { FaRegComment, FaRegHeart } from "react-icons/fa";
+import { formatDistanceToNow } from "date-fns";
+import { Carousel } from "react-bootstrap";
 import "../CSS/News.css";
 
 const News = () => {
-  const { news, loading, FetchNews } = useContext(NewsContext);
+  const { news, loading, FetchNews, error } = useContext(NewsContext); // Added error from context
   const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     FetchNews();
   }, []);
 
+  // Get top 5 recent posts for carousel
+  const recentPosts = [...news]
+    .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+    .slice(0, 5);
+
+  // Handle image errors
+  const handleImageError = (e) => {
+    e.target.src = 'https://via.placeholder.com/300x200?text=Image+Not+Available';
+    e.target.style.objectFit = 'contain';
+  };
+
+  if (error) {
+    return (
+      <div className={`alert alert-danger ${darkMode ? 'bg-dark text-light' : ''}`}>
+        Failed to load news: {error.message}
+      </div>
+    );
+  }
+
   const SkeletonCard = () => (
-    <div className="col-12 col-md-6 col-lg-4">
-      <div className="card h-100 shadow-sm skeleton-card">
-        <div className="skeleton-image shimmer"></div>
-        <div className="card-body">
-          <div className="skeleton-title shimmer mb-3"></div>
-          <div className="skeleton-line shimmer mb-2 w-75"></div>
-          <div className="skeleton-line shimmer mb-2 w-50"></div>
-          <div className="skeleton-line shimmer mb-2 w-100"></div>
-          <div className="skeleton-btn shimmer mt-3"></div>
+    <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 px-2">
+      <div className="skeleton-card card h-100 p-3 rounded-4 border-0 shadow-sm">
+        <div className="skeleton-image mb-3"></div>
+        <div className="d-flex justify-content-between align-items-center mb-2">
+          <div className="skeleton-badge"></div>
+          <div className="skeleton-readtime"></div>
+        </div>
+        <div className="skeleton-title mb-2"></div>
+        <div className="skeleton-line w-100 mb-2"></div>
+        <div className="skeleton-line w-75 mb-3"></div>
+        <div className="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+          <div className="d-flex align-items-center gap-2 mt-2">
+            <div className="skeleton-author-line mb-1"></div>
+            <div className="skeleton-author-line w-50"></div>
+          </div>
+          <div className="d-flex align-items-center gap-3 mt-2">
+            <div className="skeleton-icon"></div>
+            <div className="skeleton-icon"></div>
+          </div>
         </div>
       </div>
     </div>
   );
 
   return (
-    <div className="container my-4">
+    <div className="container-fluid px-3">
+      {/* Carousel Section - Only show when not loading */}
+      {!loading && recentPosts.length > 0 && (
+        <div className="mb-5">
+          <h4 className={`mb-4 ${darkMode ? "text-light" : "text-dark"}`}>Recent Highlights</h4>
+          <Carousel fade indicators={false} interval={4000} pause="hover">
+            {recentPosts.map((post) => (
+              <Carousel.Item key={post._id}>
+                <Link to={`/post/${post._id}`} className="text-decoration-none">
+                  <div 
+                    className="position-relative" 
+                    style={{ 
+                      height: "350px", 
+                      borderRadius: "10px", 
+                      overflow: "hidden" 
+                    }}
+                  >
+                    <img
+                      className="d-block w-100 h-100"
+                      src={post.image}
+                      alt={post.title}
+                      onError={handleImageError} // Added error handler
+                      style={{ 
+                        objectFit: "cover", 
+                        filter: darkMode ? "brightness(0.6)" : "brightness(0.8)" 
+                      }}
+                    />
+                    <div 
+                      className="position-absolute bottom-0 start-0 p-4 w-100"
+                      style={{ 
+                        background: darkMode 
+                          ? "linear-gradient(to top, rgba(0,0,0,0.9), transparent)" 
+                          : "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
+                        color: "white"
+                      }}
+                    >
+                      <h3>{post.title}</h3>
+                      <div className="d-flex align-items-center gap-3">
+                        <span className={`badge ${darkMode ? "bg-primary" : "bg-light text-dark"}`}>
+                          {post.category?.categoryName || 'Uncategorized'}
+                        </span>
+                        <small>
+                          {formatDistanceToNow(new Date(post.createdAt), {
+                            addSuffix: true,
+                          })}
+                        </small>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              </Carousel.Item>
+            ))}
+          </Carousel>
+        </div>
+      )}
+
+      {/* News Grid Section */}
       <div className="row g-4">
         {loading
-          ? Array.from({ length: 6 }).map((_, i) => <SkeletonCard key={i} />)
+          ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
           : news.map((item) => (
-              <div className="col-12 col-md-6 col-lg-4" key={item._id}>
+              <div className="col-12 col-sm-6 col-md-4 col-lg-3 px-2" key={item._id}>
                 <div
                   className={`card h-100 shadow-sm ${
-                    darkMode ? "bg-dark text-light" : "bg-light text-dark"
+                    darkMode ? "text-light bg-dark" : "text-dark bg-light"
                   }`}
                   style={{
-                    background: "#cdd0d1fa",
-                    border: "2px solid #cacacafa",
-                    borderRadius: "8px",
+                    border: darkMode ? "1px solid #444" : "1px solid #e0e0e0",
+                    borderRadius: "10px",
+                    overflow: "hidden",
+                    transition: "all 0.3s ease",
                   }}
                 >
-                  <img
-                    src={item.image}
-                    alt="News"
-                    className="card-img-top"
-                    style={{ height: "180px", objectFit: "cover" }}
-                  />
-                  <div className="card-body d-flex flex-column justify-content-between">
-                    <div>
-                      <h5 className="card-title">{item.title}</h5>
-                      <ul className="list-inline mb-2 text-muted small">
-                        <li className="list-inline-item">
-                          <Link
-                            to={`/category/${item.category._id}`}
-                            className="text-decoration-none"
-                          >
-                            {item.category.categoryName}
-                          </Link>
-                        </li>
-                        <li className="list-inline-item">|</li>
-                        <li className="list-inline-item">
-                          {item.author.username}
-                        </li>
-                        <li className="list-inline-item">|</li>
-                        <li className="list-inline-item">
-                          {new Date(item.createdAt).toLocaleDateString()}
-                        </li>
-                      </ul>
+                  {/* Image */}
+                  <div
+                    className="overflow-hidden"
+                    style={{ height: "200px", backgroundColor: "#e9ecef" }}
+                  >
+                    <Link to={`/post/${item._id}`} className="text-decoration-none">
+                      <img
+                        src={item.image}
+                        alt="News"
+                        className="w-100 h-100 object-fit-cover"
+                        onError={handleImageError} // Added error handler
+                        style={{ 
+                          objectPosition: "center",
+                          transition: "transform 0.3s"
+                        }}
+                      />
+                    </Link>
+                  </div>
+
+                  {/* Card Body */}
+                  <div className="card-body d-flex flex-column p-3">
+                    {/* Category + Time */}
+                    <div className="d-flex justify-content-between align-items-center mb-2">
+                      <Link
+                        to={`/category/${item.category?._id || ''}`}
+                        className={`badge rounded-pill px-3 py-1 fw-semibold text-decoration-none ${
+                          darkMode ? "bg-primary" : "bg-info text-dark"
+                        }`}
+                      >
+                        {item.category?.categoryName || 'Uncategorized'}
+                      </Link>
+                      <div className="d-flex align-items-center">
+                        <small className={darkMode ? "text-light" : "text-muted"}>
+                          {formatDistanceToNow(new Date(item.createdAt), {
+                            addSuffix: true,
+                          })}
+                        </small>
+                      </div>
                     </div>
-                    <p className="card-text small mb-2 text-truncate">
-                      {item.description.length > 100
-                        ? item.description.slice(0, 100) + "..."
+
+                    {/* Title */}
+                    <h5
+                      className="fw-semibold mb-2"
+                      style={{ fontSize: "1.1rem", minHeight: "3rem" }}
+                    >
+                      <Link
+                        to={`/post/${item._id}`}
+                        className={`text-decoration-none ${
+                          darkMode ? "text-light" : "text-dark"
+                        }`}
+                      >
+                        {item.title?.length > 70
+                          ? `${item.title.substring(0, 70)}...`
+                          : item.title}
+                      </Link>
+                    </h5>
+
+                    {/* Description */}
+                    <p
+                      className={`small mb-3 ${
+                        darkMode ? "text-light" : "text-muted"
+                      }`}
+                      style={{ lineHeight: "1.5", minHeight: "3rem" }}
+                    >
+                      {item.description?.length > 100
+                        ? `${item.description.substring(0, 100)}...`
                         : item.description}
                     </p>
-                    <Link
-                      to={`/post/${item._id}`}
-                      className="btn btn-sm btn-outline-primary mt-auto"
-                    >
-                      Read More
-                    </Link>
+
+                    {/* Footer */}
+                    <div className="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
+                      {/* Author */}
+                      <div className="d-flex align-items-center gap-2">
+                        <div
+                          className={`rounded-circle d-flex align-items-center justify-content-center fw-semibold ${
+                            darkMode ? "bg-secondary" : "bg-primary"
+                          } text-light`}
+                          style={{
+                            width: "36px",
+                            height: "36px",
+                            fontSize: "14px",
+                            textTransform: "uppercase",
+                          }}
+                        >
+                          {item.author?.username?.[0] || 'A'}
+                        </div>
+                        <div className="d-flex flex-column">
+                          <span
+                            className={`fw-semibold ${
+                              darkMode ? "text-light" : "text-dark"
+                            }`}
+                            style={{ fontSize: "0.85rem" }}
+                          >
+                            {item.author?.username || 'Anonymous'}
+                          </span>
+                        </div>
+                      </div>
+
+                      {/* Icons */}
+                      <div className="d-flex align-items-center gap-2">
+                        <span
+                          className={`d-flex align-items-center gap-1 ${
+                            darkMode ? "text-light" : "text-muted"
+                          }`}
+                        >
+                          <FaRegHeart size={16} /> {item.likes || 0}
+                        </span>
+                        <span
+                          className={`d-flex align-items-center gap-1 ${
+                            darkMode ? "text-light" : "text-muted"
+                          }`}
+                        >
+                          <FaRegComment size={16} /> {item.comments?.length || 0}
+                        </span>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>

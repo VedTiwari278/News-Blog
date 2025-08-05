@@ -1,57 +1,82 @@
 .skeleton-card {
-  border-radius: 8px;
-  overflow: hidden;
+  background-color: #e0e0e0;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.skeleton-image,
+.skeleton-badge,
+.skeleton-readtime,
+.skeleton-title,
+.skeleton-line,
+.skeleton-author-line,
+.skeleton-icon {
+  background-color: #cfcfcf;
+  border-radius: 4px;
 }
 
 .skeleton-image {
   height: 180px;
-  background-color: #ccc;
-  border-bottom: 1px solid #ddd;
+  width: 100%;
+}
+
+.skeleton-badge {
+  width: 70px;
+  height: 20px;
+}
+
+.skeleton-readtime {
+  width: 50px;
+  height: 15px;
 }
 
 .skeleton-title {
+  width: 80%;
   height: 20px;
-  width: 60%;
-  background-color: #ccc;
-  border-radius: 4px;
 }
 
 .skeleton-line {
-  height: 12px;
-  background-color: #ccc;
-  border-radius: 4px;
+  height: 14px;
 }
 
-.skeleton-btn {
-  height: 32px;
-  width: 40%;
-  background-color: #ccc;
-  border-radius: 20px;
+.skeleton-author-line {
+  height: 14px;
+  width: 35px;
 }
 
-.shimmer {
-  position: relative;
-  overflow: hidden;
+.skeleton-icon {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
 }
 
-.shimmer::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: -150%;
-  width: 150%;
-  height: 100%;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    rgba(255, 255, 255, 0.3) 50%,
-    transparent 100%
-  );
-  animation: shimmerMove 1.4s infinite;
-}
-
-@keyframes shimmerMove {
-  100% {
-    left: 100%;
+@keyframes pulse {
+  0% {
+    opacity: 0.85;
   }
+  50% {
+    opacity: 0.45;
+  }
+  100% {
+    opacity: 0.85;
+  }
+}
+
+
+/* Hover animation for the card */
+.news-card {
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.news-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+/* Zoom image on hover */
+.news-img {
+  transition: transform 0.4s ease;
+}
+
+.news-img-wrapper:hover .news-img {
+  transform: scale(1.1);
 }
