@@ -1,0 +1,51 @@
+.skeleton-card {
+  position: relative;
+  overflow: hidden;
+}
+
+.skeleton-img {
+  width: 80px;
+  height: 100px;
+  background-color: #ccc;
+}
+
+.skeleton-title {
+  height: 14px;
+  width: 70%;
+  background-color: #ccc;
+  border-radius: 4px;
+}
+
+.skeleton-btn {
+  height: 28px;
+  width: 50%;
+  background-color: #ccc;
+  border-radius: 15px;
+}
+
+.shimmer {
+  position: relative;
+  overflow: hidden;
+}
+
+.shimmer::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: -150%;
+  width: 150%;
+  height: 100%;
+  background: linear-gradient(
+    to right,
+    transparent 0%,
+    rgba(255, 255, 255, 0.3) 50%,
+    transparent 100%
+  );
+  animation: shimmerMove 1.4s infinite;
+}
+
+@keyframes shimmerMove {
+  100% {
+    left: 100%;
+  }
+}

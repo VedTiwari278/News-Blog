@@ -1,34 +1,42 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import Saerch from "./Saerch";
-import axios from "axios";
 import { Link } from "react-router-dom";
 import { NewsContext } from "../context/NewContext";
 import { ThemeContext } from "../context/ThemeContext";
+import "../CSS/Sidebar.css";
+
 const Sidebar = () => {
   const { news, loading } = useContext(NewsContext);
-  // const [recentPosts, setRecentPosts] = useState([]);
-
-  // useEffect(() => {
-  //   const fetchRecentPosts = async () => {
-  // try {
-  //   const response = await axios.get(
-  //     "https://news-blog-abh6.vercel.app/getAllPost"
-  //   );
-  //   if (response?.data?.data) {
-  //     // Get the last 3 posts (you can change this logic as needed)
-  const latestPosts = news.slice(-5).reverse();
-  // setRecentPosts(latestPosts);
-  // }
-  //   } catch (err) {
-  //     console.error("Failed to fetch recent posts", err);
-  //   }
-  // };
-  // fetchRecentPosts();
-  // }, []);
   const { darkMode } = useContext(ThemeContext);
+
+  const latestPosts = news.slice(-5).reverse();
+
+  const SkeletonCard = () => (
+    <div
+      className={`card shadow-sm flex-row ${
+        darkMode ? "bg-dark" : "bg-light"
+      } skeleton-card`}
+      style={{
+        width: "100%",
+        height: "100px",
+        borderRadius: "8px",
+        overflow: "hidden",
+      }}
+    >
+      <div className="skeleton-img shimmer"></div>
+      <div
+        className="card-body p-2 d-flex flex-column justify-content-between"
+        style={{ flex: 1 }}
+      >
+        <div className="skeleton-title shimmer mb-2"></div>
+        <div className="skeleton-btn shimmer"></div>
+      </div>
+    </div>
+  );
+
   return (
     <div
-      className={`${darkMode ? " bg-dark text-light" : " bg-light text-dark"}`}
+      className={`${darkMode ? "bg-dark text-light" : "bg-light text-dark"}`}
       style={{
         padding: "10px",
         background: "#cdd0d1fa",
@@ -45,11 +53,7 @@ const Sidebar = () => {
       </div>
 
       {/* Recent Posts Section */}
-      <div
-        className={`${
-          darkMode ? " bg-dark text-light" : " bg-light text-dark"
-        }`}
-      >
+      <div>
         <h4
           style={{
             borderBottom: "2px solid #ccc",
@@ -61,49 +65,51 @@ const Sidebar = () => {
         </h4>
 
         <div className="d-flex flex-column gap-3 mt-3">
-          {latestPosts.map((post) => (
-            <div
-              key={post._id}
-              className={`card shadow-sm flex-row ${
-                darkMode ? " bg-dark text-light" : " bg-light text-dark"
-              }`}
-              style={{
-                width: "100%",
-                height: "100px",
-                borderRadius: "8px",
-                overflow: "hidden",
-              }}
-            >
-              {/* Left Image */}
-              <img
-                src={post.image}
-                alt="News"
-                style={{
-                  width: "80px",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
-              />
-
-              {/* Right Content */}
-              <div
-                className="card-body d-flex flex-column justify-content-between"
-                style={{ padding: "8px", flex: 1 }}
-              >
-                <h6 className="card-title mb-1" style={{ fontSize: "14px" }}>
-                  {post.title.length > 35
-                    ? post.title.slice(0, 35) + "..."
-                    : post.title}
-                </h6>
-                <Link
-                  to={`/post/${post._id}`}
-                  className="btn btn-sm btn-outline-primary mt-1"
+          {loading
+            ? Array.from({ length: 5 }).map((_, i) => <SkeletonCard key={i} />)
+            : latestPosts.map((post) => (
+                <div
+                  key={post._id}
+                  className={`card shadow-sm flex-row ${
+                    darkMode ? "bg-dark text-light" : "bg-light text-dark"
+                  }`}
+                  style={{
+                    width: "100%",
+                    height: "100px",
+                    borderRadius: "8px",
+                    overflow: "hidden",
+                  }}
                 >
-                  Read More
-                </Link>
-              </div>
-            </div>
-          ))}
+                  <img
+                    src={post.image}
+                    alt="News"
+                    style={{
+                      width: "80px",
+                      height: "100%",
+                      objectFit: "cover",
+                    }}
+                  />
+                  <div
+                    className="card-body d-flex flex-column justify-content-between"
+                    style={{ padding: "8px", flex: 1 }}
+                  >
+                    <h6
+                      className="card-title mb-1"
+                      style={{ fontSize: "14px" }}
+                    >
+                      {post.title.length > 35
+                        ? post.title.slice(0, 35) + "..."
+                        : post.title}
+                    </h6>
+                    <Link
+                      to={`/post/${post._id}`}
+                      className="btn btn-sm btn-outline-primary mt-1"
+                    >
+                      Read More
+                    </Link>
+                  </div>
+                </div>
+              ))}
         </div>
       </div>
     </div>
