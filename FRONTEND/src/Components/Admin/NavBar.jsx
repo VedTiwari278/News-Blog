@@ -41,7 +41,7 @@ const NavBar = () => {
         <Link
           className="navbar-brand fw-bold"
           to="/"
-          style={{ textDecoration: "underline" }}
+          style={{ textDecoration: "line-through" }}
         >
           Daily News Analysis
         </Link>
