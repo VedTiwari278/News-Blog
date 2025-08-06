@@ -6,9 +6,11 @@ import { FaRegComment, FaRegHeart } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { Carousel } from "react-bootstrap";
 import "../CSS/News.css";
+import axios from "axios";
 
 const News = () => {
-  const { news, loading, FetchNews, error } = useContext(NewsContext); // Added error from context
+  const { news, setNews, loading, FetchNews, error } = useContext(NewsContext); // Added error from context
+  const [likes, setLikes] = useState(0);
   const { darkMode } = useContext(ThemeContext);
   console.log("Full Data", news);
 
@@ -38,8 +40,9 @@ const News = () => {
     );
   }
 
-  const handleLike = () => {
-    const [likes, setLikes] = useState(0);
+  const handleLike = async (e) => {
+    setNews.likes(likes + 1);
+    // const response = await axios.get("http://localhost:3000/:id");
   };
 
   const SkeletonCard = () => (
@@ -262,7 +265,7 @@ const News = () => {
                             darkMode ? "text-light" : "text-muted"
                           }`}
                         >
-                          <FaRegHeart size={16} onClick={handleLike} />{" "}
+                          <FaRegHeart size={16} onClick={handleLike} />
                           {item.likes}
                         </span>
                         <span
