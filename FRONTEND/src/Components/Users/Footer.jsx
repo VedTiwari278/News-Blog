@@ -9,11 +9,9 @@ const Footer = () => {
 
   return (
     <footer
-      className={`${
-        darkMode
-          ? "bg-dark text-light fw-bold"
-          : "bg-secondary  text-dark fw-bold"
-      } pt-4 pb-3 mt-5`}
+      className={`pt-4 pb-3 mt-5 fw-bold ${
+        darkMode ? "bg-dark text-light" : "bg-secondary text-dark"
+      }`}
     >
       <div className="container">
         <div className="row text-center text-md-start">
@@ -22,55 +20,37 @@ const Footer = () => {
             <h5>Ved Tiwari</h5>
             <p>© {new Date().getFullYear()} All rights reserved.</p>
           </div>
+
           {/* Center: Quick Links */}
           <div className="col-md-4 mb-4">
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <a
-                  href="/"
-                  className={`text-decoration-none d-block ${
-                    darkMode ? "text-light" : "text-dark"
-                  }`}
-                >
+                <Link to="/" className="text-decoration-none d-block">
                   Home
-                </a>
+                </Link>
               </li>
               <li>
-                <Link
-                  to="/about"
-                  className={`text-decoration-none d-block ${
-                    darkMode ? "text-light" : "text-dark"
-                  }`}
-                >
+                <Link to="/about" className="text-decoration-none d-block">
                   About
                 </Link>
               </li>
               <li>
-                <Link
-                  to="/register"
-                  className={`text-decoration-none d-block ${
-                    darkMode ? "text-light" : "text-dark"
-                  }`}
-                >
-                  Start Writting
+                <Link to="/register" className="text-decoration-none d-block">
+                  Start Writing
                 </Link>
               </li>
             </ul>
           </div>
+
           {/* Right: Social Links */}
-          <div
-            className={`fs-5 ${
-              darkMode ? "text-light" : "text-dark"
-            }col-md-4 text-light mb-4 `}
-          >
+          <div className="col-md-4 mb-4">
             <h5>Follow Me</h5>
-            <div className="d-flex justify-content-center justify-content-md-start gap-4">
+            <div className="d-flex justify-content-center justify-content-md-start gap-4 fs-5">
               <a
                 href="https://www.instagram.com/vedprakash_431/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`fs-5 ${darkMode ? "text-light" : "text-dark"}`}
                 aria-label="Instagram"
               >
                 <FaInstagram />
@@ -79,7 +59,6 @@ const Footer = () => {
                 href="https://www.linkedin.com/in/ved-prakash-tiwari-b21522280/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`fs-5 ${darkMode ? "text-light" : "text-dark"}`}
                 aria-label="LinkedIn"
               >
                 <FaLinkedin />
@@ -88,14 +67,12 @@ const Footer = () => {
                 href="https://github.com/VedTiwari278"
                 target="_blank"
                 rel="noopener noreferrer"
-                className={`fs-5 ${darkMode ? "text-light" : "text-dark"}`}
                 aria-label="GitHub"
               >
                 <FaGithub />
               </a>
               <a
                 href="mailto:vedprakasht759@gmail.com"
-                className={`fs-5 ${darkMode ? "text-light" : "text-dark"}`}
                 aria-label="Email"
               >
                 <FaEnvelope />
