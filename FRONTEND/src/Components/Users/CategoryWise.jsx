@@ -49,7 +49,7 @@ const CategoryWise = () => {
   return (
     <div className="container mt-4">
       {/* Category Marquee */}
-      <h3 className="text-dark text-center mb-4">
+      <h3 className="text-danger text-center mb-4">
         <marquee behavior="scroll" direction="left">
           {`Category: ${categoryName}`}
         </marquee>
