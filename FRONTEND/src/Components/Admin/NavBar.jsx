@@ -44,11 +44,11 @@ const NavBar = () => {
           to="/"
           style={{
             fontFamily: "'Georgia', serif",
-            fontSize: "1.8rem",
+            fontSize: "1rem",
             letterSpacing: "1px",
             textDecoration: "none",
             color: "transparent",
-            backgroundImage: "linear-gradient(to right, #ff6a00, #ee0979)",
+            backgroundImage: "linear-gradient(to right, #d7905dff, #ee0979)",
             WebkitBackgroundClip: "text",
             WebkitTextFillColor: "transparent",
             textShadow: "1px 1px 2px rgba(0,0,0,0.2)",
