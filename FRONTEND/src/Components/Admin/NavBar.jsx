@@ -38,7 +38,11 @@ const NavBar = () => {
       } shadow`}
     >
       <div className="container">
-        <Link className="navbar-brand fw-bold" to="/">
+        <Link
+          className="navbar-brand fw-bold"
+          to="/"
+          style={{ textDecoration: "underline" }}
+        >
           Daily News Analysis
         </Link>
 
