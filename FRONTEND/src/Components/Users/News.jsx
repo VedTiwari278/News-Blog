@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom"; // Added missing import
 import { NewsContext } from "../context/NewContext";
 import { ThemeContext } from "../context/ThemeContext";
@@ -10,6 +10,7 @@ import "../CSS/News.css";
 const News = () => {
   const { news, loading, FetchNews, error } = useContext(NewsContext); // Added error from context
   const { darkMode } = useContext(ThemeContext);
+  console.log("Full Data", news);
 
   useEffect(() => {
     FetchNews();
@@ -22,17 +23,24 @@ const News = () => {
 
   // Handle image errors
   const handleImageError = (e) => {
-    e.target.src = 'https://via.placeholder.com/300x200?text=Image+Not+Available';
-    e.target.style.objectFit = 'contain';
+    e.target.src =
+      "https://via.placeholder.com/300x200?text=Image+Not+Available";
+    e.target.style.objectFit = "contain";
   };
 
   if (error) {
     return (
-      <div className={`alert alert-danger ${darkMode ? 'bg-dark text-light' : ''}`}>
+      <div
+        className={`alert alert-danger ${darkMode ? "bg-dark text-light" : ""}`}
+      >
         Failed to load news: {error.message}
       </div>
     );
   }
+
+  const handleLike = () => {
+    const [likes, setLikes] = useState(0);
+  };
 
   const SkeletonCard = () => (
     <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 px-2">
@@ -64,17 +72,19 @@ const News = () => {
       {/* Carousel Section - Only show when not loading */}
       {!loading && recentPosts.length > 0 && (
         <div className="mb-5">
-          <h4 className={`mb-4 ${darkMode ? "text-light" : "text-dark"}`}>Recent Highlights</h4>
+          <h4 className={`mb-4 ${darkMode ? "text-light" : "text-dark"}`}>
+            Recent Highlights
+          </h4>
           <Carousel fade indicators={false} interval={4000} pause="hover">
             {recentPosts.map((post) => (
               <Carousel.Item key={post._id}>
                 <Link to={`/post/${post._id}`} className="text-decoration-none">
-                  <div 
-                    className="position-relative" 
-                    style={{ 
-                      height: "350px", 
-                      borderRadius: "10px", 
-                      overflow: "hidden" 
+                  <div
+                    className="position-relative"
+                    style={{
+                      height: "350px",
+                      borderRadius: "10px",
+                      overflow: "hidden",
                     }}
                   >
                     <img
@@ -82,24 +92,30 @@ const News = () => {
                       src={post.image}
                       alt={post.title}
                       onError={handleImageError} // Added error handler
-                      style={{ 
-                        objectFit: "cover", 
-                        filter: darkMode ? "brightness(0.6)" : "brightness(0.8)" 
+                      style={{
+                        objectFit: "cover",
+                        filter: darkMode
+                          ? "brightness(0.6)"
+                          : "brightness(0.8)",
                       }}
                     />
-                    <div 
+                    <div
                       className="position-absolute bottom-0 start-0 p-4 w-100"
-                      style={{ 
-                        background: darkMode 
-                          ? "linear-gradient(to top, rgba(0,0,0,0.9), transparent)" 
+                      style={{
+                        background: darkMode
+                          ? "linear-gradient(to top, rgba(0,0,0,0.9), transparent)"
                           : "linear-gradient(to top, rgba(0,0,0,0.7), transparent)",
-                        color: "white"
+                        color: "white",
                       }}
                     >
                       <h3>{post.title}</h3>
                       <div className="d-flex align-items-center gap-3">
-                        <span className={`badge ${darkMode ? "bg-primary" : "bg-light text-dark"}`}>
-                          {post.category?.categoryName || 'Uncategorized'}
+                        <span
+                          className={`badge ${
+                            darkMode ? "bg-primary" : "bg-light text-dark"
+                          }`}
+                        >
+                          {post.category?.categoryName || "Uncategorized"}
                         </span>
                         <small>
                           {formatDistanceToNow(new Date(post.createdAt), {
@@ -121,7 +137,10 @@ const News = () => {
         {loading
           ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
           : news.map((item) => (
-              <div className="col-12 col-sm-6 col-md-4 col-lg-3 px-2" key={item._id}>
+              <div
+                className="col-12 col-sm-6 col-md-4 col-lg-3 px-2"
+                key={item._id}
+              >
                 <div
                   className={`card h-100 shadow-sm ${
                     darkMode ? "text-light bg-dark" : "text-dark bg-light"
@@ -138,15 +157,18 @@ const News = () => {
                     className="overflow-hidden"
                     style={{ height: "200px", backgroundColor: "#e9ecef" }}
                   >
-                    <Link to={`/post/${item._id}`} className="text-decoration-none">
+                    <Link
+                      to={`/post/${item._id}`}
+                      className="text-decoration-none"
+                    >
                       <img
                         src={item.image}
                         alt="News"
                         className="w-100 h-100 object-fit-cover zoom-image"
                         onError={handleImageError} // Added error handler
-                        style={{ 
+                        style={{
                           objectPosition: "center",
-                          transition: "transform 0.3s"
+                          transition: "transform 0.3s",
                         }}
                       />
                     </Link>
@@ -157,15 +179,17 @@ const News = () => {
                     {/* Category + Time */}
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <Link
-                        to={`/category/${item.category?._id || ''}`}
+                        to={`/category/${item.category?._id || ""}`}
                         className={`badge rounded-pill px-3 py-1 fw-semibold text-decoration-none ${
                           darkMode ? "bg-primary" : "bg-info text-dark"
                         }`}
                       >
-                        {item.category?.categoryName || 'Uncategorized'}
+                        {item.category?.categoryName || "Uncategorized"}
                       </Link>
                       <div className="d-flex align-items-center">
-                        <small className={darkMode ? "text-light" : "text-muted"}>
+                        <small
+                          className={darkMode ? "text-light" : "text-muted"}
+                        >
                           {formatDistanceToNow(new Date(item.createdAt), {
                             addSuffix: true,
                           })}
@@ -217,7 +241,7 @@ const News = () => {
                             textTransform: "uppercase",
                           }}
                         >
-                          {item.author?.username?.[0] || 'A'}
+                          {item.author?.username?.[0] || "A"}
                         </div>
                         <div className="d-flex flex-column">
                           <span
@@ -226,7 +250,7 @@ const News = () => {
                             }`}
                             style={{ fontSize: "0.85rem" }}
                           >
-                            {item.author?.username || 'Anonymous'}
+                            {item.author?.username || "Anonymous"}
                           </span>
                         </div>
                       </div>
@@ -238,14 +262,16 @@ const News = () => {
                             darkMode ? "text-light" : "text-muted"
                           }`}
                         >
-                          <FaRegHeart size={16} /> {item.likes || 0}
+                          <FaRegHeart size={16} onClick={handleLike} />{" "}
+                          {item.likes || 0}
                         </span>
                         <span
                           className={`d-flex align-items-center gap-1 ${
                             darkMode ? "text-light" : "text-muted"
                           }`}
                         >
-                          <FaRegComment size={16} /> {item.comments?.length || 0}
+                          <FaRegComment size={16} />{" "}
+                          {item.comments?.length || 0}
                         </span>
                       </div>
                     </div>

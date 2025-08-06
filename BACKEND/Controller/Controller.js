@@ -23,7 +23,6 @@ exports.addpost = async (req, res) => {
     if (req.file && req.file.path) {
       imageUrl = req.file.path; // ✅ Cloudinary gives the full URL in path
     }
-
     const newPost = new Post({
       title,
       description,
