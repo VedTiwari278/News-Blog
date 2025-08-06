@@ -142,7 +142,7 @@ const News = () => {
                       <img
                         src={item.image}
                         alt="News"
-                        className="w-100 h-100 object-fit-cover"
+                        className="w-100 h-100 object-fit-cover zoom-image"
                         onError={handleImageError} // Added error handler
                         style={{ 
                           objectPosition: "center",

@@ -80,3 +80,13 @@
 .news-img-wrapper:hover .news-img {
   transform: scale(1.1);
 }
+
+/* Zoom effect for image inside card on hover */
+.card:hover .zoom-image {
+  transform: scale(1.1);
+}
+
+/* Smooth transition */
+.zoom-image {
+  transition: transform 0.4s ease-in-out;
+}
