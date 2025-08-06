@@ -334,7 +334,7 @@ exports.likePost = async (req, res) => {
     if (!post) {
       return res.status(404).json({ message: "Post not found" });
     }
-
+    post.isLiked = true;
     post.likes = (post.likes || 0) + 1;
     await post.save();
 
