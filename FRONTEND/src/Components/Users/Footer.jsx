@@ -7,12 +7,10 @@ import { ThemeContext } from "../context/ThemeContext";
 const Footer = () => {
   const { darkMode } = useContext(ThemeContext);
 
+  const themeClasses = darkMode ? "bg-dark text-light" : "bg-secondary text-dark";
+
   return (
-    <footer
-      className={`pt-4 pb-3 mt-5 fw-bold ${
-        darkMode ? "bg-dark text-light" : "bg-secondary text-dark"
-      }`}
-    >
+    <footer className={`pt-4 pb-3 mt-5 fw-bold ${themeClasses}`}>
       <div className="container">
         <div className="row text-center text-md-start">
           {/* Left: About/Name */}
@@ -26,17 +24,17 @@ const Footer = () => {
             <h5>Quick Links</h5>
             <ul className="list-unstyled">
               <li>
-                <Link to="/" className="text-decoration-none d-block">
+                <Link to="/" className="text-decoration-none d-block text-reset">
                   Home
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-decoration-none d-block">
+                <Link to="/about" className="text-decoration-none d-block text-reset">
                   About
                 </Link>
               </li>
               <li>
-                <Link to="/register" className="text-decoration-none d-block">
+                <Link to="/register" className="text-decoration-none d-block text-reset">
                   Start Writing
                 </Link>
               </li>
@@ -52,6 +50,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="Instagram"
+                className="text-reset"
               >
                 <FaInstagram />
               </a>
@@ -60,6 +59,7 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="LinkedIn"
+                className="text-reset"
               >
                 <FaLinkedin />
               </a>
@@ -68,12 +68,14 @@ const Footer = () => {
                 target="_blank"
                 rel="noopener noreferrer"
                 aria-label="GitHub"
+                className="text-reset"
               >
                 <FaGithub />
               </a>
               <a
                 href="mailto:vedprakasht759@gmail.com"
                 aria-label="Email"
+                className="text-reset"
               >
                 <FaEnvelope />
               </a>
