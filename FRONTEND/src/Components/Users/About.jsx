@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useContext } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Container, Row, Col } from "react-bootstrap";
 import { Link } from "react-router-dom";
+import { ThemeContext } from "../context/ThemeContext";
 import {
   FaCheckCircle,
   FaLaptopCode,
@@ -10,6 +11,13 @@ import {
 } from "react-icons/fa";
 
 const About = () => {
+  const { darkMode } = useContext(ThemeContext);
+
+  const bgCard = darkMode ? "bg-dark text-light" : "bg-light text-dark";
+  const sectionText = darkMode ? "text-light" : "text-dark";
+  const headingText = darkMode ? "text-info" : "text-secondary";
+  const developerBg = darkMode ? "bg-secondary text-light" : "bg-light text-dark";
+
   return (
     <>
       {/* Hero Section */}
@@ -20,7 +28,7 @@ const About = () => {
           backgroundSize: "cover",
           backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
-          minHeight: "40vh", // ✅ keeps height responsive
+          minHeight: "40vh",
           display: "flex",
           flexDirection: "column",
           justifyContent: "center",
@@ -32,12 +40,10 @@ const About = () => {
         className="shadow-lg"
       >
         <h1 className="fw-bold display-4">Welcome to NewsBlog</h1>
-        <p className="lead mt-3">
-          Stay informed with trusted, timely, and unbiased journalism.
-        </p>
+        <p className="lead mt-3">Stay informed with trusted, timely, and unbiased journalism.</p>
       </div>
 
-      <Container className="my-5">
+      <Container className={`my-5 ${sectionText}`}>
         {/* Mission Section */}
         <Row className="mb-5 align-items-center">
           <Col md={6}>
@@ -49,14 +55,12 @@ const About = () => {
           </Col>
           <Col md={6}>
             <div className="px-3">
-              <h3 className="fw-bold text-secondary mb-3">
+              <h3 className={`fw-bold mb-3 ${headingText}`}>
                 <FaRegNewspaper className="me-2 text-info" />
                 Our Mission
               </h3>
               <p className="fs-5">
-                In a world full of noise and misinformation, our goal is to
-                empower people with authentic, accurate, and timely news. Every
-                story we publish is well-researched and reader-focused.
+                In a world full of noise and misinformation, our goal is to empower people with authentic, accurate, and timely news.
               </p>
             </div>
           </Col>
@@ -66,27 +70,24 @@ const About = () => {
         <Row className="mb-5 align-items-center">
           <Col md={6} className="order-2 order-md-1">
             <div className="px-3">
-              <h3 className="fw-bold text-secondary mb-3">
+              <h3 className={`fw-bold mb-3 ${headingText}`}>
                 <FaCheckCircle className="me-2 text-success" />
                 Why Choose Us?
               </h3>
               <ul className="fs-5 list-unstyled">
-                <li className="border-start border-4 my-2 p-4 border-danger bg-light rounded-start rounded-end shadow-sm">
-                  <FaCheckCircle className="text-success me-2" /> Timely News
-                  Updates
-                </li>
-                <li className="border-start border-4 my-2 p-4 border-warning bg-light rounded-start rounded-end shadow-sm">
-                  <FaCheckCircle className="text-success me-2" /> Well-Curated
-                  Categories
-                </li>
-                <li className="border-start border-4 my-2 p-4 border-info bg-light rounded-start rounded-end shadow-sm">
-                  <FaCheckCircle className="text-success me-2" /> Simple & Clean
-                  UI
-                </li>
-                <li className="border-start border-4 my-2 p-4 border-primary bg-light rounded-start rounded-end shadow-sm">
-                  <FaLaptopCode className="text-info me-2" /> Built with MERN
-                  Stack
-                </li>
+                {[
+                  { text: "Timely News Updates", border: "danger" },
+                  { text: "Well-Curated Categories", border: "warning" },
+                  { text: "Simple & Clean UI", border: "info" },
+                  { text: "Built with MERN Stack", border: "primary", icon: <FaLaptopCode className="text-info me-2" /> },
+                ].map(({ text, border, icon }, i) => (
+                  <li
+                    key={i}
+                    className={`border-start border-4 my-2 p-4 border-${border} ${bgCard} rounded-start rounded-end shadow-sm`}
+                  >
+                    {icon || <FaCheckCircle className="text-success me-2" />} {text}
+                  </li>
+                ))}
               </ul>
             </div>
           </Col>
@@ -99,7 +100,7 @@ const About = () => {
           </Col>
         </Row>
 
-        {/* Extra Section: Team Collaboration */}
+        {/* Team Collaboration */}
         <Row className="mb-5 align-items-center">
           <Col md={6}>
             <img
@@ -110,42 +111,35 @@ const About = () => {
           </Col>
           <Col md={6}>
             <div className="px-3">
-              <h3 className="fw-bold text-secondary mb-3">
+              <h3 className={`fw-bold mb-3 ${headingText}`}>
                 <FaUsers className="me-2 text-warning" />
                 Team Collaboration
               </h3>
               <p className="fs-5">
-                Our editorial and tech teams work hand-in-hand to ensure that
-                what you see is not only fast and functional, but also backed by
-                journalistic integrity.
+                Our editorial and tech teams work hand-in-hand to ensure that what you see is not only fast and functional, but also backed by journalistic integrity.
               </p>
             </div>
           </Col>
         </Row>
 
         {/* Developer Section */}
-        <div className="bg-light p-5 rounded-4 shadow text-center border-danger border-1 border">
-          <h4 className="fw-bold text-dark mb-4">Meet the Developer</h4>
+        <div className={`p-5 rounded-4 shadow text-center border border-1 border-danger ${developerBg}`}>
+          <h4 className="fw-bold mb-4">Meet the Developer</h4>
           <img
             src="/images/mypic.jpg"
             alt="Developer"
-            className="rounded mb-3 border border-3 border-muted"
+            className="rounded mb-3 border border-3"
             style={{ width: "150px", height: "165px", objectFit: "cover" }}
           />
           <h5 className="fw-semibold">Ved Tiwari</h5>
-          <p className="text-dark mb-3 ">
+          <p className="mb-3">
             MERN Stack Developer | DSA Enthusiast | YouTuber
-            <Link
-              to="https://www.youtube.com/@Algo_Tap"
-              className="text-decoration-none "
-            >
-              @ Algo_Tap
+            <Link to="https://www.youtube.com/@Algo_Tap" className="text-decoration-none text-info ms-1">
+              @Algo_Tap
             </Link>
           </p>
           <p className="fs-5" style={{ maxWidth: "700px", margin: "0 auto" }}>
-            This project is a part of my continuous learning and growth in
-            full-stack development. I am passionate about building scalable,
-            impactful, and user-centric applications.
+            This project is a part of my continuous learning and growth in full-stack development. I am passionate about building scalable, impactful, and user-centric applications.
           </p>
         </div>
       </Container>
