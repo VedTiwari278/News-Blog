@@ -82,6 +82,11 @@ const NavBar = () => {
                     Posts
                   </Link>
                 </li>
+                <li className="nav-item">
+                  <Link className="nav-link" to="/register">
+                    Start Writting
+                  </Link>
+                </li>
               </>
             )}
             {role === "admin" && (
