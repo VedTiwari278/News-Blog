@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useLocation, Link } from "react-router-dom";
 import axios from "axios";
+import { ThemeContext } from "../context/ThemeContext";
 
 const SearchResults = () => {
   const [results, setResults] = useState([]);
   const location = useLocation();
-
+  const { darkMode } = useContext(ThemeContext);
   const queryParams = new URLSearchParams(location.search);
   const term = queryParams.get("term");
 
@@ -37,7 +38,11 @@ const SearchResults = () => {
           {results.map((newsItem) => (
             <div className="col" key={newsItem._id}>
               <div className="card shadow-sm h-100">
-                <div className="row g-0 h-100">
+                <div
+                  className={`${
+                    darkMode ? "bg-dark text-light" : "bg-light text-dark"
+                  }row g-0 h-100`}
+                >
                   {/* Image - becomes full width on mobile */}
                   <div className="col-md-5">
                     <img
