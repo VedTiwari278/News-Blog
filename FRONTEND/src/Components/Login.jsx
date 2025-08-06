@@ -1,12 +1,13 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
+import { ThemeContext } from "./context/ThemeContext";
 
 function Login() {
   const [data, setData] = useState({ email: "", password: "" });
   const navigate = useNavigate();
-
+  const { darkMode } = useContext(ThemeContext);
   const handleLogin = async (e) => {
     e.preventDefault();
     try {
@@ -23,7 +24,11 @@ function Login() {
   };
 
   return (
-    <div className="min-vh-100 d-flex align-items-center justify-content-center bg-light">
+    <div
+      className={`${
+        darkMode ? "bg-dark text-light" : "bg-light text-dark"
+      }min-vh-100 d-flex align-items-center justify-content-center bg-light`}
+    >
       <div
         className="card shadow-lg border-0 p-4"
         style={{ maxWidth: "420px", width: "100%" }}

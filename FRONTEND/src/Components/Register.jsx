@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
+import { ThemeContext } from "./context/ThemeContext";
 
 function Register() {
   const navigate = useNavigate();
+  const { darkMode } = useContext(ThemeContext);
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -31,7 +33,11 @@ function Register() {
   };
 
   return (
-    <div className="d-flex justify-content-center align-items-center vh-100 bg-light">
+    <div
+      className={`${
+        darkMode ? "bg-dark text-light" : "bg-light text-dark"
+      }d-flex justify-content-center align-items-center vh-100 bg-light`}
+    >
       <div
         className="card p-4 shadow-lg"
         style={{ maxWidth: "400px", width: "100%" }}
