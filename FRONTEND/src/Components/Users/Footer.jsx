@@ -54,7 +54,7 @@ const Footer = () => {
                     darkMode ? "text-light" : "text-dark"
                   }`}
                 >
-                  Be a Contributor
+                  Start Writting
                 </Link>
               </li>
             </ul>
