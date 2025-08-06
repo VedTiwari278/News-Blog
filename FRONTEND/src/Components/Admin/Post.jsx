@@ -1,54 +1,43 @@
 import React, { useContext, useEffect, useState } from "react";
 import { FaEdit } from "react-icons/fa";
+
 import { FaDeleteLeft } from "react-icons/fa6";
 import "bootstrap/dist/css/bootstrap.min.css";
 import axios from "axios";
 import { Link, useNavigate } from "react-router-dom";
 import { NewsContext } from "../context/NewContext";
-import jwtDecode from "jwt-decode";
-
 const Post = () => {
-  const navigate = useNavigate();
+  // const [news, setNews] = useState([]);
+  // const [loading, setLoading] = useState(true);
   const { news, setNews, loading, FetchNews } = useContext(NewsContext);
-  const [user, setUser] = useState(null); // Store user info
-  const [filteredPosts, setFilteredPosts] = useState([]);
+  // useEffect(() => {
+  //   const FetchNews = async () => {
+  //     try {
+  //       const response = await axios.get(
+  //         "https://news-blog-abh6.vercel.app/getAllPost"
+  //       );
+  //       if (response) {
+  //         setNews(response.data.data);
+  //       }
+  //     } catch (err) {
+  //       console.error("No Posts Found", err);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+  //   FetchNews();
+  // }, []);
+  useEffect(() => {
+    FetchNews();
+  }, [news]);
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
-    if (!token) {
+    if (!localStorage.getItem("token")) {
       navigate("/login");
-      return;
-    }
-
-    try {
-      const decoded = jwtDecode(token);
-      setUser(decoded); // Save decoded user info
-
-      // Fetch posts then filter them based on role
-      const loadPosts = async () => {
-        await FetchNews(); // get all posts from context
-      };
-
-      loadPosts();
-    } catch (err) {
-      console.error("Token decoding failed", err);
-      navigate("/login");
+    } else {
+      FetchNews();
     }
   }, []);
-
-  useEffect(() => {
-    // Once news and user are available, filter accordingly
-    if (!user) return;
-
-    if (user.role === "admin") {
-      setFilteredPosts(news); // admin sees all posts
-    } else {
-      const myPosts = news.filter(
-        (post) => post.author?._id === user.id // assuming 'id' is stored as 'id' in token
-      );
-      setFilteredPosts(myPosts);
-    }
-  }, [news, user]);
 
   const handleDelete = async (id) => {
     try {
@@ -65,7 +54,7 @@ const Post = () => {
           },
         }
       );
-      FetchNews(); // Refresh post list after delete
+      FetchNews();
     } catch (error) {
       alert("Failed to delete post");
       console.error(error);
@@ -79,6 +68,7 @@ const Post = () => {
         <Link to="/admin/add-post" className="btn btn-success mt-2 mt-md-0">
           + ADD POST
         </Link>
+
         <Link to="/" className="btn btn-outline-primary mt-4 rounded-pill px-4">
           ⬅ Back to Home
         </Link>
@@ -91,6 +81,8 @@ const Post = () => {
         </div>
       ) : (
         <div className="table-responsive">
+          {" "}
+          {/* ✅ Responsive wrapper */}
           <table className="table table-bordered table-striped table-hover shadow">
             <thead className="table-dark">
               <tr>
@@ -104,8 +96,8 @@ const Post = () => {
               </tr>
             </thead>
             <tbody>
-              {filteredPosts.length > 0 ? (
-                filteredPosts.map((post, index) => (
+              {Array.isArray(news) && news.length > 0 ? (
+                news.map((post, index) => (
                   <tr key={post._id || index}>
                     <td>{index + 1}</td>
                     <td>{post.title}</td>
