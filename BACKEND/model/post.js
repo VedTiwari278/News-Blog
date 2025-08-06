@@ -29,7 +29,6 @@ const postSchema = new mongoose.Schema({
     type: Number,
     default: 0,
   },
-  isLiked: { default: false },
   createdAt: {
     type: Date,
     default: Date.now,

@@ -30,7 +30,7 @@ const News = () => {
 
   const handleLike = async (postId) => {
     // Prevent multiple likes (you can toggle instead if needed)
-    if (isLiked[postId] && news.isLiked === true) return;
+    if (isLiked[postId]) return;
 
     setLikeCounts((prev) => ({
       ...prev,
