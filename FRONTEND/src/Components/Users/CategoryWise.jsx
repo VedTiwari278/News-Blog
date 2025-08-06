@@ -92,9 +92,9 @@ const CategoryWise = () => {
           ) : (
             FilteredNews.map((newsItem) => (
               <div
-                className={`${
+                className={`card shadow-sm flex-row mb-3 ${
                   darkMode ? "bg-dark text-light" : "bg-light text-dark"
-                }card shadow-sm flex-row mb-3`}
+                }`}
                 style={{
                   width: "100%",
                   maxWidth: "700px",
@@ -122,20 +122,20 @@ const CategoryWise = () => {
                 >
                   <div>
                     <h5 className="card-title mb-1">{newsItem.title}</h5>
-                    <ul className="list-inline mb-2 text-muted small">
+                    <ul className="list-inline mb-2 small text-muted">
                       <li className="list-inline-item">
                         <Link
                           to={`/category/${newsItem.category._id}`}
-                          className="text-decoration-none"
+                          className={`text-decoration-none ${
+                            darkMode ? "text-light" : "text-dark"
+                          }`}
                         >
                           {newsItem.category.categoryName}
                         </Link>
                       </li>
                       <li className="list-inline-item">|</li>
                       <li className="list-inline-item">
-                        <a href="#" className="text-decoration-none">
-                          {newsItem.author?.username || "Unknown"}
-                        </a>
+                        <span>{newsItem.author?.username || "Unknown"}</span>
                       </li>
                       <li className="list-inline-item">|</li>
                       <li className="list-inline-item">
@@ -160,7 +160,9 @@ const CategoryWise = () => {
                     <div>
                       <Link
                         to={`/post/${newsItem._id}`}
-                        className="btn btn-sm btn-outline-primary"
+                        className={`btn btn-sm ${
+                          darkMode ? "btn-outline-light" : "btn-outline-primary"
+                        }`}
                       >
                         Read More
                       </Link>
