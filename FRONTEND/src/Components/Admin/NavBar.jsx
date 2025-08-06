@@ -1,5 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { FaRegNewspaper } from "react-icons/fa"; // Optional icon
 import { jwtDecode } from "jwt-decode";
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { ThemeContext } from "../context/ThemeContext";
@@ -39,13 +40,23 @@ const NavBar = () => {
     >
       <div className="container">
         <Link
-          className="navbar-brand fw-bold"
+          className="navbar-brand fw-bold d-flex align-items-center"
           to="/"
-          style={{ textDecoration: "line-through" }}
+          style={{
+            fontFamily: "'Georgia', serif",
+            fontSize: "1.8rem",
+            letterSpacing: "1px",
+            textDecoration: "none",
+            color: "transparent",
+            backgroundImage: "linear-gradient(to right, #ff6a00, #ee0979)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            textShadow: "1px 1px 2px rgba(0,0,0,0.2)",
+          }}
         >
+          <FaRegNewspaper className="me-2" />
           Daily News Analysis
         </Link>
-
         <button
           className="navbar-toggler"
           type="button"
@@ -57,7 +68,6 @@ const NavBar = () => {
         >
           <span className="navbar-toggler-icon"></span>
         </button>
-
         <div className="collapse navbar-collapse" id="navbarNav">
           <ul className="navbar-nav mx-auto gap-3">
             {["writer", "admin"].includes(role) && (
