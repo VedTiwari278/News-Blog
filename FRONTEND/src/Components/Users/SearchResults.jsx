@@ -37,13 +37,13 @@ const SearchResults = () => {
         <div className="row row-cols-1 g-4">
           {results.map((newsItem) => (
             <div className="col" key={newsItem._id}>
-              <div className="card shadow-sm h-100">
-                <div
-                  className={`${
-                    darkMode ? "bg-dark text-light" : "bg-light text-dark"
-                  }row g-0 h-100`}
-                >
-                  {/* Image - becomes full width on mobile */}
+              <div
+                className={`card shadow-sm h-100 ${
+                  darkMode ? "bg-dark text-light" : "bg-light text-dark"
+                }`}
+              >
+                <div className="row g-0 h-100">
+                  {/* Image */}
                   <div className="col-md-5">
                     <img
                       src={newsItem.image}
