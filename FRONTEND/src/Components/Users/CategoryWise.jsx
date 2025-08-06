@@ -3,7 +3,7 @@ import axios from "axios";
 import { Link, useParams } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { NewsContext } from "../context/NewContext";
-
+import { ThemeContext } from "../context/ThemeContext";
 const CategoryWise = () => {
   // const [news, setNews] = useState([]);
   // const [loading, setLoading] = useState(true);
@@ -11,6 +11,7 @@ const CategoryWise = () => {
 
   const { news, setNews, loading } = useContext(NewsContext);
   const [FilteredNews, setFilterNews] = useState([]);
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
     const filtered = news.filter((item) => item.category._id === id);
@@ -91,7 +92,9 @@ const CategoryWise = () => {
           ) : (
             FilteredNews.map((newsItem) => (
               <div
-                className="card shadow-sm flex-row mb-3"
+                className={`${
+                  darkMode ? "bg-dark text-light" : "bg-light text-dark"
+                }card shadow-sm flex-row mb-3`}
                 style={{
                   width: "100%",
                   maxWidth: "700px",
