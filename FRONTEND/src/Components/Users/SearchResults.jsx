@@ -47,7 +47,7 @@ const SearchResults = () => {
                       style={{
                         objectFit: "cover",
                         minHeight: "200px",
-                        width: "100%"
+                        width: "100%",
                       }}
                     />
                   </div>
@@ -66,13 +66,17 @@ const SearchResults = () => {
                               {newsItem.category?.categoryName}
                             </Link>
                           </li>
-                          <li className="list-inline-item d-none d-sm-inline">|</li>
+                          <li className="list-inline-item d-none d-sm-inline">
+                            |
+                          </li>
                           <li className="list-inline-item">
                             <a href="#" className="text-decoration-none">
                               {newsItem.author.username}
                             </a>
                           </li>
-                          <li className="list-inline-item d-none d-sm-inline">|</li>
+                          <li className="list-inline-item d-none d-sm-inline">
+                            |
+                          </li>
                           <li className="list-inline-item">
                             {new Date(newsItem.createdAt).toLocaleDateString()}
                           </li>

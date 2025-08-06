@@ -1,5 +1,5 @@
 import React, { useContext, useEffect, useState } from "react";
-import { Link } from "react-router-dom"; // Added missing import
+import { Link } from "react-router-dom";
 import { NewsContext } from "../context/NewContext";
 import { ThemeContext } from "../context/ThemeContext";
 import { FaRegComment, FaRegHeart } from "react-icons/fa";
@@ -9,40 +9,46 @@ import "../CSS/News.css";
 import axios from "axios";
 
 const News = () => {
-  const { news, setNews, loading, FetchNews, error } = useContext(NewsContext); // Added error from context
-  const [likes, setLikes] = useState(0);
+  const { news, setNews, loading, FetchNews, error } = useContext(NewsContext);
   const { darkMode } = useContext(ThemeContext);
-  console.log("Full Data", news);
+  const [likeCounts, setLikeCounts] = useState({});
+  const [isLiked, setIsLiked] = useState({});
 
   useEffect(() => {
     FetchNews();
   }, []);
 
-  // Get top 5 recent posts for carousel
   const recentPosts = [...news]
     .sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     .slice(0, 5);
 
-  // Handle image errors
   const handleImageError = (e) => {
     e.target.src =
       "https://via.placeholder.com/300x200?text=Image+Not+Available";
     e.target.style.objectFit = "contain";
   };
 
-  if (error) {
-    return (
-      <div
-        className={`alert alert-danger ${darkMode ? "bg-dark text-light" : ""}`}
-      >
-        Failed to load news: {error.message}
-      </div>
-    );
-  }
+  const handleLike = async (postId) => {
+    // Prevent multiple likes (you can toggle instead if needed)
+    if (isLiked[postId]) return;
 
-  const handleLike = async (e) => {
-    setNews.likes(likes + 1);
-    // const response = await axios.get("http://localhost:3000/:id");
+    setLikeCounts((prev) => ({
+      ...prev,
+      [postId]: (prev[postId] || 0) + 1,
+    }));
+
+    setIsLiked((prev) => ({
+      ...prev,
+      [postId]: true,
+    }));
+
+    try {
+      await axios.post(
+        `https://news-blog-abh6.vercel.app/api/posts/${postId}/like`
+      );
+    } catch (err) {
+      console.error("Failed to like post:", err);
+    }
   };
 
   const SkeletonCard = () => (
@@ -70,9 +76,19 @@ const News = () => {
     </div>
   );
 
+  if (error) {
+    return (
+      <div
+        className={`alert alert-danger ${darkMode ? "bg-dark text-light" : ""}`}
+      >
+        Failed to load news: {error.message}
+      </div>
+    );
+  }
+
   return (
     <div className="container-fluid px-3">
-      {/* Carousel Section - Only show when not loading */}
+      {/* Carousel */}
       {!loading && recentPosts.length > 0 && (
         <div className="mb-5">
           <h4 className={`mb-4 ${darkMode ? "text-light" : "text-dark"}`}>
@@ -94,7 +110,7 @@ const News = () => {
                       className="d-block w-100 h-100"
                       src={post.image}
                       alt={post.title}
-                      onError={handleImageError} // Added error handler
+                      onError={handleImageError}
                       style={{
                         objectFit: "cover",
                         filter: darkMode
@@ -135,7 +151,7 @@ const News = () => {
         </div>
       )}
 
-      {/* News Grid Section */}
+      {/* News Cards */}
       <div className="row g-4">
         {loading
           ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
@@ -168,7 +184,7 @@ const News = () => {
                         src={item.image}
                         alt="News"
                         className="w-100 h-100 object-fit-cover zoom-image"
-                        onError={handleImageError} // Added error handler
+                        onError={handleImageError}
                         style={{
                           objectPosition: "center",
                           transition: "transform 0.3s",
@@ -265,9 +281,23 @@ const News = () => {
                             darkMode ? "text-light" : "text-muted"
                           }`}
                         >
-                          <FaRegHeart size={16} onClick={handleLike} />
-                          {item.likes}
+                          <FaRegHeart
+                            size={16}
+                            onClick={() => handleLike(item._id)}
+                            style={{
+                              cursor: "pointer",
+                              color: isLiked[item._id]
+                                ? "red"
+                                : darkMode
+                                ? "white"
+                                : "gray",
+                            }}
+                          />
+                          {likeCounts[item._id] !== undefined
+                            ? item.likes + likeCounts[item._id]
+                            : item.likes}
                         </span>
+
                         <span
                           className={`d-flex align-items-center gap-1 ${
                             darkMode ? "text-light" : "text-muted"

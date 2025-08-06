@@ -23,4 +23,7 @@ Frontendrouter.get(
   controller.getHeaderCategory
 );
 
+Frontendrouter.post("/api/posts/:postId/like", controller.likePost);
+
+
 module.exports = Frontendrouter;
