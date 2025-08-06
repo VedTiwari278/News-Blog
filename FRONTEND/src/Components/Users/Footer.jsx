@@ -22,7 +22,6 @@ const Footer = () => {
             <h5>Ved Tiwari</h5>
             <p>© {new Date().getFullYear()} All rights reserved.</p>
           </div>
-
           {/* Center: Quick Links */}
           <div className="col-md-4 mb-4">
             <h5>Quick Links</h5>
@@ -59,9 +58,12 @@ const Footer = () => {
               </li>
             </ul>
           </div>
-
           {/* Right: Social Links */}
-          <div className="col-md-4 text-light mb-4">
+          <div
+            className={`fs-5 ${
+              darkMode ? "text-light" : "text-dark"
+            }col-md-4 text-light mb-4 `}
+          >
             <h5>Follow Me</h5>
             <div className="d-flex justify-content-center justify-content-md-start gap-4">
               <a
