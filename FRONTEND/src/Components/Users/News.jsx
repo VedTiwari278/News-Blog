@@ -263,7 +263,7 @@ const News = () => {
                           }`}
                         >
                           <FaRegHeart size={16} onClick={handleLike} />{" "}
-                          {item.likes || 0}
+                          {item.likes}
                         </span>
                         <span
                           className={`d-flex align-items-center gap-1 ${
