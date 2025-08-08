@@ -22,14 +22,12 @@ const Header = () => {
 
   return (
     <>
-      {/* Fixed Category Bar under navbar */}
+      {/* Logo Section */}
+
+      {/* Responsive Category Bar */}
       <div
-        className="bg-primary py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center position-fixed w-100"
-        style={{
-          top: "56px", // Navbar ki height (adjust if needed)
-          whiteSpace: "nowrap",
-          zIndex: 1030, // under or near navbar
-        }}
+        className="bg-primary py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
+        style={{ whiteSpace: "nowrap" }}
       >
         {loading
           ? Array.from({ length: 6 }).map((_, index) => (
@@ -52,12 +50,12 @@ const Header = () => {
                 style={{
                   flex: "0 0 auto",
                   display: "inline-block",
-                  color: "#ffffff",
+                  color: "#ffffff", // default white
                 }}
                 whileHover={{
                   rotate: 5,
                   scale: 1.1,
-                  color: "#d10101e7",
+                  color: "#d10101e7", // hover color
                 }}
                 whileTap={{
                   rotate: 10,
