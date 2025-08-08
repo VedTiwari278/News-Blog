@@ -54,7 +54,7 @@ const Header = () => {
               <MotionLink
                 key={category._id}
                 to={`/category/${category._id}`}
-                className="text-decoration-none border fw-semibold px-2"
+                className="text-decoration-none border rounded-pill m-2 bg-muted fw-semibold px-2"
                 style={{
                   flex: "0 0 auto",
                   display: "inline-block",
