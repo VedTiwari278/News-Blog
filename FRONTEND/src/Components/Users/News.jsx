@@ -186,7 +186,14 @@ const News = () => {
                         alt="News"
                         className="w-100 h-100 object-fit-cover zoom-image"
                         onError={handleImageError}
-                        whileHover={({ rotate: 360 }, { scale: 1.1 })}
+                        whileHover={{
+                          rotate: [0, 360],
+                          transition: {
+                            repeat: Infinity,
+                            duration: 1,
+                            ease: "linear",
+                          },
+                        }}
                         // style={{
                         //   objectPosition: "center",
                         //   transition: "transform 0.3s",
