@@ -39,7 +39,15 @@ const NavBar = () => {
     >
       <div className="container">
         <Link className="navbar-brand fw-bold" to="/">
-          Daily News Analysis
+          <img
+            height={70}
+            width={100}
+            className={`${
+              darkMode ? "border-2 border-light" : "border-2 border-dark"
+            } rounded-circle`}
+            src="/images/Logo.jpeg"
+            alt=""
+          />
         </Link>
 
         <button
