@@ -105,6 +105,11 @@ const News = () => {
                         darkMode ? "2px solid white" : "5px solid black"
                       }`,
                     }}
+                    whileTap={{
+                      border: `${
+                        darkMode ? "2px solid white" : "5px solid black"
+                      }`,
+                    }}
                     className="position-relative"
                     style={{
                       height: "350px",
