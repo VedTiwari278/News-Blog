@@ -5,9 +5,9 @@ import { ThemeContext } from "../context/ThemeContext";
 import { FaRegComment, FaRegHeart } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { Carousel } from "react-bootstrap";
+import { motion } from "framer-motion";
 import "../CSS/News.css";
 import axios from "axios";
-import { motion } from "framer-motion";
 
 const News = () => {
   const { news, setNews, loading, FetchNews, error } = useContext(NewsContext);
@@ -186,24 +186,17 @@ const News = () => {
                         alt="News"
                         className="w-100 h-100 object-fit-cover zoom-image"
                         onError={handleImageError}
-                        whileHover={{
-                          rotate: [0, 360],
-                          transition: {
-                            repeat: Infinity,
-                            duration: 1,
-                            ease: "linear",
-                          },
-                        }}
-                        // style={{
-                        //   objectPosition: "center",
-                        //   transition: "transform 0.3s",
-                        // }}
+                        whileHover={{ scale: 1.1 }}
                       />
                     </Link>
                   </div>
 
                   {/* Card Body */}
-                  <div className="card-body d-flex flex-column p-3">
+                  <motion.div
+                    className="card-body d-flex flex-column p-3"
+                    whileHover={{ scale: 1.1 }}
+                    whileTap={{ scale: 1.1 }}
+                  >
                     {/* Category + Time */}
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <Link
@@ -317,7 +310,7 @@ const News = () => {
                         </span>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </div>
               </div>
             ))}
