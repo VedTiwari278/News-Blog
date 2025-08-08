@@ -63,7 +63,7 @@ const Header = () => {
                 whileHover={{
                   rotate: 5,
                   scale: 1.1,
-                  color: "#ff0000ff", // hover color
+                  color: "#d10101e7", // hover color
                 }}
                 whileTap={{
                   rotate: 10,

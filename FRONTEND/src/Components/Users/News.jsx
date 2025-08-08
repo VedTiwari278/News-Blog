@@ -99,7 +99,12 @@ const News = () => {
             {recentPosts.map((post) => (
               <Carousel.Item key={post._id}>
                 <Link to={`/post/${post._id}`} className="text-decoration-none">
-                  <div
+                  <motion.div
+                    whileHover={{
+                      border: `${
+                        darkMode ? "2px solid white" : "5px solid black"
+                      }`,
+                    }}
                     className="position-relative"
                     style={{
                       height: "350px",
@@ -144,7 +149,7 @@ const News = () => {
                         </small>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
                 </Link>
               </Carousel.Item>
             ))}
