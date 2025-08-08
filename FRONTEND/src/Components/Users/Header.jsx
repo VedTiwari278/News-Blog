@@ -54,7 +54,7 @@ const Header = () => {
               <MotionLink
                 key={category._id}
                 to={`/category/${category._id}`}
-                className="text-decoration-none fw-semibold px-2"
+                className="text-decoration-none border fw-semibold px-2"
                 style={{
                   flex: "0 0 auto",
                   display: "inline-block",
@@ -66,9 +66,9 @@ const Header = () => {
                   color: "#ff0000ff", // hover color
                 }}
                 whileTap={{
-                  rotate: 5,
+                  rotate: 10,
                   color: "#ff0000ff",
-                  scale: 0.95,
+                  scale: 1.1,
                 }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
