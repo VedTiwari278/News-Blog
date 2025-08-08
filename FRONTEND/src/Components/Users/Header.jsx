@@ -22,19 +22,9 @@ const Header = () => {
 
   return (
     <>
-      {/* Logo Section */}
-      {/* <div className="text-center py-3 bg-light shadow-sm">
-        <img
-          src="/images/News.jpeg"
-          alt="No Logo Found"
-          className="img-fluid"
-          style={{ maxHeight: "80px", width: "auto" }}
-        />
-      </div> */}
-
       {/* Responsive Category Bar */}
       <div
-        className="bg-primary py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
+        className="bg-primary fixed-top py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
         style={{ whiteSpace: "nowrap" }}
       >
         {loading
