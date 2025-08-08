@@ -7,6 +7,7 @@ import { formatDistanceToNow } from "date-fns";
 import { Carousel } from "react-bootstrap";
 import "../CSS/News.css";
 import axios from "axios";
+import { motion } from "framer-motion";
 
 const News = () => {
   const { news, setNews, loading, FetchNews, error } = useContext(NewsContext);
@@ -180,15 +181,16 @@ const News = () => {
                       to={`/post/${item._id}`}
                       className="text-decoration-none"
                     >
-                      <img
+                      <motion.img
                         src={item.image}
                         alt="News"
                         className="w-100 h-100 object-fit-cover zoom-image"
                         onError={handleImageError}
-                        style={{
-                          objectPosition: "center",
-                          transition: "transform 0.3s",
-                        }}
+                        whileHover={({ rotate: 360 }, { scale: 1.1 })}
+                        // style={{
+                        //   objectPosition: "center",
+                        //   transition: "transform 0.3s",
+                        // }}
                       />
                     </Link>
                   </div>
