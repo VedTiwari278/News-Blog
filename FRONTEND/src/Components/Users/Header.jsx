@@ -65,7 +65,11 @@ const Header = () => {
                   scale: 1.1,
                   color: "#ff0000ff", // hover color
                 }}
-                whileTap={{ scale: 0.95 }}
+                whileTap={{
+                  rotate: 5,
+                  color: "#ff0000ff",
+                  scale: 0.95,
+                }}
                 transition={{ type: "spring", stiffness: 300 }}
               >
                 {category.categoryName}
