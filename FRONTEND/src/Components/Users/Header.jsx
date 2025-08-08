@@ -23,14 +23,14 @@ const Header = () => {
   return (
     <>
       {/* Logo Section */}
-      <div className="text-center py-3 bg-light shadow-sm">
+      {/* <div className="text-center py-3 bg-light shadow-sm">
         <img
           src="/images/News.jpeg"
           alt="No Logo Found"
           className="img-fluid"
           style={{ maxHeight: "80px", width: "auto" }}
         />
-      </div>
+      </div> */}
 
       {/* Responsive Category Bar */}
       <div
