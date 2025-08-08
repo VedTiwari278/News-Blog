@@ -2,6 +2,10 @@ import React, { useContext, useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom";
 import { CategoryContext } from "../context/CategoryContext";
+import { motion } from "framer-motion";
+
+// Create a motion-enhanced Link
+const MotionLink = motion(Link);
 
 const Header = () => {
   const { categories, fetchCategories } = useContext(CategoryContext);
@@ -34,8 +38,7 @@ const Header = () => {
         style={{ whiteSpace: "nowrap" }}
       >
         {loading
-          ? // Skeleton placeholders
-            Array.from({ length: 6 }).map((_, index) => (
+          ? Array.from({ length: 6 }).map((_, index) => (
               <div
                 key={index}
                 className="mx-2 rounded bg-white"
@@ -47,16 +50,26 @@ const Header = () => {
                 }}
               ></div>
             ))
-          : // Actual categories
-            categories.map((category) => (
-              <Link
+          : categories.map((category) => (
+              <MotionLink
                 key={category._id}
                 to={`/category/${category._id}`}
-                className="text-white text-decoration-none fw-semibold px-2"
-                style={{ flex: "0 0 auto" }}
+                className="text-decoration-none fw-semibold px-2"
+                style={{
+                  flex: "0 0 auto",
+                  display: "inline-block",
+                  color: "#ffffff", // default white
+                }}
+                whileHover={{
+                  rotate: 5,
+                  scale: 1.1,
+                  color: "#ff0000ff", // hover color
+                }}
+                whileTap={{ scale: 0.95 }}
+                transition={{ type: "spring", stiffness: 300 }}
               >
                 {category.categoryName}
-              </Link>
+              </MotionLink>
             ))}
       </div>
 
