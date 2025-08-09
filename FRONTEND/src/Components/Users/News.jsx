@@ -206,6 +206,8 @@ const News = () => {
                     className="card-body d-flex flex-column p-3"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 1.1 }}
+                    transition={{ duration: 0.6, ease: "easeInOut" }}
+                    viewport={{ amount: 0.2 }}
                   >
                     {/* Category + Time */}
                     <div className="d-flex justify-content-between align-items-center mb-2">
