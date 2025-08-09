@@ -5,7 +5,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import { FaRegComment, FaRegHeart } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { Carousel } from "react-bootstrap";
-import { motion } from "framer-motion";
+import { easeInOut, motion } from "framer-motion";
 import "../CSS/News.css";
 import axios from "axios";
 
@@ -196,7 +196,11 @@ const News = () => {
                         alt="News"
                         className="w-100 h-100 object-fit-cover zoom-image"
                         onError={handleImageError}
-                        whileHover={{ scale: 1.1 }}
+                        whileHover={{
+                          scale: 1.1,
+                          rotate: 360,
+                          transition: { duration: 0.5, ease: "easeInOut" },
+                        }}
                       />
                     </Link>
                   </div>
