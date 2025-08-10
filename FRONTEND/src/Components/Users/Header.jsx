@@ -22,12 +22,15 @@ const Header = () => {
 
   return (
     <>
-      {/* Logo Section */}
-
       {/* Responsive Category Bar */}
       <div
-        className="bg-primary py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
-        style={{ whiteSpace: "nowrap" }}
+        className="bg-primary  py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
+        style={{
+          position: "sticky",
+          top: 96,
+          whiteSpace: "nowrap",
+          zIndex: 1030, // Bootstrap default navbar z-index is 1030
+        }}
       >
         {loading
           ? Array.from({ length: 6 }).map((_, index) => (
