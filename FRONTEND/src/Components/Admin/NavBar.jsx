@@ -31,7 +31,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`navbar sticky-top navbar-expand-lg ${
+      className={`navbar sticky-top  navbar-expand-lg ${
         darkMode
           ? "navbar-dark bg-dark fw-bold"
           : "navbar-light bg-light fw-bold"

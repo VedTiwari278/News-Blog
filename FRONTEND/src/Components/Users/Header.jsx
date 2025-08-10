@@ -24,7 +24,7 @@ const Header = () => {
     <>
       {/* Responsive Category Bar */}
       <div
-        className="bg-primary  py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
+        className="bg-primary bg-opacity-75 py-2 px-2 overflow-auto d-flex justify-content-start justify-content-md-center"
         style={{
           position: "sticky",
           top: 96,
@@ -49,20 +49,17 @@ const Header = () => {
               <MotionLink
                 key={category._id}
                 to={`/category/${category._id}`}
-                className="text-decoration-none border rounded-pill m-2 bg-muted fw-semibold px-2"
+                className="text-decoration-none border rounded m-2 bg-dark fw-semibold px-2"
                 style={{
                   flex: "0 0 auto",
                   display: "inline-block",
                   color: "#ffffff", // default white
                 }}
                 whileHover={{
-                  rotate: 5,
                   scale: 1.1,
-                  color: "#d10101e7", // hover color
+                  // hover color
                 }}
                 whileTap={{
-                  rotate: 10,
-                  color: "#ff0000ff",
                   scale: 1.1,
                 }}
                 transition={{ type: "spring", stiffness: 300 }}
