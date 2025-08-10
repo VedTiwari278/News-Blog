@@ -68,13 +68,13 @@ router.post("/login", async (req, res) => {
   if (!match) return res.status(400).json({ msg: "Wrong password" });
 
   // Generate token
-  const token = jwt.sign(
-    { id: user._id, role: user.role, username: user.username },
-    "ghjklsakjdhgfgwehf",
-    {
-      expiresIn: "1d",
-    }
-  );
+    const token = jwt.sign(
+      { id: user._id, role: user.role, username: user.username },
+      "ghjklsakjdhgfgwehf",
+      {
+        expiresIn: "1m",
+      }
+    );
 
   res.json({
     token,
