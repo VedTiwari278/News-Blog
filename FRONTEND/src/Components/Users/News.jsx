@@ -5,7 +5,7 @@ import { ThemeContext } from "../context/ThemeContext";
 import { FaRegComment, FaRegHeart } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { Carousel } from "react-bootstrap";
-import { easeInOut, motion } from "framer-motion";
+import { motion } from "framer-motion";
 import "../CSS/News.css";
 import axios from "axios";
 
@@ -196,11 +196,7 @@ const News = () => {
                         alt="News"
                         className="w-100 h-100 object-fit-cover zoom-image"
                         onError={handleImageError}
-                        whileHover={{
-                          scale: 1.1,
-                          rotate: 360,
-                          transition: { duration: 0.5, ease: "easeInOut" },
-                        }}
+                        whileHover={{ scale: 1.1 }}
                       />
                     </Link>
                   </div>
@@ -210,8 +206,6 @@ const News = () => {
                     className="card-body d-flex flex-column p-3"
                     whileHover={{ scale: 1.1 }}
                     whileTap={{ scale: 1.1 }}
-                    transition={{ duration: 0.6, ease: "easeInOut" }}
-                    viewport={{ amount: 0.2 }}
                   >
                     {/* Category + Time */}
                     <div className="d-flex justify-content-between align-items-center mb-2">
