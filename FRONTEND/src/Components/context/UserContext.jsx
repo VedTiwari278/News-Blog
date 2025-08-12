@@ -21,6 +21,8 @@ export const UserProvider = ({ children }) => {
           },
         }
       );
+      // console.log("Ye hai user ka dataa :",response.da);
+
       if (response?.data?.data) {
         setUser(response.data.data);
       }

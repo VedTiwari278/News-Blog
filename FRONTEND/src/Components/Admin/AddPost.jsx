@@ -67,8 +67,8 @@ const AddPost = () => {
   return (
     <div
       className={`${
-        darkMode ? "bg-dark text-white" : "bg-light text-dark"
-      }card shadow-lg border-0 rounded-4 p-4`}
+        darkMode ? "bg-dark text-white" : "bg-transparent text-dark"
+      }card shadow-lg border-0 -4 p-4 my-5`}
     >
       {/* Header */}
       <div className="mb-4 border-bottom pb-2">
@@ -142,8 +142,11 @@ const AddPost = () => {
               />
             ) : (
               <div
-                className="border border-2 border-dashed rounded-4 text-muted d-flex flex-column align-items-center justify-content-center p-4"
-                style={{ height: "200px", width: "100%" }}
+                className={`${
+                  darkMode
+                    ? " border-light text-light"
+                    : "border-dark text-dark"
+                } border border-2 border-dashed rounded-4  d-flex flex-column align-items-center justify-content-center p-4`}
               >
                 <span>Image Preview</span>
               </div>

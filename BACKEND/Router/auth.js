@@ -2,39 +2,38 @@ const express = require("express");
 const router = express.Router();
 const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
+const multer = require("multer");
 
-const auth = require("../model/Users"); // replace with your actual model path
+const auth = require("../model/Users");
+const { storage } = require("../config/cloudinary");
 
-router.post("/register", async (req, res) => {
+const upload = multer({ storage });
+
+// Register route with avatar upload
+router.post("/register", upload.single("avatar"), async (req, res) => {
   try {
     const { firstName, lastName, username, email, password, role } = req.body;
+    const file = req.file;
+    console.log("Avtar :", file);
 
-    console.log(req.body);
-
-    //   // Check required fields
     if (!firstName || !lastName || !username || !email || !password || !role) {
-      // console.log("All Good");
-
       return res
         .status(400)
         .json({ msg: "All required fields must be filled" });
     }
 
-    // Check if email or username already exists
-    const existingEmail = await auth.findOne({ email });
-    if (existingEmail) {
+    // Check existing user
+    if (await auth.findOne({ email })) {
       return res.status(400).json({ msg: "Email already exists" });
     }
-
-    const existingUsername = await auth.findOne({ username });
-    if (existingUsername) {
-      return res.status(400).json({ msg: "username already taken" });
+    if (await auth.findOne({ username })) {
+      return res.status(400).json({ msg: "Username already taken" });
     }
 
-    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
+    const avatarUrl = req.file ? req.file.path : null;
+
     const newUser = new auth({
       firstName,
       lastName,
@@ -42,6 +41,7 @@ router.post("/register", async (req, res) => {
       email,
       password: hashedPassword,
       role,
+      avatar: avatarUrl,
     });
 
     await newUser.save();
@@ -53,37 +53,46 @@ router.post("/register", async (req, res) => {
   }
 });
 
-// module.exports = router;
-
+// Login route
 router.post("/login", async (req, res) => {
-  const { email, password } = req.body;
+  try {
+    const { email, password } = req.body;
 
-  // Check if user exists
-  const user = await auth.findOne({ email });
-  if (!user) return res.status(400).json({ msg: "Invalid credentials" });
-  // console.log(user.role);
+    const user = await auth.findOne({ email });
+    // console.log("User ka data : ", user);
 
-  // Match password
-  const match = await bcrypt.compare(password, user.password);
-  if (!match) return res.status(400).json({ msg: "Wrong password" });
+    if (!user) return res.status(400).json({ msg: "Invalid credentials" });
 
-  // Generate token
+    const match = await bcrypt.compare(password, user.password);
+    if (!match) return res.status(400).json({ msg: "Wrong password" });
+
     const token = jwt.sign(
-      { id: user._id, role: user.role, username: user.username },
-      "ghjklsakjdhgfgwehf",
       {
-        expiresIn: "7d",
-      }
+        id: user._id,
+        role: user.role,
+        username: user.username,
+        avatar: user.avatar,
+      },
+      "ghjklsakjdhgfgwehf",
+      { expiresIn: "7d" }
     );
 
-  res.json({
-    token,
-    user: {
-      id: user._id,
-      name: user.name,
-      email: user.email,
-    },
-  });
+    res.json({
+      token,
+      user: {
+        id: user._id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        username: user.username,
+        email: user.email,
+        role: user.role,
+        avatar: user.avatar,
+      },
+    });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ msg: "Server error during login" });
+  }
 });
 
 module.exports = router;

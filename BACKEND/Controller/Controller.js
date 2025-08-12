@@ -280,7 +280,7 @@ exports.getHeaderCategory = async (req, res) => {
 exports.AllPost = async (req, res) => {
   const data = await Post.find()
     .populate("category", "categoryName")
-    .populate("author", "username");
+    .populate("author", "username avatar");
   // console.log(data);
 
   res.status(200).send({ data: data });

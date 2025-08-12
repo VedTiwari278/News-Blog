@@ -19,6 +19,8 @@ export const NewsProvider = ({ children }) => {
         "https://news-blog-abh6.vercel.app/getAllPost"
       );
       if (response) {
+        // console.log("This is all news data : ", response.data.data);
+
         setNews(response.data.data);
       }
     } catch (err) {

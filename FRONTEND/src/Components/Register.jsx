@@ -6,6 +6,7 @@ import { ThemeContext } from "./context/ThemeContext";
 function Register() {
   const { darkMode } = useContext(ThemeContext);
   const navigate = useNavigate();
+
   const [data, setData] = useState({
     firstName: "",
     lastName: "",
@@ -13,19 +14,42 @@ function Register() {
     email: "",
     password: "",
     role: "reader",
+    avatar: null,
   });
+
+  const [preview, setPreview] = useState(null);
+
+  const handleAvatarChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setData((prev) => ({ ...prev, avatar: file }));
+      setPreview(URL.createObjectURL(file));
+    }
+  };
 
   const handleRegister = async (e) => {
     e.preventDefault();
+
     try {
+      const formData = new FormData();
+      formData.append("firstName", data.firstName);
+      formData.append("lastName", data.lastName);
+      formData.append("username", data.username);
+      formData.append("email", data.email);
+      formData.append("password", data.password);
+      formData.append("role", data.role);
+      if (data.avatar) formData.append("avatar", data.avatar);
+
       const response = await axios.post(
         "https://news-blog-abh6.vercel.app/auth/register",
-        data
+        formData,
+        {
+          headers: { "Content-Type": "multipart/form-data" },
+        }
       );
+
       alert("Registered Successfully");
-      if (response) {
-        navigate("/login");
-      }
+      if (response) navigate("/login");
     } catch (err) {
       alert(err.response?.data?.msg || "Something went wrong");
     }
@@ -41,14 +65,40 @@ function Register() {
         className={`card shadow-lg border-0 p-4 ${
           darkMode ? "bg-transparent text-light" : "bg-white text-dark"
         }`}
-        style={{ maxWidth: "500px", width: "100%" }}
+        style={{ maxWidth: 500, width: "100%" }}
       >
         <div className="text-center mb-4">
           <h2 className="fw-bold text-primary">Create Account</h2>
           <p className="text-muted">Register to continue</p>
         </div>
 
-        <form onSubmit={handleRegister}>
+        <form onSubmit={handleRegister} encType="multipart/form-data">
+          {/* Avatar Upload */}
+          <div className="mb-3 text-center">
+            {preview ? (
+              <img
+                src={preview}
+                alt="avatar preview"
+                className="rounded-circle mb-2"
+                style={{ width: 100, height: 100, objectFit: "cover" }}
+              />
+            ) : (
+              <div
+                className={`rounded-circle mb-2 d-inline-block ${
+                  darkMode ? "bg-secondary" : "bg-light border"
+                }`}
+                style={{ width: 100, height: 100 }}
+              />
+            )}
+            <input
+              type="file"
+              accept="image/*"
+              onChange={handleAvatarChange}
+              className="form-control form-control-sm"
+              style={{ maxWidth: 250, margin: "0 auto" }}
+            />
+          </div>
+
           {/* First Name */}
           <div className="form-floating mb-3">
             <input
@@ -100,6 +150,7 @@ function Register() {
               }`}
               id="floatingUsername"
               placeholder="Username"
+              autoComplete="username"
               value={data.username}
               onChange={(e) => setData({ ...data, username: e.target.value })}
               required
@@ -142,6 +193,7 @@ function Register() {
               }`}
               id="floatingPassword"
               placeholder="Password"
+              autoComplete="current-password"
               value={data.password}
               onChange={(e) => setData({ ...data, password: e.target.value })}
               required
@@ -181,7 +233,7 @@ function Register() {
         </form>
 
         <div className="text-center mt-3">
-          <span className="">Already have an account? </span>
+          <span>Already have an account? </span>
           <Link
             to="/login"
             className="fw-semibold text-decoration-none text-primary"

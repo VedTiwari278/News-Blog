@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { jwtDecode } from "jwt-decode";
+import { jwtDecode } from "jwt-decode"; // fixed import
 import "bootstrap/dist/js/bootstrap.bundle.min";
 import { ThemeContext } from "../context/ThemeContext";
 import { MdOutlineDarkMode, MdOutlineLightMode } from "react-icons/md";
@@ -12,12 +12,15 @@ const NavBar = () => {
 
   let role = null;
   let user = null;
+  let avatar = null;
 
   if (token) {
     try {
       const decoded = jwtDecode(token);
       role = decoded.role;
       user = decoded.username;
+      avatar = decoded.avatar;
+      console.log("Avatar URL:", avatar);
     } catch (error) {
       console.error("Invalid token");
     }
@@ -31,7 +34,7 @@ const NavBar = () => {
 
   return (
     <nav
-      className={`navbar sticky-top  navbar-expand-lg ${
+      className={`navbar sticky-top navbar-expand-lg ${
         darkMode
           ? "navbar-dark bg-dark fw-bold"
           : "navbar-light bg-light fw-bold"
@@ -46,7 +49,7 @@ const NavBar = () => {
               darkMode ? "border-2 border-light" : "border-2 border-dark"
             } rounded-circle`}
             src="/images/Logo.jpeg"
-            alt=""
+            alt="Logo"
           />
         </Link>
 
@@ -88,7 +91,7 @@ const NavBar = () => {
           </ul>
 
           <ul className="navbar-nav ms-auto gap-3 align-items-center">
-            {/* 🌙 Theme toggle icon button */}
+            {/* Theme toggle button */}
             <li className="nav-item">
               <button
                 className="btn border-0"
@@ -97,20 +100,52 @@ const NavBar = () => {
                   fontSize: "1.5rem",
                   color: darkMode ? "#fff" : "#000",
                 }}
+                aria-label="Toggle theme"
               >
                 {darkMode ? <MdOutlineDarkMode /> : <MdOutlineLightMode />}
               </button>
             </li>
 
             {user && (
-              <li className="nav-item">
+              <li className="nav-item d-flex align-items-center">
                 <span
                   className={`fw-semibold ${
                     darkMode ? "text-light" : "text-dark"
                   }`}
                 >
-                  Welcome, {user}
+                  Welcome,
                 </span>
+                {avatar ? (
+                  <img
+                    src={avatar}
+                    alt={`${user} avatar`}
+                    style={{
+                      width: "35px",
+                      height: "35px",
+                      borderRadius: "50%",
+                      objectFit: "cover",
+                      marginLeft: "8px",
+                      border: darkMode ? "2px solid white" : "2px solid black",
+                    }}
+                  />
+                ) : (
+                  <div
+                    style={{
+                      width: "35px",
+                      height: "35px",
+                      borderRadius: "50%",
+                      backgroundColor: darkMode ? "#666" : "#ccc",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      color: darkMode ? "#fff" : "#000",
+                      fontWeight: "bold",
+                      marginLeft: "8px",
+                    }}
+                  >
+                    {user.charAt(0).toUpperCase()}
+                  </div>
+                )}
               </li>
             )}
 

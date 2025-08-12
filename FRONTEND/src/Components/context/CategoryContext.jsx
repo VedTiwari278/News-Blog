@@ -7,7 +7,7 @@ export const CategoryProvider = ({ children }) => {
 
   const fetchCategories = async () => {
     const token = localStorage.getItem("token");
-    console.log("This is  Token : ", token);
+    // console.log("This is  Token : ", token);
     try {
       const res = await axios.get(
         "https://news-blog-abh6.vercel.app/admin/get-category"

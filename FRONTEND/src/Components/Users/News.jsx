@@ -6,11 +6,11 @@ import { FaRegComment, FaRegHeart } from "react-icons/fa";
 import { formatDistanceToNow } from "date-fns";
 import { Carousel } from "react-bootstrap";
 import { motion } from "framer-motion";
-import "../CSS/News.css";
+import "../CSS/News.css"; // keep only minimal styling for skeletons etc
 import axios from "axios";
 
 const News = () => {
-  const { news, setNews, loading, FetchNews, error } = useContext(NewsContext);
+  const { news, loading, FetchNews, error } = useContext(NewsContext);
   const { darkMode } = useContext(ThemeContext);
   const [likeCounts, setLikeCounts] = useState({});
   const [isLiked, setIsLiked] = useState({});
@@ -30,7 +30,6 @@ const News = () => {
   };
 
   const handleLike = async (postId) => {
-    // Prevent multiple likes (you can toggle instead if needed)
     if (isLiked[postId]) return;
 
     setLikeCounts((prev) => ({
@@ -52,32 +51,14 @@ const News = () => {
     }
   };
 
-  const SkeletonCard = () => (
-    <div className="col-12 col-sm-6 col-md-4 col-lg-3 mb-4 px-2">
-      <div className="skeleton-card card h-100 p-3 rounded-4 border-0 shadow-sm">
-        <div className="skeleton-image mb-3"></div>
-        <div className="d-flex justify-content-between align-items-center mb-2">
-          <div className="skeleton-badge"></div>
-          <div className="skeleton-readtime"></div>
-        </div>
-        <div className="skeleton-title mb-2"></div>
-        <div className="skeleton-line w-100 mb-2"></div>
-        <div className="skeleton-line w-75 mb-3"></div>
-        <div className="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
-          <div className="d-flex align-items-center gap-2 mt-2">
-            <div className="skeleton-author-line mb-1"></div>
-            <div className="skeleton-author-line w-50"></div>
-          </div>
-          <div className="d-flex align-items-center gap-3 mt-2">
-            <div className="skeleton-icon"></div>
-            <div className="skeleton-icon"></div>
-          </div>
-        </div>
-      </div>
-    </div>
-  );
+  const cardBgClass = darkMode ? "text-light bg-dark" : "text-dark bg-light";
+  const borderColor = darkMode ? "#444" : "#e0e0e0";
+  const badgeClass = darkMode ? "bg-primary" : "bg-info text-dark";
+  const textLightOrMuted = darkMode ? "text-light" : "text-muted";
 
-  if (error) {
+  const heartColor = (liked) => (liked ? "red" : darkMode ? "white" : "gray");
+
+  if (error)
     return (
       <div
         className={`alert alert-danger ${darkMode ? "bg-dark text-light" : ""}`}
@@ -85,14 +66,13 @@ const News = () => {
         Failed to load news: {error.message}
       </div>
     );
-  }
 
   return (
     <div className="container-fluid px-3">
       {/* Carousel */}
       {!loading && recentPosts.length > 0 && (
         <div className="mb-5">
-          <h4 className={`mb-4 ${darkMode ? "text-light" : "text-dark"}`}>
+          <h4 className={darkMode ? "text-light" : "text-dark"}>
             Recent Highlights
           </h4>
           <Carousel fade indicators={false} interval={4000} pause="hover">
@@ -101,36 +81,37 @@ const News = () => {
                 <Link to={`/post/${post._id}`} className="text-decoration-none">
                   <motion.div
                     whileHover={{
-                      border: `${
-                        darkMode ? "2px solid white" : "5px solid black"
-                      }`,
+                      borderColor: darkMode ? "#fff" : "#000",
+                      borderWidth: 3,
                     }}
-                    whileTap={{
-                      border: `${
-                        darkMode ? "2px solid white" : "5px solid black"
-                      }`,
-                    }}
+                    transition={{ type: "spring", stiffness: 300 }}
                     className="position-relative"
                     style={{
-                      height: "350px",
-                      borderRadius: "10px",
+                      height: 350,
+                      borderRadius: 10,
                       overflow: "hidden",
+                      borderStyle: "solid",
+                      borderColor: "transparent",
+                      borderWidth: 2,
                     }}
                   >
-                    <img
-                      className="d-block w-100 h-100"
+                    <motion.img
                       src={post.image}
                       alt={post.title}
                       onError={handleImageError}
                       style={{
                         objectFit: "cover",
+                        width: "100%",
+                        height: "100%",
                         filter: darkMode
                           ? "brightness(0.6)"
                           : "brightness(0.8)",
                       }}
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.4 }}
                     />
                     <div
-                      className="position-absolute bottom-0 start-0 p-4 w-100"
+                      className="position-absolute bottom-0 start-0 p-3 w-100"
                       style={{
                         background: darkMode
                           ? "linear-gradient(to top, rgba(0,0,0,0.9), transparent)"
@@ -165,79 +146,69 @@ const News = () => {
       {/* News Cards */}
       <div className="row g-4">
         {loading
-          ? Array.from({ length: 8 }).map((_, i) => <SkeletonCard key={i} />)
+          ? Array.from({ length: 8 }).map((_, i) => (
+              <div key={i} className="col-12 col-sm-6 col-md-4 col-lg-3 px-2">
+                <div className="card skeleton-card h-100 p-3 rounded-4 border-0 shadow-sm"></div>
+              </div>
+            ))
           : news.map((item) => (
-              <div
-                className="col-12 col-sm-6 col-md-4 col-lg-3 px-2"
+              <motion.div
                 key={item._id}
+                className={`col-12 col-sm-6 col-md-4 col-lg-3 px-2`}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+                whileHover={{ scale: 1.03 }}
               >
-                <div
-                  className={`card h-100 shadow-sm ${
-                    darkMode ? "text-light bg-dark" : "text-dark bg-light"
-                  }`}
+                <motion.div
+                  className={`card h-100 shadow-sm ${cardBgClass}`}
                   style={{
-                    border: darkMode ? "1px solid #444" : "1px solid #e0e0e0",
-                    borderRadius: "10px",
+                    border: `1px solid ${borderColor}`,
+                    borderRadius: 10,
                     overflow: "hidden",
-                    transition: "all 0.3s ease",
+                    cursor: "pointer",
                   }}
+                  whileTap={{ scale: 0.97 }}
                 >
-                  {/* Image */}
-                  <div
-                    className="overflow-hidden"
-                    style={{ height: "200px", backgroundColor: "#e9ecef" }}
+                  <Link
+                    to={`/post/${item._id}`}
+                    className="text-decoration-none"
                   >
-                    <Link
-                      to={`/post/${item._id}`}
-                      className="text-decoration-none"
-                    >
-                      <motion.img
-                        src={item.image}
-                        alt="News"
-                        className="w-100 h-100 object-fit-cover zoom-image"
-                        onError={handleImageError}
-                        whileHover={{ scale: 1.1 }}
-                      />
-                    </Link>
-                  </div>
+                    <motion.img
+                      src={item.image}
+                      alt="News"
+                      className="w-100"
+                      style={{ height: 200, objectFit: "cover" }}
+                      onError={handleImageError}
+                      whileHover={{ scale: 1.1 }}
+                      transition={{ duration: 0.3 }}
+                    />
+                  </Link>
 
-                  {/* Card Body */}
-                  <motion.div
-                    className="card-body d-flex flex-column p-3"
-                    whileHover={{ scale: 1.1 }}
-                    whileTap={{ scale: 1.1 }}
-                  >
-                    {/* Category + Time */}
+                  <div className="card-body d-flex flex-column p-3">
                     <div className="d-flex justify-content-between align-items-center mb-2">
                       <Link
                         to={`/category/${item.category?._id || ""}`}
-                        className={`badge rounded-pill px-3 py-1 fw-semibold text-decoration-none ${
-                          darkMode ? "bg-primary" : "bg-info text-dark"
-                        }`}
+                        className={`badge rounded-pill px-3 py-1 fw-semibold text-decoration-none ${badgeClass}`}
                       >
                         {item.category?.categoryName || "Uncategorized"}
                       </Link>
-                      <div className="d-flex align-items-center">
-                        <small
-                          className={darkMode ? "text-light" : "text-muted"}
-                        >
-                          {formatDistanceToNow(new Date(item.createdAt), {
-                            addSuffix: true,
-                          })}
-                        </small>
-                      </div>
+                      <small className={textLightOrMuted}>
+                        {formatDistanceToNow(new Date(item.createdAt), {
+                          addSuffix: true,
+                        })}
+                      </small>
                     </div>
 
-                    {/* Title */}
                     <h5
-                      className="fw-semibold mb-2"
+                      className={`fw-semibold mb-2 ${
+                        darkMode ? "text-light" : "text-dark"
+                      }`}
                       style={{ fontSize: "1.1rem", minHeight: "3rem" }}
                     >
                       <Link
                         to={`/post/${item._id}`}
-                        className={`text-decoration-none ${
-                          darkMode ? "text-light" : "text-dark"
-                        }`}
+                        className="text-decoration-none"
                       >
                         {item.title?.length > 70
                           ? `${item.title.substring(0, 70)}...`
@@ -245,84 +216,92 @@ const News = () => {
                       </Link>
                     </h5>
 
-                    {/* Description */}
                     <p
-                      className={`small mb-3 ${
-                        darkMode ? "text-light" : "text-muted"
-                      }`}
-                      style={{ lineHeight: "1.5", minHeight: "3rem" }}
+                      className={`small mb-3 ${textLightOrMuted}`}
+                      style={{ lineHeight: 1.5, minHeight: "3rem" }}
                     >
                       {item.description?.length > 100
                         ? `${item.description.substring(0, 100)}...`
                         : item.description}
                     </p>
 
-                    {/* Footer */}
                     <div className="d-flex justify-content-between align-items-center mt-auto pt-2 border-top">
-                      {/* Author */}
                       <div className="d-flex align-items-center gap-2">
-                        <div
-                          className={`rounded-circle d-flex align-items-center justify-content-center fw-semibold ${
-                            darkMode ? "bg-secondary" : "bg-primary"
-                          } text-light`}
-                          style={{
-                            width: "36px",
-                            height: "36px",
-                            fontSize: "14px",
-                            textTransform: "uppercase",
-                          }}
-                        >
-                          {item.author?.username?.[0] || "A"}
-                        </div>
-                        <div className="d-flex flex-column">
+                        {/* Author avatar or default avatar */}
+                        {item.author?.avatar ? (
+                          <img
+                            src={item.author.avatar}
+                            alt={item.author.username || "User avatar"}
+                            className="rounded-circle"
+                            style={{
+                              width: 36,
+                              height: 36,
+                              objectFit: "cover",
+                              display: "block",
+                            }}
+                            onError={(e) => {
+                              e.target.onerror = null;
+                              e.target.src = "/images/avtar.avif";
+                            }}
+                          />
+                        ) : (
+                          <img
+                            src="/images/avtar.avif"
+                            alt="Default avatar"
+                            className="rounded-circle"
+                            style={{
+                              width: 36,
+                              height: 36,
+                              objectFit: "cover",
+                              display: "block",
+                            }}
+                          />
+                        )}
+
+                        <div className="d-flex flex-column ms-2">
                           <span
                             className={`fw-semibold ${
                               darkMode ? "text-light" : "text-dark"
                             }`}
-                            style={{ fontSize: "0.85rem" }}
+                            style={{ fontSize: 14 }}
                           >
                             {item.author?.username || "Anonymous"}
                           </span>
                         </div>
                       </div>
 
-                      {/* Icons */}
-                      <div className="d-flex align-items-center gap-2">
-                        <span
-                          className={`d-flex align-items-center gap-1 ${
-                            darkMode ? "text-light" : "text-muted"
-                          }`}
-                        >
-                          <FaRegHeart
-                            size={16}
-                            onClick={() => handleLike(item._id)}
-                            style={{
-                              cursor: "pointer",
-                              color: isLiked[item._id]
-                                ? "red"
-                                : darkMode
-                                ? "white"
-                                : "gray",
-                            }}
-                          />
+                      <motion.div
+                        className="d-flex align-items-center"
+                        whileTap={{ scale: 0.8 }}
+                        style={{ cursor: "pointer" }}
+                        onClick={() => handleLike(item._id)}
+                      >
+                        <FaRegHeart
+                          size={16}
+                          color={heartColor(isLiked[item._id])}
+                        />
+                        <span className={`ms-1 ${textLightOrMuted}`}>
                           {likeCounts[item._id] !== undefined
                             ? item.likes + likeCounts[item._id]
                             : item.likes}
                         </span>
+                      </motion.div>
 
-                        <span
-                          className={`d-flex align-items-center gap-1 ${
-                            darkMode ? "text-light" : "text-muted"
-                          }`}
-                        >
-                          <FaRegComment size={16} />{" "}
+                      <div className="d-flex align-items-center gap-1 text-muted">
+                        <FaRegComment
+                          size={16}
+                          style={{
+                            color: `${darkMode ? "white" : ""}`,
+                          }}
+                        />
+                        <span className={` ${textLightOrMuted}`}>
                           {item.comments?.length || 0}
                         </span>
                       </div>
                     </div>
-                  </motion.div>
-                </div>
-              </div>
+                  </div>
+                </motion.div>
+              </motion.div>
             ))}
       </div>
     </div>
