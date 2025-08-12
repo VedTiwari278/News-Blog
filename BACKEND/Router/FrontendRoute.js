@@ -18,12 +18,11 @@ Frontendrouter.get(
 );
 
 Frontendrouter.get(
-  "/get-category",
+  "/admin/get-category",
 
   controller.getHeaderCategory
 );
 
 Frontendrouter.post("/api/posts/:postId/like", controller.likePost);
-
 
 module.exports = Frontendrouter;
