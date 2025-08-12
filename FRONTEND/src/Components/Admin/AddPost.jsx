@@ -3,6 +3,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import { NewsContext } from "../context/NewContext";
 import { CategoryContext } from "../context/CategoryContext";
+import { ThemeContext } from "../context/ThemeContext";
 
 const AddPost = () => {
   const navigate = useNavigate();
@@ -13,34 +14,29 @@ const AddPost = () => {
   const categoryRef = useRef();
   const imageRef = useRef();
 
-  // const [categories, setCategories] = useState([]);
-  const [submitting, setSubmitting] = useState(false); // 🟡 Loader state
-  const { news, setNews, FetchNews } = useContext(NewsContext);
+  const [submitting, setSubmitting] = useState(false);
+  const [preview, setPreview] = useState(null);
+
+  const { FetchNews } = useContext(NewsContext);
   const { categories } = useContext(CategoryContext);
+  const { darkMode } = useContext(ThemeContext);
 
   useEffect(() => {
-    // const fetchCategories = async () => {
-    //   try {
-    //     const res = await axios.get(
-    //       "https://news-blog-abh6.vercel.app/admin/get-categories",
-    //       {
-    //         headers: {
-    //           Authorization: `Bearer ${token}`,
-    //         },
-    //       }
-    //     );
-    //     setCategories(res.data.data);
-    //   } catch (err) {
-    //     console.error("❌ Error fetching categories:", err);
-    //   }
-    // };
-
     FetchNews();
   }, []);
 
+  const handleImageChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setPreview(URL.createObjectURL(file));
+    } else {
+      setPreview(null);
+    }
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    setSubmitting(true); // 🟡 Set loading true
+    setSubmitting(true);
 
     const data = new FormData();
     data.append("title", titleRef.current.value);
@@ -49,7 +45,7 @@ const AddPost = () => {
     data.append("image", imageRef.current.files[0]);
 
     try {
-      const response = await axios.post(
+      await axios.post(
         "https://news-blog-abh6.vercel.app/admin/add-post/",
         data,
         {
@@ -60,90 +56,139 @@ const AddPost = () => {
         }
       );
       FetchNews();
-
-      console.log("✅ Post Submitted:", response.data.message);
       navigate("/admin/posts");
     } catch (err) {
-      console.error("❌ Error submitting post:", err);
       alert("Failed to submit post");
     } finally {
-      setSubmitting(false); // 🔴 Reset loading
+      setSubmitting(false);
     }
   };
 
   return (
-    <div className="container mt-5">
-      <h2 className="text-primary mb-4">Add New Post</h2>
-      <form onSubmit={handleSubmit} encType="multipart/form-data">
-        <div className="mb-3">
-          <label htmlFor="title" className="form-label">
-            Title
-          </label>
-          <input
-            type="text"
-            className="form-control"
-            id="title"
-            placeholder="Enter post title"
-            ref={titleRef}
-            required
-          />
+    <div
+      className={`${
+        darkMode ? "bg-dark text-white" : "bg-light text-dark"
+      }card shadow-lg border-0  p-4 `}
+    >
+      <div
+        className={`${
+          darkMode ? "bg-dark text-white" : "bg-light text-dark"
+        }card shadow-lg border-0 rounded-4 p-4`}
+      >
+        {/* Header */}
+        <div className="mb-4 border-bottom pb-2">
+          <h2 className="fw-bold text-gradient"> Add New Post</h2>
+          <p className={`mb-0 ${darkMode ? "textlight" : "text-dark"}`}>
+            Create and publish a new news article.
+          </p>
         </div>
 
-        <div className="mb-3">
-          <label htmlFor="description" className="form-label">
-            Description
-          </label>
-          <textarea
-            className="form-control"
-            id="description"
-            rows="4"
-            placeholder="Enter post description"
-            ref={descRef}
-            required
-          ></textarea>
-        </div>
+        {/* Form */}
+        <form onSubmit={handleSubmit} encType="multipart/form-data">
+          <div className="row g-4">
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Title</label>
+              <input
+                type="text"
+                className="form-control rounded-3 shadow-sm"
+                placeholder="Enter post title"
+                ref={titleRef}
+                required
+              />
+            </div>
 
-        <div className="mb-3">
-          <label htmlFor="category" className="form-label">
-            Category
-          </label>
-          <select
-            className="form-select"
-            id="category"
-            ref={categoryRef}
-            required
-          >
-            <option value="">-- Choose Category --</option>
-            {categories.map((cat) => (
-              <option key={cat._id} value={cat._id}>
-                {cat.categoryName}
-              </option>
-            ))}
-          </select>
-        </div>
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Category</label>
+              <select
+                className="form-select rounded-3 shadow-sm"
+                ref={categoryRef}
+                required
+              >
+                <option value="">-- Choose Category --</option>
+                {categories.map((cat) => (
+                  <option key={cat._id} value={cat._id}>
+                    {cat.categoryName}
+                  </option>
+                ))}
+              </select>
+            </div>
 
-        <div className="mb-3">
-          <label htmlFor="image" className="form-label">
-            Post Image
-          </label>
-          <input
-            type="file"
-            className="form-control"
-            id="image"
-            accept="image/*"
-            ref={imageRef}
-            required
-          />
-        </div>
+            <div className="col-12">
+              <label className="form-label fw-semibold">Description</label>
+              <textarea
+                className="form-control rounded-3 shadow-sm"
+                rows="4"
+                placeholder="Enter post description"
+                ref={descRef}
+                required
+              ></textarea>
+            </div>
 
-        <button
-          type="submit"
-          className="btn btn-success w-100"
-          disabled={submitting}
-        >
-          {submitting ? "Submitting..." : "Submit Post"}
-        </button>
-      </form>
+            <div className="col-md-6">
+              <label className="form-label fw-semibold">Post Image</label>
+              <input
+                type="file"
+                className="form-control rounded-3 shadow-sm"
+                accept="image/*"
+                ref={imageRef}
+                onChange={handleImageChange}
+                required
+              />
+            </div>
+
+            {/* Image Preview */}
+            <div className="col-md-6 d-flex align-items-center justify-content-center">
+              {preview ? (
+                <img
+                  src={preview}
+                  alt="Preview"
+                  className="img-fluid rounded-4 shadow"
+                  style={{ maxHeight: "200px", objectFit: "cover" }}
+                />
+              ) : (
+                <div
+                  className="border border-2 border-dashed rounded-4 text-muted d-flex flex-column align-items-center justify-content-center p-4"
+                  style={{ height: "200px", width: "100%" }}
+                >
+                  <span>Image Preview</span>
+                </div>
+              )}
+            </div>
+          </div>
+
+          <div className="mt-4 text-end">
+            <button
+              type="submit"
+              className="btn btn-primary px-4 py-2 rounded-3 shadow-sm"
+              disabled={submitting}
+            >
+              {submitting ? (
+                <>
+                  <span
+                    className="spinner-border spinner-border-sm me-2"
+                    role="status"
+                  ></span>
+                  Submitting...
+                </>
+              ) : (
+                "Publish Post"
+              )}
+            </button>
+          </div>
+        </form>
+      </div>
+
+      {/* Gradient CSS */}
+      <style>{`
+        .text-gradient {
+          background: linear-gradient(90deg, #007bff, #00c6ff);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+        }
+        .border-dashed {
+          border-style: dashed !important;
+        }
+      `}</style>
     </div>
   );
 };
