@@ -68,7 +68,7 @@ const News = () => {
     );
 
   return (
-    <div className="container-fluid px-3">
+    <div className="container-fluid px-3 my-5">
       {/* Carousel */}
       {!loading && recentPosts.length > 0 && (
         <div className="mb-5">
