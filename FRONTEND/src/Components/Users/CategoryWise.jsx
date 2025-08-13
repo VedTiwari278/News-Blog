@@ -1,180 +1,92 @@
 import React, { useContext, useEffect, useState } from "react";
-import axios from "axios";
-import { Link, useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import Sidebar from "./Sidebar";
 import { NewsContext } from "../context/NewContext";
 import { ThemeContext } from "../context/ThemeContext";
+
 const CategoryWise = () => {
-  // const [news, setNews] = useState([]);
-  // const [loading, setLoading] = useState(true);
   const { id } = useParams();
-
-  const { news, setNews, loading } = useContext(NewsContext);
-  const [FilteredNews, setFilterNews] = useState([]);
+  const { news, loading } = useContext(NewsContext);
   const { darkMode } = useContext(ThemeContext);
+  const [filteredNews, setFilteredNews] = useState([]);
 
+  // Filter posts by category
   useEffect(() => {
-    const filtered = news.filter((item) => item.category._id === id);
-    setFilterNews(filtered);
+    if (news.length) setFilteredNews(news.filter((post) => post.category?._id === id));
   }, [news, id]);
 
-  // console.log("By ID :", FilterNews);
-
-  // useEffect(() => {
-  //   const FetchNews = async () => {
-  //     try {
-  //       setLoading(true);
-  //       const response = await axios.get(
-  //         `https://news-blog-abh6.vercel.app/getAllPostById/${id}`
-  //       );
-  //       if (response) {
-  //         console.log(response.data.data);
-
-  //         setNews(response.data.data);
-  //       }
-  //     } catch (err) {
-  //       console.error("No Posts Found", err);
-  //     } finally {
-  //       setLoading(false);
-  //     }
-  //   };
-  //   FetchNews();
-  // }, [id]);
-
   const categoryName =
-    FilteredNews.length > 0
-      ? FilteredNews[0].category?.categoryName
+    filteredNews.length > 0
+      ? filteredNews[0].category?.categoryName
       : "Unknown Category";
 
   return (
-    <div className="container mt-4">
-      {/* Category Marquee */}
-      <h3 className="text-danger text-center mb-4">
-        <marquee behavior="scroll" direction="left">
-          {`Category: ${categoryName}`}
-        </marquee>
-      </h3>
+    <div
+      className="container mt-4"
+      style={{ minHeight: "80vh", color: darkMode ? "#fff" : "#111" }}
+    >
+      {/* Category Info */}
+      <div
+        className="mb-4 p-3 rounded"
+        style={{ backgroundColor: darkMode ? "#111" : "#f8f9fa" }}
+      >
+        <h4>Category: {categoryName}</h4>
+      </div>
+      <hr />
 
+      {/* Posts */}
       <div className="row">
-        {/* Left Column */}
-        <div
-          className="col-md-9 d-flex flex-column align-items-center"
-          style={{ minHeight: "70vh" }}
-        >
+        <div className="col-md-9">
           {loading ? (
-            <div
-              className="d-flex justify-content-center align-items-center w-100"
-              style={{ minHeight: "60vh" }}
-            >
-              <div className="text-center">
-                <div
-                  className="spinner-border text-primary"
-                  role="status"
-                ></div>
-                <p className="mt-3">Loading posts...</p>
-              </div>
+            <div className="text-center py-5">
+              <div className="spinner-border text-primary" role="status"></div>
+              <p>Loading posts...</p>
             </div>
-          ) : FilteredNews.length === 0 ? (
-            <div
-              className="d-flex justify-content-center align-items-center w-100"
-              style={{ minHeight: "60vh" }}
-            >
-              <div
-                className="alert alert-danger text-center shadow p-4 rounded"
-                style={{ maxWidth: "700px", width: "100%" }}
-              >
-                <h5 className="text-danger fw-bold mb-2">🚫 No Posts Found</h5>
-                <h6 className="mb-0 text-muted">
-                  No content is available under this category.
-                </h6>
-              </div>
+          ) : filteredNews.length === 0 ? (
+            <div className="alert text-center py-4">
+              <h5>No posts found in this category.</h5>
             </div>
           ) : (
-            FilteredNews.map((newsItem) => (
-              <div
-                className={`card shadow-sm flex-row mb-3 ${
-                  darkMode ? "bg-dark text-light" : "bg-light text-dark"
-                }`}
-                style={{
-                  width: "100%",
-                  maxWidth: "700px",
-                  height: "180px",
-                  borderRadius: "12px",
-                  overflow: "hidden",
-                }}
-                key={newsItem._id}
-              >
-                {/* Left Image */}
-                <img
-                  src={newsItem.image}
-                  alt="News"
-                  style={{
-                    width: "200px",
-                    height: "100%",
-                    objectFit: "cover",
-                  }}
-                />
-
-                {/* Right Content */}
-                <div
-                  className="card-body d-flex flex-column justify-content-between"
-                  style={{ flex: 1 }}
-                >
-                  <div>
-                    <h5 className="card-title mb-1">{newsItem.title}</h5>
-                    <ul className="list-inline mb-2 small text-muted">
-                      <li className="list-inline-item">
-                        <Link
-                          to={`/category/${newsItem.category._id}`}
-                          className={`text-decoration-none ${
-                            darkMode ? "text-light" : "text-dark"
-                          }`}
-                        >
-                          {newsItem.category.categoryName}
-                        </Link>
-                      </li>
-                      <li className="list-inline-item">|</li>
-                      <li className="list-inline-item">
-                        <span>{newsItem.author?.username || "Unknown"}</span>
-                      </li>
-                      <li className="list-inline-item">|</li>
-                      <li className="list-inline-item">
-                        {new Date(newsItem.createdAt).toLocaleDateString()}
-                      </li>
-                    </ul>
-                  </div>
-
-                  <div className="d-flex flex-column">
-                    <p
-                      className="card-text small mb-2"
-                      style={{
-                        whiteSpace: "nowrap",
-                        overflow: "hidden",
-                        textOverflow: "ellipsis",
-                      }}
-                    >
-                      {newsItem.description.length > 100
-                        ? newsItem.description.slice(0, 40) + "..."
-                        : newsItem.description}
-                    </p>
-                    <div>
+            <div className="row g-3">
+              {filteredNews.map((post) => (
+                <div key={post._id} className="col-sm-12 col-md-6 col-lg-4">
+                  <div className={`card h-100 ${darkMode ? "bg-dark text-light" : ""}`}>
+                    <Link to={`/post/${post._id}`}>
+                      <img
+                        src={post.image}
+                        alt={post.title}
+                        className="card-img-top"
+                        onError={(e) =>
+                          (e.target.src =
+                            "https://via.placeholder.com/300x180?text=No+Image")
+                        }
+                      />
+                    </Link>
+                    <div className="card-body d-flex flex-column">
+                      <h6 className="card-title text-truncate" title={post.title}>
+                        {post.title}
+                      </h6>
+                      <p className="text-muted mb-2" style={{ fontSize: 12 }}>
+                        {post.author?.username || "Unknown"} •{" "}
+                        {new Date(post.createdAt).toLocaleDateString()}
+                      </p>
+                      <p className="card-text text-truncate" title={post.description}>
+                        {post.description}
+                      </p>
                       <Link
-                        to={`/post/${newsItem._id}`}
-                        className={`btn btn-sm ${
-                          darkMode ? "btn-outline-light" : "btn-outline-primary"
-                        }`}
+                        to={`/post/${post._id}`}
+                        className="mt-auto btn btn-sm btn-outline-primary"
                       >
                         Read More
                       </Link>
                     </div>
                   </div>
                 </div>
-              </div>
-            ))
+              ))}
+            </div>
           )}
         </div>
 
-        {/* Right Sidebar */}
         <div className="col-md-3">
           <Sidebar />
         </div>
