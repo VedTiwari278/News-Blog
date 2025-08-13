@@ -10,7 +10,7 @@ export const UserProvider = ({ children }) => {
   const token = localStorage.getItem("token");
 
   const fetchUser = async () => {
-    if (user.length > 0) return; // 🧠 Prevent refetching
+    if (user.length > 0) return; // Prevent refetching
     try {
       setLoading(true);
       const response = await axios.get(
@@ -21,7 +21,7 @@ export const UserProvider = ({ children }) => {
           },
         }
       );
-      // console.log("Ye hai user ka dataa :",response.da);
+      console.log("Ye hai user ka data:", response.data);
 
       if (response?.data?.data) {
         setUser(response.data.data);
@@ -32,6 +32,11 @@ export const UserProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  // ✅ Call fetchUser on first render
+  useEffect(() => {
+    fetchUser();
+  }, []); // empty dependency array ensures it runs once
 
   return (
     <UserContext.Provider

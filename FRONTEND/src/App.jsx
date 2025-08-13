@@ -1,5 +1,10 @@
 import React, { useEffect } from "react";
-import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./App.css";
 
@@ -23,6 +28,7 @@ import Register from "./Components/Register";
 import Login from "./Components/Login";
 import About from "./Components/Users/About";
 import { ThemeProvider } from "./Components/context/ThemeContext";
+import UserWise from "./Components/Users/UserWise";
 
 const Contact = () => <h2 className="text-center mt-5">Contact Page</h2>;
 
@@ -56,6 +62,7 @@ const App = () => {
           <Route path="/admin/edit-post/:id" element={<UpdatePost />} />
           <Route path="/admin/add-category" element={<AddCategory />} />
           <Route path="/category/:id" element={<CategoryWise />} />
+          <Route path="/user/:id" element={<UserWise />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/about" element={<About />} />
           <Route path="/post/:id" element={<Single />} />

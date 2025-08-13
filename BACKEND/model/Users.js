@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
     enum: ["reader", "writer", "admin"],
     default: "reader",
   },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
   avatar: { type: String, default: null }, // will store cloudinary URL
 });
 

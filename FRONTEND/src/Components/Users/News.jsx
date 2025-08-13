@@ -229,33 +229,37 @@ const News = () => {
                       <div className="d-flex align-items-center gap-2">
                         {/* Author avatar or default avatar */}
                         {item.author?.avatar ? (
-                          <img
-                            src={item.author.avatar}
-                            alt={item.author.username || "User avatar"}
-                            className="rounded-circle"
-                            style={{
-                              width: 36,
-                              height: 36,
-                              objectFit: "cover",
-                              display: "block",
-                            }}
-                            onError={(e) => {
-                              e.target.onerror = null;
-                              e.target.src = "/images/avtar.avif";
-                            }}
-                          />
+                          <Link to={`/user/${item.author._id}`}>
+                            <img
+                              src={item.author.avatar}
+                              alt={item.author.username || "User avatar"}
+                              className="rounded-circle"
+                              style={{
+                                width: 36,
+                                height: 36,
+                                objectFit: "cover",
+                                display: "block",
+                              }}
+                              onError={(e) => {
+                                e.target.onerror = null;
+                                e.target.src = "/images/avtar.avif";
+                              }}
+                            />
+                          </Link>
                         ) : (
-                          <img
-                            src="/images/avtar.avif"
-                            alt="Default avatar"
-                            className="rounded-circle"
-                            style={{
-                              width: 36,
-                              height: 36,
-                              objectFit: "cover",
-                              display: "block",
-                            }}
-                          />
+                          <Link to={`/user/${item.author._id}`}>
+                            <img
+                              src="/images/avtar.avif"
+                              alt="Default avatar"
+                              className="rounded-circle"
+                              style={{
+                                width: 36,
+                                height: 36,
+                                objectFit: "cover",
+                                display: "block",
+                              }}
+                            />
+                          </Link>
                         )}
 
                         <div className="d-flex flex-column ms-2">
