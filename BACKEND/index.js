@@ -6,7 +6,6 @@ import { connectDB } from "./db/index.js";
 dotenv.config();
 
 const PORT = process.env.PORT || 8000;
-app.use(morgan("dev"));
 
 connectDB().then(() => {
   app.listen(PORT, () => {
