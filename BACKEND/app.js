@@ -10,6 +10,19 @@ import { blogRouter } from "./Router/blog.routes.js";
 const app = express();
 app.use(morgan("dev"));
 
+// app.use(
+//   cors({
+//     origin: [
+//       "http://localhost:5173",
+//       "http://localhost:5174",
+//       "http://localhost:3000",
+//       "https://news-blog-8wof.vercel.app",
+//       "https://news-blog-8wof.vercel.app",
+//     ],
+//     credentials: true,
+//   }),
+// );
+
 app.use(
   cors({
     origin: [
@@ -18,9 +31,12 @@ app.use(
       "http://localhost:3000",
       "https://news-blog-8wof.vercel.app",
     ],
+    methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    allowedHeaders: ["Content-Type", "Authorization"],
     credentials: true,
   }),
 );
+
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(limiter);
