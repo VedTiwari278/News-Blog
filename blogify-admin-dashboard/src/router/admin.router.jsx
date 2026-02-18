@@ -1,7 +1,7 @@
 import BlogLayout from "../features/blog/BlogLayout";
 import AllBlogs from "../features/blog/AllBlogs";
 import Create_Blog from "../features/blog/Create_Blog";
-import OverViewLayout from "../features/blog/overViewLayout";
+import OverViewLayout from "../features/blog/OverViewLayout";
 
 export const dashboardRoutes = [
   {
@@ -22,7 +22,7 @@ export const dashboardRoutes = [
       },
       {
         path: ":slug",
-        element: <OverViewLayout />,
+        element: <OverViewLayout/>,
       },
     ],
   },
