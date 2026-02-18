@@ -1,7 +1,7 @@
 import BlogOverview from "./BlogOverview";
 import RecentBlog from "./RecentBlog";
 
-function BlogLayout() {
+function OverViewLayout() {
   return (
     <div>
       <div className="grid grid-cols-1 md:grid-cols-3 p-2 gap-8">
@@ -17,4 +17,4 @@ function BlogLayout() {
   );
 }
 
-export default BlogLayout;
+export default OverViewLayout;
