@@ -1,22 +1,23 @@
-// BACKEND > config > cloudinary.js
-const cloudinary = require("cloudinary").v2;
-const { CloudinaryStorage } = require("multer-storage-cloudinary");
+import { v2 as cloudinary } from "cloudinary";
+import { CloudinaryStorage } from "multer-storage-cloudinary";
+import {
+  CLOUDINARY_API_KEY,
+  CLOUDINARY_API_SECRET,
+  CLOUDINARY_CLOUD_NAME,
+} from "./index.js";
 
 cloudinary.config({
-  cloud_name: "dnmyq1nke",
-  api_key: "495721184823222",
-  api_secret: "D0oW1nA_80e2Bt-4zrFNlwVNZhM",
+  cloud_name: CLOUDINARY_CLOUD_NAME,
+  api_key: CLOUDINARY_API_KEY,
+  api_secret: CLOUDINARY_API_SECRET,
 });
 
-const storage = new CloudinaryStorage({
+export const storage = new CloudinaryStorage({
   cloudinary,
   params: {
-    folder: "upload", // optional folder in Cloudinary
+    folder: "upload",
     allowed_formats: ["jpg", "png", "jpeg"],
   },
 });
 
-module.exports = {
-  cloudinary,
-  storage,
-};
+export default cloudinary;
