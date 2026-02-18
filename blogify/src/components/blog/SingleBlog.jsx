@@ -93,7 +93,7 @@ function SingleBlog({ slug }) {
                 )}
                 {data?.readTime || (
                   <>
-                   <FaClock/> <span>{data?.readTime||"5"} min read</span>
+                    <FaClock /> <span>{data?.readTime || "5"} min read</span>
                   </>
                 )}
               </div>
@@ -104,7 +104,7 @@ function SingleBlog({ slug }) {
                   <img
                     src={data.mainImage}
                     alt={data.title || "Main blog image"}
-                    className="w-full h-64 sm:h-96 lg:h-[480px] object-cover rounded-xl shadow-xl"
+                    className="w-full h-64 sm:h-96 lg:h-120 object-cover rounded-xl shadow-xl"
                     loading="eager"
                   />
                 </figure>
@@ -145,7 +145,7 @@ function SingleBlog({ slug }) {
                   <img
                     src={data.featuredImage}
                     alt="Featured visual"
-                    className="w-full rounded-2xl shadow-xl object-cover max-h-[520px]"
+                    className="w-full rounded-2xl shadow-xl object-cover max-h-130"
                   />
                 </figure>
               )}
