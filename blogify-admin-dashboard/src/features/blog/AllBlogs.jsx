@@ -4,7 +4,7 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 import axios from "axios";
 import { BASE_URL } from "../../config";
 import { useAuth } from "../../context/AuthContext";
-import Pagination from "../../utils/pagination";
+import Pagination from "../../utils/Pagination";
 import { FiTrash2 } from "react-icons/fi"; // ✅ Feather Trash Icon
 
 function AllBlogs() {
@@ -37,7 +37,7 @@ function AllBlogs() {
       await axios.delete(`${BASE_URL}/blog/delete-blog/${id}`, {
         headers: { Authorization: `Bearer ${token}` },
       });
-      queryClient.invalidateQueries(["AllBlogs", page]); 
+      queryClient.invalidateQueries(["AllBlogs", page]);
     } catch (err) {
       console.error(err);
     }
