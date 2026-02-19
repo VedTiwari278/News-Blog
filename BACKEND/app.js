@@ -31,7 +31,7 @@ app.get("/", (req, res) => {
 });
 
 app.use(`/api/${VERSION}/auth/`, authRouter);
-app.use(`/api/${VERSION}/blog/`, blogRouter);
+app.use(`/api/${VERSION}/blog`, blogRouter);
 
 app.use(errorHandler);
 export default app;
