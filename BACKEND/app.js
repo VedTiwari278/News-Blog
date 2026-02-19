@@ -19,6 +19,7 @@ app.use(
       "https://news-blog-n7tv.vercel.app",
     ],
     methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
+    credentials: true,
   }),
 );
 app.use(express.json());
