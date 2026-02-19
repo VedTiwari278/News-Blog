@@ -46,8 +46,6 @@ import { blogRouter } from "./Router/blog.routes.js";
 
 const app = express();
 
-app.use(morgan("dev"));
-
 // ✅ Correct CORS
 app.use(
   cors({
@@ -65,6 +63,7 @@ app.use(
 
 // ✅ Handle preflight explicitly
 app.options("*", cors());
+app.use(morgan("dev"));
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
