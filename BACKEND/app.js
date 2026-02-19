@@ -35,3 +35,4 @@ app.use(`/api/${VERSION}/blog/`, blogRouter);
 
 app.use(errorHandler);
 export default app;
+

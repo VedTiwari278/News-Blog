@@ -14,6 +14,7 @@ export default function HomePage() {
   const fetchRecentBlogs = async () => {
     const { data } = await axios.get(`${BASE_URL}/blog/recent-blogs`,{
       withCredentials:true
+
     });
     return data;
   };
@@ -57,6 +58,10 @@ export default function HomePage() {
 
   // ✅ Loading & Error UI
   if (isLoading) return <p className="text-center mt-10">Loading...</p>;
+  if (slides.length === 0) {
+    console.log("Data nhi aaya");
+    return <p className="text-center mt-10">Failed to load</p>;
+  }
   if (error) return <p className="text-center mt-10">Failed to load</p>;
 
   return (
