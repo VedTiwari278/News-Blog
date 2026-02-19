@@ -76,8 +76,11 @@ function Create_Blog() {
     console.log("DATA:", data);
 
     await axios.post(`${BASE_URL}/blog/create`, formData, {
-      headers: { Authorization: `Bearer ${token}` },
-      "Content-Type": "multipart/form-data",
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "Content-Type": "multipart/form-data",
+      },
+      withCredentials: true,
     });
 
     alert("Blog Created ✅");

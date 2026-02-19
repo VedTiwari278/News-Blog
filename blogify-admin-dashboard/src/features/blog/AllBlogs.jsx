@@ -20,7 +20,10 @@ function AllBlogs() {
       const res = await axios.get(
         `${BASE_URL}/blog/get-blogs?page=${page}&limit=6`,
         {
-          headers: { Authorization: `Bearer ${token}` },
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+          withCredentials: true,
         },
       );
       return res.data;
@@ -33,10 +36,15 @@ function AllBlogs() {
 
   const handleDelete = async (id) => {
     if (!window.confirm("Are you sure you want to delete this blog?")) return;
+
     try {
       await axios.delete(`${BASE_URL}/blog/delete-blog/${id}`, {
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        withCredentials: true,
       });
+
       queryClient.invalidateQueries(["AllBlogs", page]);
     } catch (err) {
       console.error(err);

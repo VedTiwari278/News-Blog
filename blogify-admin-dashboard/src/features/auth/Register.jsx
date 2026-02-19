@@ -18,7 +18,9 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post(`${BASE_URL}/auth/register`, data);
+      const res = await axios.post(`${BASE_URL}/auth/register`, data, {
+        withCredentials: true,
+      });
       toast.success(res?.data?.message);
     } catch (err) {
       toast.error(err.response?.data?.message || "Registration failed");

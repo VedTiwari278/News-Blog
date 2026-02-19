@@ -19,6 +19,7 @@ export default function BlogDetail() {
           headers: {
             Authorization: `Bearer ${token}`,
           },
+          withCredentials: true,
         });
         setBlog(res.data?.data);
       } catch (err) {
@@ -38,7 +39,9 @@ export default function BlogDetail() {
 
   return (
     <div className="mx-auto shadow-black shadow-md p-2  mb-10 space-y-8">
-      <h1 className="text-md md:text-lg  font-bold text-center text-gray-900">{blog.title}</h1>
+      <h1 className="text-md md:text-lg  font-bold text-center text-gray-900">
+        {blog.title}
+      </h1>
 
       {/* Author & Meta */}
       <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between text-gray-500 text-sm space-y-2 sm:space-y-0">

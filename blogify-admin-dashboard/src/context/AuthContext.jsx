@@ -8,7 +8,6 @@ const AuthContext = createContext();
 
 // Provider component
 export const AuthProvider = ({ children }) => {
-
   const [user, setUser] = useState("");
   const [token, setToken] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -27,10 +26,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   const login = async (email, password) => {
-    const res = await axios.post(`${BASE_URL}/auth/login`, {
-      email,
-      password,
-    });
+    const res = await axios.post(
+      `${BASE_URL}/auth/login`,
+      {
+        email,
+        password,
+      },
+      { withCredentials: true },
+    );
 
     const { user: loggedUser, token: authToken } = res.data.data;
 
@@ -44,7 +47,7 @@ export const AuthProvider = ({ children }) => {
     localStorage.setItem("user", JSON.stringify(loggedUser));
     localStorage.setItem("token", authToken);
     toast.success(res?.data?.message);
-    
+
     return true;
   };
 
