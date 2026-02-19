@@ -12,7 +12,9 @@ function SingleBlog({ slug }) {
     queryKey: ["single-blog", slug],
     queryFn: async () => {
       try {
-        const res = await axios.get(`${BASE_URL}/blog/get-blog/${slug}`);
+        const res = await axios.get(`${BASE_URL}/blog/get-blog/${slug}`, {
+          withCredentials: true,
+        });
         return res?.data?.data ?? null;
       } catch (err) {
         throw err;

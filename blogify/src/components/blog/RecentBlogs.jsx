@@ -15,7 +15,9 @@ function RecentBlogs() {
   } = useQuery({
     queryKey: ["recent-blogs"],
     queryFn: async () => {
-      const res = await axios.get(`${BASE_URL}/blog/recent-blogs`);
+      const res = await axios.get(`${BASE_URL}/blog/recent-blogs`, {
+        withCredentials: true,
+      });
       return res?.data?.data?.data ?? res?.data?.data ?? res?.data ?? [];
     },
     staleTime: 5 * 60 * 1000,

@@ -13,7 +13,9 @@ export default function Blog() {
   } = useQuery({
     queryKey: ["all_blogs"],
     queryFn: async () => {
-      const res = await axios.get(`${BASE_URL}/blog/get-blogs/`);
+      const res = await axios.get(`${BASE_URL}/blog/get-blogs/`, {
+        withCredentials: true,
+      });
 
       return res?.data;
     },
@@ -44,7 +46,9 @@ export default function Blog() {
             <div className="p-4">
               <h2 className="text-xl font-bold mb-2">{blog?.title}</h2>
 
-              <p className="text-gray-700 mb-4 wrap-break-word line-clamp-1">{blog?.summary}</p>
+              <p className="text-gray-700 mb-4 wrap-break-word line-clamp-1">
+                {blog?.summary}
+              </p>
 
               <span className="text-blue-600 font-semibold hover:underline">
                 Read More →
