@@ -12,7 +12,9 @@ export default function HomePage() {
 
   // ✅ Fetch function
   const fetchRecentBlogs = async () => {
-    const { data } = await axios.get(`${BASE_URL}/blog/recent-blogs`);
+    const { data } = await axios.get(`${BASE_URL}/blog/recent-blogs`, {
+      withCredentials: true,
+    });
     return data;
   };
 
