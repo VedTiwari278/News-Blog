@@ -18,7 +18,7 @@ function Register() {
 
   const onSubmit = async (data) => {
     try {
-      const res = await axios.post(`https://vedtest.vercel.app/api/v1/auth/register`, data, {
+      const res = await axios.post(`https://vedtest-8pdo4e5q1-sachinkushwhas-projects.vercel.app/api/v1/auth/register`, data, {
         withCredentials: true,
       });
       toast.success(res?.data?.message);
